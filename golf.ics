@@ -2,19 +2,11 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Verantwoordelijke: Vinois Max\nMedespelers: Claeys Nicolas Jean\, Duytschaever Charles\, SOENEN JULIEN
-DURATION:PT4H
-LOCATION:Royal Latem Golf Club\, Deurle\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250805T163000Z
-SUMMARY:Tee-time ⛳️ Royal Latem Golf Club
-UID:dc6f19af-fad2-4403-bbe7-a833768d95a8@dc6f.org
-END:VEVENT
-BEGIN:VEVENT
 DESCRIPTION:Voorkeur start: -\nTee: 53
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, Deurle\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250816T100000Z
 SUMMARY:Competition ⛳️ The Original New Generation (Fours.+ Greens. + Chapm.)
-UID:0c6c3514-1434-4ee9-8a56-227837e0d583@0c6c.org
+UID:304f4931-50a2-4ecd-82d4-0f8f1a921c37@304f.org
 END:VEVENT
 END:VCALENDAR
