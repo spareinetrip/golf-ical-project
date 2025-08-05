@@ -58,17 +58,29 @@ class IGolfScraper:
                     print(f"Error getting Chrome version: {e}")
         
         # Check ChromeDriver
-        chromedriver_path = os.environ.get('CHROMEDRIVER_PATH', '/usr/local/bin/chromedriver')
-        print(f"ChromeDriver path: {chromedriver_path}")
-        print(f"ChromeDriver exists: {os.path.exists(chromedriver_path)}")
+        chromedriver_path = os.environ.get('CHROMEDRIVER_PATH')
+        if not chromedriver_path:
+            # Try to find ChromeDriver in PATH
+            import subprocess
+            try:
+                result = subprocess.run(['which', 'chromedriver'], capture_output=True, text=True)
+                chromedriver_path = result.stdout.strip()
+            except:
+                chromedriver_path = '/usr/local/bin/chromedriver'
         
-        if os.path.exists(chromedriver_path):
+        print(f"ChromeDriver path: {chromedriver_path}")
+        print(f"ChromeDriver exists: {os.path.exists(chromedriver_path) if chromedriver_path else False}")
+        
+        if chromedriver_path and os.path.exists(chromedriver_path):
             try:
                 import subprocess
                 result = subprocess.run([chromedriver_path, '--version'], capture_output=True, text=True)
                 print(f"ChromeDriver version: {result.stdout.strip()}")
             except Exception as e:
                 print(f"Error getting ChromeDriver version: {e}")
+        else:
+            print("ChromeDriver not found, will try to use system ChromeDriver")
+            chromedriver_path = 'chromedriver'  # Use PATH
         
         # Setup Chrome options
         print("Setting up Chrome options...")
@@ -98,10 +110,17 @@ class IGolfScraper:
         
         try:
             print("🔄 Initializing Chrome driver...")
-            service = Service(chromedriver_path)
-            print(f"Service created with path: {chromedriver_path}")
             
-            self.driver = webdriver.Chrome(service=service, options=options)
+            # Use Service only if we have a specific path
+            if chromedriver_path and chromedriver_path != 'chromedriver':
+                service = Service(chromedriver_path)
+                print(f"Service created with path: {chromedriver_path}")
+                self.driver = webdriver.Chrome(service=service, options=options)
+            else:
+                # Use default ChromeDriver from PATH
+                print("Using ChromeDriver from PATH")
+                self.driver = webdriver.Chrome(options=options)
+            
             print("✅ Chrome driver geïnitialiseerd")
             
             # Test the driver

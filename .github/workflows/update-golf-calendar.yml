@@ -19,75 +19,33 @@ jobs:
       with:
         python-version: '3.11'
         
-    - name: Install Chrome and ChromeDriver
+    - name: Setup Chrome
+      uses: browser-actions/setup-chrome@v1
+      
+    - name: Setup ChromeDriver
       run: |
-        echo "=== STARTING CHROME/CHROMEDRIVER INSTALLATION ==="
+        echo "=== CHROMEDRIVER SETUP ==="
         
-        # Update packages
-        echo "Updating packages..."
-        sudo apt-get update
-        sudo apt-get install -y wget unzip curl jq
+        # Use the ChromeDriver that comes with the browser-actions/setup-chrome action
+        echo "ChromeDriver should be automatically available"
         
-        # Check what's already installed
-        echo "=== CHECKING EXISTING INSTALLATIONS ==="
-        echo "System Chrome:"
-        google-chrome --version || echo "No system Chrome found"
-        
-        echo "System ChromeDriver:"
-        chromedriver --version || echo "No system ChromeDriver found"
-        
-        echo "=== DETERMINING CHROME VERSION ==="
-        CHROME_VERSION=$(google-chrome --version | grep -oE '[0-9]+' | head -1)
-        echo "Detected Chrome version: $CHROME_VERSION"
-        
-        # Always use a specific, known-working approach
-        echo "=== USING KNOWN WORKING CHROMEDRIVER SETUP ==="
-        
-        # Remove any existing ChromeDriver
-        sudo rm -f /usr/local/bin/chromedriver
-        sudo rm -f /usr/bin/chromedriver
-        
-        # Download a specific ChromeDriver version that works with Chrome 138
-        echo "Downloading ChromeDriver 120.0.6099.109 (known to work with newer Chrome)..."
-        wget -q "https://chromedriver.storage.googleapis.com/120.0.6099.109/chromedriver_linux64.zip" -O /tmp/chromedriver.zip
-        
-        echo "Checking if download succeeded..."
-        ls -la /tmp/chromedriver.zip
-        
-        echo "Extracting ChromeDriver..."
-        unzip -q /tmp/chromedriver.zip -d /tmp/
-        
-        echo "Installing ChromeDriver..."
-        sudo cp /tmp/chromedriver /usr/local/bin/
-        sudo chmod +x /usr/local/bin/chromedriver
-        
-        echo "=== VERIFICATION ==="
-        echo "ChromeDriver location:"
-        which chromedriver
+        # Check what's available
+        echo "Available ChromeDriver:"
+        which chromedriver || echo "ChromeDriver not in PATH"
         
         echo "ChromeDriver version:"
-        chromedriver --version
+        chromedriver --version || echo "ChromeDriver not working"
         
-        echo "ChromeDriver permissions:"
-        ls -la /usr/local/bin/chromedriver
+        echo "Chrome version:"
+        google-chrome --version || echo "Chrome not working"
         
-        echo "=== TESTING CHROME BINARY ==="
-        echo "System Chrome binary:"
-        which google-chrome
-        
-        echo "System Chrome version:"
-        google-chrome --version
-        
-        echo "=== ENVIRONMENT SETUP ==="
-        echo "Setting up environment variables..."
+        # Set environment variables
         echo "CHROME_BIN=$(which google-chrome)" >> $GITHUB_ENV
-        echo "CHROMEDRIVER_PATH=/usr/local/bin/chromedriver" >> $GITHUB_ENV
+        echo "CHROMEDRIVER_PATH=$(which chromedriver)" >> $GITHUB_ENV
         
         echo "Environment variables set:"
         echo "CHROME_BIN: $(which google-chrome)"
-        echo "CHROMEDRIVER_PATH: /usr/local/bin/chromedriver"
-        
-        echo "=== INSTALLATION COMPLETE ==="
+        echo "CHROMEDRIVER_PATH: $(which chromedriver)"
         
     - name: Install dependencies
       run: |
