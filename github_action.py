@@ -82,35 +82,25 @@ class IGolfScraper:
             print("ChromeDriver not found, will try to use system ChromeDriver")
             chromedriver_path = 'chromedriver'  # Use PATH
         
-        # Setup Chrome options
+        # Setup Chrome options based on proven Selenium GitHub Actions setup
         print("Setting up Chrome options...")
         options = Options()
-        options.add_argument('--headless')
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--disable-gpu')
-        options.add_argument('--disable-web-security')
-        options.add_argument('--disable-features=VizDisplayCompositor')
-        options.add_argument('--window-size=1920,1080')
-        options.add_argument('--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36')
         
-        # GitHub Actions specific options for stability
-        options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--disable-extensions')
-        options.add_argument('--disable-plugins')
-        options.add_argument('--disable-images')
-        # options.add_argument('--disable-javascript')  # We need JS for the website
-        options.add_argument('--disable-background-timer-throttling')
-        options.add_argument('--disable-backgrounding-occluded-windows')
-        options.add_argument('--disable-renderer-backgrounding')
-        options.add_argument('--disable-features=TranslateUI')
-        options.add_argument('--disable-ipc-flooding-protection')
-        options.add_argument('--memory-pressure-off')
-        options.add_argument('--max_old_space_size=4096')
+        # Essential options for GitHub Actions
+        chrome_options = [
+            "--headless",
+            "--disable-gpu",
+            "--window-size=1920,1200",
+            "--ignore-certificate-errors",
+            "--disable-extensions",
+            "--no-sandbox",
+            "--disable-dev-shm-usage"
+        ]
         
-        # Remove problematic options
-        # options.add_argument('--remote-debugging-port=9222')  # Can cause connection issues
-        # options.add_argument('--single-process')  # Can cause stability issues
+        for option in chrome_options:
+            options.add_argument(option)
+            
+        print(f"Chrome options configured: {len(chrome_options)} options")
         
         # Use Chrome binary if specified
         if chrome_bin and os.path.exists(chrome_bin):
@@ -124,7 +114,7 @@ class IGolfScraper:
         try:
             print("🔄 Initializing Chrome driver...")
             
-            # Use Service only if we have a specific path
+            # Use the proven approach from Selenium GitHub Actions
             if chromedriver_path and chromedriver_path != 'chromedriver':
                 service = Service(chromedriver_path)
                 print(f"Service created with path: {chromedriver_path}")
@@ -136,7 +126,7 @@ class IGolfScraper:
             
             print("✅ Chrome driver geïnitialiseerd")
             
-            # Test the driver
+            # Simple test
             print("Testing driver...")
             self.driver.get("https://www.google.com")
             print(f"Page title: {self.driver.title}")
@@ -161,68 +151,62 @@ class IGolfScraper:
             # Navigate to the page
             self.driver.get(I_GOLF_URL)
             print(f"📍 Navigated to: {self.driver.current_url}")
+            print(f"📍 Page title: {self.driver.title}")
             
             # Wait for page to load
-            time.sleep(5)
+            time.sleep(8)
+            
+            # Debug: Check page source
+            print(f"📍 Page source length: {len(self.driver.page_source)}")
             
             # Check if we're already logged in
             current_url = self.driver.current_url
+            print(f"📍 Current URL: {current_url}")
+            
             if "LOGIN" not in current_url.upper():
                 print("✅ Already logged in")
                 return True
             
-            # Look for login fields with retry
-            max_retries = 3
-            for attempt in range(max_retries):
-                try:
-                    print(f"🔍 Login attempt {attempt + 1}/{max_retries}")
-                    
-                    # Wait for login fields
-                    username_field = WebDriverWait(self.driver, 15).until(
-                        EC.presence_of_element_located((By.NAME, "P101_USERNAME"))
-                    )
-                    password_field = self.driver.find_element(By.NAME, "P101_PASSWORD")
-                    
-                    print("✅ Login fields found")
-                    
-                    # Clear and fill credentials
-                    username_field.clear()
-                    username_field.send_keys(USERNAME)
-                    password_field.clear()
-                    password_field.send_keys(PASSWORD)
-                    
-                    # Submit
-                    password_field.send_keys(Keys.RETURN)
-                    
-                    print("✅ Credentials submitted, waiting...")
-                    time.sleep(6)
-                    
-                    # Check if login was successful
-                    current_url = self.driver.current_url
-                    print(f"📍 URL after login: {current_url}")
-                    
-                    if "LOGIN" not in current_url.upper():
-                        print("✅ Login successful")
-                        return True
-                    else:
-                        print(f"⚠️  Still on login page, attempt {attempt + 1}")
-                        if attempt < max_retries - 1:
-                            time.sleep(3)
-                            self.driver.refresh()
-                            time.sleep(3)
-                        
-                except Exception as e:
-                    print(f"⚠️  Login attempt {attempt + 1} failed: {e}")
-                    if attempt < max_retries - 1:
-                        time.sleep(3)
-                        self.driver.refresh()
-                        time.sleep(3)
+            # Look for login fields
+            print("🔍 Looking for login fields...")
             
-            print("❌ All login attempts failed")
-            return False
+            # Wait for login fields with longer timeout
+            username_field = WebDriverWait(self.driver, 20).until(
+                EC.presence_of_element_located((By.NAME, "P101_USERNAME"))
+            )
+            password_field = self.driver.find_element(By.NAME, "P101_PASSWORD")
+            
+            print("✅ Login fields found")
+            
+            # Clear and fill credentials
+            username_field.clear()
+            username_field.send_keys(USERNAME)
+            password_field.clear()
+            password_field.send_keys(PASSWORD)
+            
+            # Submit
+            password_field.send_keys(Keys.RETURN)
+            
+            print("✅ Credentials submitted, waiting...")
+            time.sleep(8)
+            
+            # Check if login was successful
+            current_url = self.driver.current_url
+            print(f"📍 URL after login: {current_url}")
+            print(f"📍 Page title after login: {self.driver.title}")
+            
+            if "LOGIN" not in current_url.upper():
+                print("✅ Login successful")
+                return True
+            else:
+                print("❌ Still on login page")
+                return False
             
         except Exception as e:
             print(f"❌ Login failed: {e}")
+            print(f"Exception type: {type(e).__name__}")
+            import traceback
+            print(f"Full traceback: {traceback.format_exc()}")
             return False
     
     def navigate_to_reservations(self):

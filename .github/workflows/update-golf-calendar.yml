@@ -19,33 +19,19 @@ jobs:
       with:
         python-version: '3.11'
         
-    - name: Setup Chrome
-      uses: browser-actions/setup-chrome@v1
-      
-    - name: Setup ChromeDriver
+    - name: Install ChromeDriver
       run: |
-        echo "=== CHROMEDRIVER SETUP ==="
+        echo "=== INSTALLING CHROMEDRIVER ==="
         
-        # Use the ChromeDriver that comes with the browser-actions/setup-chrome action
-        echo "ChromeDriver should be automatically available"
+        # Use the simple one-liner from the community solution
+        bash <(curl -s -S -L https://raw.githubusercontent.com/jflmao/Install_the_ChromeDriver_in_Actions/main/for_linux.sh)
         
-        # Check what's available
-        echo "Available ChromeDriver:"
-        which chromedriver || echo "ChromeDriver not in PATH"
-        
-        echo "ChromeDriver version:"
-        chromedriver --version || echo "ChromeDriver not working"
-        
-        echo "Chrome version:"
-        google-chrome --version || echo "Chrome not working"
+        echo "ChromeDriver installed successfully"
+        chromedriver --version
         
         # Set environment variables
         echo "CHROME_BIN=$(which google-chrome)" >> $GITHUB_ENV
         echo "CHROMEDRIVER_PATH=$(which chromedriver)" >> $GITHUB_ENV
-        
-        echo "Environment variables set:"
-        echo "CHROME_BIN: $(which google-chrome)"
-        echo "CHROMEDRIVER_PATH: $(which chromedriver)"
         
     - name: Install dependencies
       run: |
