@@ -579,7 +579,15 @@ def create_ical_calendar(events):
     for event_data in events:
         event = Event()
         event.name = event_data['title']
-        event.location = event_data['location']
+        
+        # Fix location to include coordinates for clickable directions
+        location = event_data['location']
+        if location == "Royal Latem Golf Club":
+            # Add coordinates for Royal Latem Golf Club (best option for clickable locations)
+            event.location = "Royal Latem Golf Club;;51.0125,3.6308"
+        else:
+            event.location = location
+        
         event.begin = event_data['start']
         event.duration = event_data['duration']
         event.description = event_data.get('notes', '')
