@@ -52,15 +52,21 @@ class IGolfScraper:
         options.add_argument('--single-process')
         
         try:
-            # Use webdriver-manager for GitHub Actions
-            from webdriver_manager.chrome import ChromeDriverManager
-            print("🔄 Initializing ChromeDriver for GitHub Actions...")
-            driver_path = ChromeDriverManager().install()
-            service = Service(driver_path)
-            
-            # Create driver
-            self.driver = webdriver.Chrome(service=service, options=options)
-            print("✅ Chrome driver geïnitialiseerd")
+            # Try system ChromeDriver first (for GitHub Actions)
+            try:
+                print("🔄 Trying system ChromeDriver...")
+                service = Service('/usr/local/bin/chromedriver')
+                self.driver = webdriver.Chrome(service=service, options=options)
+                print("✅ Chrome driver geïnitialiseerd met system ChromeDriver")
+            except Exception as e:
+                print(f"⚠️  System ChromeDriver failed: {e}")
+                # Fallback to webdriver-manager
+                from webdriver_manager.chrome import ChromeDriverManager
+                print("🔄 Falling back to webdriver-manager...")
+                driver_path = ChromeDriverManager().install()
+                service = Service(driver_path)
+                self.driver = webdriver.Chrome(service=service, options=options)
+                print("✅ Chrome driver geïnitialiseerd met webdriver-manager")
             
         except Exception as e:
             print(f"❌ Fout bij Chrome driver setup: {e}")
