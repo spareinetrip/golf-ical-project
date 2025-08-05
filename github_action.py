@@ -364,7 +364,7 @@ class IGolfScraper:
                 
                 # Maak notes - only include clean voorkeur start and tee info
                 notes_parts = []
-                if voorkeur_start and voorkeur_start != "Voorkeur start: -":
+                if voorkeur_start:
                     notes_parts.append(voorkeur_start)
                 if tee_info:
                     notes_parts.append(tee_info)
@@ -526,7 +526,7 @@ class IGolfScraper:
                 notes_parts = []
                 
                 # Search in the full description text since it's all on one line
-                verantwoordelijke_match = re.search(r'Verantwoordelijke:\s*([^,\n]*)', desc_text)
+                verantwoordelijke_match = re.search(r'Verantwoordelijke:\s*([^,\n]*?)(?=\s*Medespelers:)', desc_text)
                 if verantwoordelijke_match:
                     verantwoordelijke_name = verantwoordelijke_match.group(1).strip()
                     notes_parts.append(f"Verantwoordelijke: {verantwoordelijke_name}")
@@ -535,9 +535,7 @@ class IGolfScraper:
                 medespelers_start = desc_text.find('Medespelers:')
                 if medespelers_start != -1:
                     medespelers_text = desc_text[medespelers_start + len('Medespelers:'):].strip()
-                    # Remove any trailing text that might be after the names
-                    medespelers_clean = re.sub(r'([^,]+(?:,[^,]+)*).*', r'\1', medespelers_text)
-                    notes_parts.append(f"Medespelers: {medespelers_clean}")
+                    notes_parts.append(f"Medespelers: {medespelers_text}")
                 
                 notes = '\n'.join(notes_parts)
                 
