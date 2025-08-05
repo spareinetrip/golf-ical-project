@@ -36,6 +36,42 @@ class IGolfScraper:
     
     def setup_driver(self):
         """Setup headless Chrome driver for GitHub Actions"""
+        print("=== CHROME DRIVER SETUP START ===")
+        
+        # Debug environment
+        print(f"Environment variables:")
+        print(f"  CHROME_BIN: {os.environ.get('CHROME_BIN', 'Not set')}")
+        print(f"  CHROMEDRIVER_PATH: {os.environ.get('CHROMEDRIVER_PATH', 'Not set')}")
+        print(f"  PATH: {os.environ.get('PATH', 'Not set')}")
+        
+        # Check Chrome binary
+        chrome_bin = os.environ.get('CHROME_BIN')
+        if chrome_bin:
+            print(f"Chrome binary path: {chrome_bin}")
+            print(f"Chrome binary exists: {os.path.exists(chrome_bin)}")
+            if os.path.exists(chrome_bin):
+                try:
+                    import subprocess
+                    result = subprocess.run([chrome_bin, '--version'], capture_output=True, text=True)
+                    print(f"Chrome version: {result.stdout.strip()}")
+                except Exception as e:
+                    print(f"Error getting Chrome version: {e}")
+        
+        # Check ChromeDriver
+        chromedriver_path = os.environ.get('CHROMEDRIVER_PATH', '/usr/local/bin/chromedriver')
+        print(f"ChromeDriver path: {chromedriver_path}")
+        print(f"ChromeDriver exists: {os.path.exists(chromedriver_path)}")
+        
+        if os.path.exists(chromedriver_path):
+            try:
+                import subprocess
+                result = subprocess.run([chromedriver_path, '--version'], capture_output=True, text=True)
+                print(f"ChromeDriver version: {result.stdout.strip()}")
+            except Exception as e:
+                print(f"Error getting ChromeDriver version: {e}")
+        
+        # Setup Chrome options
+        print("Setting up Chrome options...")
         options = Options()
         options.add_argument('--headless')
         options.add_argument('--no-sandbox')
@@ -51,21 +87,34 @@ class IGolfScraper:
         options.add_argument('--remote-debugging-port=9222')
         options.add_argument('--single-process')
         
-        # Use Chrome for Testing if available
-        chrome_bin = os.environ.get('CHROME_BIN')
+        # Use Chrome binary if specified
         if chrome_bin and os.path.exists(chrome_bin):
-            print(f"🔄 Using Chrome for Testing: {chrome_bin}")
+            print(f"🔄 Using specified Chrome binary: {chrome_bin}")
             options.binary_location = chrome_bin
         
+        print("Chrome options configured:")
+        for arg in options.arguments:
+            print(f"  {arg}")
+        
         try:
-            # Use system ChromeDriver (installed by workflow)
             print("🔄 Initializing Chrome driver...")
-            service = Service('/usr/local/bin/chromedriver')
+            service = Service(chromedriver_path)
+            print(f"Service created with path: {chromedriver_path}")
+            
             self.driver = webdriver.Chrome(service=service, options=options)
             print("✅ Chrome driver geïnitialiseerd")
             
+            # Test the driver
+            print("Testing driver...")
+            self.driver.get("https://www.google.com")
+            print(f"Page title: {self.driver.title}")
+            print("✅ Driver test successful")
+            
         except Exception as e:
             print(f"❌ Fout bij Chrome driver setup: {e}")
+            print(f"Exception type: {type(e).__name__}")
+            import traceback
+            print(f"Full traceback: {traceback.format_exc()}")
             raise
             
         except Exception as e:
@@ -537,30 +586,53 @@ def create_ical_calendar(events):
 
 def main():
     """Hoofdfunctie voor GitHub Actions"""
-    print("🚀 Starting Golf iCal Generator for GitHub Actions...")
+    print("=== GOLF ICAL GENERATOR START ===")
     print(f"📅 Generated at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    
+    # Debug system info
+    print("=== SYSTEM INFO ===")
+    import platform
+    print(f"Platform: {platform.platform()}")
+    print(f"Python version: {platform.python_version()}")
+    print(f"Architecture: {platform.architecture()}")
+    
+    # Debug environment
+    print("=== ENVIRONMENT DEBUG ===")
+    print(f"Working directory: {os.getcwd()}")
+    print(f"Files in directory: {os.listdir('.')}")
     
     scraper = None
     try:
+        print("=== INITIALIZING SCRAPER ===")
         # Initialiseer scraper
         scraper = IGolfScraper()
+        print("✅ Scraper initialized")
         
+        print("=== LOGGING IN ===")
         # Login
         if not scraper.login():
             raise Exception("Login gefaald")
+        print("✅ Login successful")
         
+        print("=== NAVIGATING TO RESERVATIONS ===")
         # Navigeer naar reservaties
         if not scraper.navigate_to_reservations():
             raise Exception("Navigatie naar reservaties gefaald")
+        print("✅ Navigation successful")
         
+        print("=== SCRAPING RESERVATIONS ===")
         # Scrape reservaties
         events = scraper.scrape_reservations()
+        print(f"✅ Scraped {len(events)} events")
         
+        print("=== CREATING ICAL ===")
         # Maak iCal calendar
         calendar = create_ical_calendar(events)
+        print("✅ Calendar created")
         
         # Save to file
         output_file = 'golf.ics'
+        print(f"=== SAVING TO {output_file} ===")
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(str(calendar))
         
@@ -568,17 +640,25 @@ def main():
         print(f"📊 Aantal events: {len(events)}")
         
         # Print event details for debugging
+        print("=== EVENT DETAILS ===")
         for i, event_data in enumerate(events[:5]):  # Show first 5
             print(f"  {i+1}. {event_data['title']} - {event_data['start'].strftime('%Y-%m-%d %H:%M')}")
         
         if len(events) > 5:
             print(f"  ... en {len(events) - 5} meer events")
         
+        print("=== SUCCESS ===")
         return True
         
     except Exception as e:
+        print("=== ERROR OCCURRED ===")
         print(f"❌ Fout bij genereren iCal: {e}")
+        print(f"Exception type: {type(e).__name__}")
+        import traceback
+        print(f"Full traceback: {traceback.format_exc()}")
+        
         # Create empty calendar file
+        print("=== CREATING EMPTY CALENDAR ===")
         empty_calendar = Calendar()
         with open('golf.ics', 'w', encoding='utf-8') as f:
             f.write(str(empty_calendar))
@@ -586,8 +666,10 @@ def main():
         return False
         
     finally:
+        print("=== CLEANUP ===")
         if scraper:
             scraper.close()
+            print("✅ Scraper closed")
 
 
 if __name__ == '__main__':

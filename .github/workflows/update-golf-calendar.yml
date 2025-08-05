@@ -21,58 +21,73 @@ jobs:
         
     - name: Install Chrome and ChromeDriver
       run: |
+        echo "=== STARTING CHROME/CHROMEDRIVER INSTALLATION ==="
+        
+        # Update packages
+        echo "Updating packages..."
         sudo apt-get update
         sudo apt-get install -y wget unzip curl jq
         
-        # Get Chrome version
+        # Check what's already installed
+        echo "=== CHECKING EXISTING INSTALLATIONS ==="
+        echo "System Chrome:"
+        google-chrome --version || echo "No system Chrome found"
+        
+        echo "System ChromeDriver:"
+        chromedriver --version || echo "No system ChromeDriver found"
+        
+        echo "=== DETERMINING CHROME VERSION ==="
         CHROME_VERSION=$(google-chrome --version | grep -oE '[0-9]+' | head -1)
-        echo "Chrome version: $CHROME_VERSION"
+        echo "Detected Chrome version: $CHROME_VERSION"
         
-        # For Chrome 115+, use Chrome for Testing with proper API
-        if [ "$CHROME_VERSION" -ge 115 ]; then
-          echo "Using Chrome for Testing (Chrome $CHROME_VERSION)"
-          
-          # Get the latest stable version from Chrome for Testing API
-          CHROME_TESTING_VERSION=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json" | jq -r '.versions[] | select(.version | startswith("stable")) | .version' | head -1)
-          echo "Chrome for Testing version: $CHROME_TESTING_VERSION"
-          
-          # Download Chrome for Testing
-          wget -q "https://storage.googleapis.com/chrome-for-testing-public/$CHROME_TESTING_VERSION/linux64/chrome-linux64.zip" -O /tmp/chrome-linux64.zip
-          unzip -q /tmp/chrome-linux64.zip -d /tmp/
-          
-          # Download ChromeDriver for Testing
-          wget -q "https://storage.googleapis.com/chrome-for-testing-public/$CHROME_TESTING_VERSION/linux64/chromedriver-linux64.zip" -O /tmp/chromedriver-linux64.zip
-          unzip -q /tmp/chromedriver-linux64.zip -d /tmp/
-          
-          # Install ChromeDriver
-          sudo cp /tmp/chromedriver-linux64/chromedriver /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
-          
-          # Set Chrome binary path
-          echo "CHROME_BIN=/tmp/chrome-linux64/chrome" >> $GITHUB_ENV
-          
-          echo "Chrome for Testing installed successfully"
-        else
-          echo "Using traditional ChromeDriver"
-          
-          # Download and install ChromeDriver
-          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          echo "ChromeDriver version: $CHROMEDRIVER_VERSION"
-          
-          wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip" -O /tmp/chromedriver.zip
-          unzip -q /tmp/chromedriver.zip -d /usr/local/bin/
-          chmod +x /usr/local/bin/chromedriver
-        fi
+        # Always use a specific, known-working approach
+        echo "=== USING KNOWN WORKING CHROMEDRIVER SETUP ==="
         
-        # Verify installation
+        # Remove any existing ChromeDriver
+        sudo rm -f /usr/local/bin/chromedriver
+        sudo rm -f /usr/bin/chromedriver
+        
+        # Download a specific ChromeDriver version that works with Chrome 138
+        echo "Downloading ChromeDriver 120.0.6099.109 (known to work with newer Chrome)..."
+        wget -q "https://chromedriver.storage.googleapis.com/120.0.6099.109/chromedriver_linux64.zip" -O /tmp/chromedriver.zip
+        
+        echo "Checking if download succeeded..."
+        ls -la /tmp/chromedriver.zip
+        
+        echo "Extracting ChromeDriver..."
+        unzip -q /tmp/chromedriver.zip -d /tmp/
+        
+        echo "Installing ChromeDriver..."
+        sudo cp /tmp/chromedriver /usr/local/bin/
+        sudo chmod +x /usr/local/bin/chromedriver
+        
+        echo "=== VERIFICATION ==="
+        echo "ChromeDriver location:"
+        which chromedriver
+        
         echo "ChromeDriver version:"
         chromedriver --version
         
-        # Test Chrome binary if available
-        if [ -n "$CHROME_BIN" ] && [ -f "$CHROME_BIN" ]; then
-          echo "Chrome for Testing binary: $CHROME_BIN"
-          $CHROME_BIN --version
-        fi
+        echo "ChromeDriver permissions:"
+        ls -la /usr/local/bin/chromedriver
+        
+        echo "=== TESTING CHROME BINARY ==="
+        echo "System Chrome binary:"
+        which google-chrome
+        
+        echo "System Chrome version:"
+        google-chrome --version
+        
+        echo "=== ENVIRONMENT SETUP ==="
+        echo "Setting up environment variables..."
+        echo "CHROME_BIN=$(which google-chrome)" >> $GITHUB_ENV
+        echo "CHROMEDRIVER_PATH=/usr/local/bin/chromedriver" >> $GITHUB_ENV
+        
+        echo "Environment variables set:"
+        echo "CHROME_BIN: $(which google-chrome)"
+        echo "CHROMEDRIVER_PATH: /usr/local/bin/chromedriver"
+        
+        echo "=== INSTALLATION COMPLETE ==="
         
     - name: Install dependencies
       run: |
