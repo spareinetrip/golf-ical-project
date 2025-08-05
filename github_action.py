@@ -343,23 +343,29 @@ class IGolfScraper:
                 voorkeur_start = "Voorkeur start: -"
                 tee_info = ""
                 
-                # Parse voorkeur start
-                voorkeur_match = re.search(r'Voorkeur start:\s*([^\n]*)', desc_text)
+                # Parse voorkeur start - extract only the time value
+                voorkeur_match = re.search(r'Voorkeur start:\s*([^-\s]+)', desc_text)
                 if voorkeur_match:
                     voorkeur_value = voorkeur_match.group(1).strip()
                     if voorkeur_value and voorkeur_value != "-":
                         voorkeur_start = f"Voorkeur start: {voorkeur_value}"
                     else:
                         voorkeur_start = "Voorkeur start: -"
+                else:
+                    voorkeur_start = "Voorkeur start: -"
                 
-                # Parse tee info
+                # Parse tee info - extract only the number
                 tee_match = re.search(r'Tee:\s*(\d+)', desc_text)
                 if tee_match:
                     tee_number = tee_match.group(1)
                     tee_info = f"Tee: {tee_number}"
+                else:
+                    tee_info = ""
                 
-                # Maak notes
-                notes_parts = [voorkeur_start]
+                # Maak notes - only include clean voorkeur start and tee info
+                notes_parts = []
+                if voorkeur_start and voorkeur_start != "Voorkeur start: -":
+                    notes_parts.append(voorkeur_start)
                 if tee_info:
                     notes_parts.append(tee_info)
                 notes = '\n'.join(notes_parts)
@@ -415,24 +421,32 @@ class IGolfScraper:
                 if not desc_elem:
                     print(f"  ❌ t-Card-desc niet gevonden in TEE region")
                     continue
-                if desc_elem:
-                    desc_text = desc_elem.get_text()
-                    print(f"  📝 Beschrijving: {desc_text[:100]}...")
-                    lines = [line.strip() for line in desc_text.split('\n') if line.strip()]
-                    location_raw = lines[0] if lines else "Onbekende golfclub"
-                    
-                    # Clean up location name (proper case)
-                    location_parts = location_raw.split()
-                    if len(location_parts) >= 3 and location_parts[0] == "ROYAL" and location_parts[1] == "LATEM":
-                        location = "Royal Latem Golf Club"
-                    else:
-                        # General cleanup - title case
-                        location = location_raw.title()
-                    
-                    notes = '\n'.join(lines[1:]) if len(lines) > 1 else ""
+                
+                desc_text = desc_elem.get_text()
+                print(f"  📝 Beschrijving: {desc_text[:100]}...")
+                lines = [line.strip() for line in desc_text.split('\n') if line.strip()]
+                location_raw = lines[0] if lines else "Onbekende golfclub"
+                
+                # Clean up location name (proper case)
+                location_parts = location_raw.split()
+                if len(location_parts) >= 3 and location_parts[0] == "ROYAL" and location_parts[1] == "LATEM":
+                    location = "Royal Latem Golf Club"
                 else:
-                    location = "Onbekende golfclub"
-                    notes = ""
+                    # General cleanup - title case
+                    location = location_raw.title()
+                
+                # Extract only Medespelers info for tee reservations
+                notes_parts = []
+                for line in lines:
+                    if 'Medespelers:' in line:
+                        # Clean up the line to only include Medespelers info
+                        medespelers_match = re.search(r'Medespelers:\s*(.*)', line)
+                        if medespelers_match:
+                            medespelers_names = medespelers_match.group(1).strip()
+                            notes_parts.append(f"Medespelers: {medespelers_names}")
+                        break  # Only take the first occurrence
+                
+                notes = '\n'.join(notes_parts)
                 
                 print(f"  🏌️  Locatie: {location}")
                 
@@ -494,31 +508,38 @@ class IGolfScraper:
                 if not desc_elem:
                     print(f"  ❌ t-Card-desc niet gevonden in ITEE_CO region")
                     continue
-                if desc_elem:
-                    desc_text = desc_elem.get_text()
-                    print(f"  📝 Beschrijving: {desc_text[:100]}...")
-                    lines = [line.strip() for line in desc_text.split('\n') if line.strip()]
-                    location_raw = lines[0] if lines else "Onbekende golfclub"
-                    
-                    # Clean up location name (proper case)
-                    location_parts = location_raw.split()
-                    if len(location_parts) >= 3 and location_parts[0] == "ROYAL" and location_parts[1] == "LATEM":
-                        location = "Royal Latem Golf Club"
-                    else:
-                        # General cleanup - title case
-                        location = location_raw.title()
-                    
-                    # Zoek verantwoordelijke en medespelers info
-                    notes_parts = []
-                    for line in lines:
-                        if 'Verantwoordelijke:' in line:
-                            notes_parts.append(line)
-                        elif 'Medespelers:' in line:
-                            notes_parts.append(line)
-                    notes = '\n'.join(notes_parts)
+                
+                desc_text = desc_elem.get_text()
+                print(f"  📝 Beschrijving: {desc_text}")
+                lines = [line.strip() for line in desc_text.split('\n') if line.strip()]
+                location_raw = lines[0] if lines else "Onbekende golfclub"
+                
+                # Clean up location name (proper case)
+                location_parts = location_raw.split()
+                if len(location_parts) >= 3 and location_parts[0] == "ROYAL" and location_parts[1] == "LATEM":
+                    location = "Royal Latem Golf Club"
                 else:
-                    location = "Onbekende golfclub"
-                    notes = ""
+                    # General cleanup - title case
+                    location = location_raw.title()
+                
+                # Extract only Verantwoordelijke and Medespelers info for medespeler reservations
+                notes_parts = []
+                
+                # Search in the full description text since it's all on one line
+                verantwoordelijke_match = re.search(r'Verantwoordelijke:\s*([^,\n]*)', desc_text)
+                if verantwoordelijke_match:
+                    verantwoordelijke_name = verantwoordelijke_match.group(1).strip()
+                    notes_parts.append(f"Verantwoordelijke: {verantwoordelijke_name}")
+                
+                # Extract medespelers - look for everything after "Medespelers:" until the end
+                medespelers_start = desc_text.find('Medespelers:')
+                if medespelers_start != -1:
+                    medespelers_text = desc_text[medespelers_start + len('Medespelers:'):].strip()
+                    # Remove any trailing text that might be after the names
+                    medespelers_clean = re.sub(r'([^,]+(?:,[^,]+)*).*', r'\1', medespelers_text)
+                    notes_parts.append(f"Medespelers: {medespelers_clean}")
+                
+                notes = '\n'.join(notes_parts)
                 
                 print(f"  🏌️  Locatie: {location}")
                 
