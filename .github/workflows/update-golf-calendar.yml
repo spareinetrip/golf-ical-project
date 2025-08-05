@@ -22,16 +22,41 @@ jobs:
     - name: Install Chrome and ChromeDriver
       run: |
         sudo apt-get update
-        sudo apt-get install -y google-chrome-stable wget unzip
+        sudo apt-get install -y wget unzip curl
         
-        # Install ChromeDriver using the official method
-        CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-        echo "ChromeDriver version: $CHROMEDRIVER_VERSION"
+        # Get Chrome version
+        CHROME_VERSION=$(google-chrome --version | grep -oE '[0-9]+' | head -1)
+        echo "Chrome version: $CHROME_VERSION"
         
-        # Download and install ChromeDriver
-        wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip" -O /tmp/chromedriver.zip
-        unzip /tmp/chromedriver.zip -d /usr/local/bin/
-        chmod +x /usr/local/bin/chromedriver
+        # For Chrome 115+, use Chrome for Testing
+        if [ "$CHROME_VERSION" -ge 115 ]; then
+          echo "Using Chrome for Testing (Chrome $CHROME_VERSION)"
+          
+          # Download Chrome for Testing
+          wget -q "https://storage.googleapis.com/chrome-for-testing-public/stable/linux64/chrome-linux64.zip" -O /tmp/chrome-linux64.zip
+          unzip /tmp/chrome-linux64.zip -d /tmp/
+          
+          # Download ChromeDriver for Testing
+          wget -q "https://storage.googleapis.com/chrome-for-testing-public/stable/linux64/chromedriver-linux64.zip" -O /tmp/chromedriver-linux64.zip
+          unzip /tmp/chromedriver-linux64.zip -d /tmp/
+          
+          # Install ChromeDriver
+          sudo cp /tmp/chromedriver-linux64/chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+          
+          # Set Chrome binary path
+          echo "export CHROME_BIN=/tmp/chrome-linux64/chrome" >> $GITHUB_ENV
+        else
+          echo "Using traditional ChromeDriver"
+          
+          # Download and install ChromeDriver
+          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          echo "ChromeDriver version: $CHROMEDRIVER_VERSION"
+          
+          wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip" -O /tmp/chromedriver.zip
+          unzip /tmp/chromedriver.zip -d /usr/local/bin/
+          chmod +x /usr/local/bin/chromedriver
+        fi
         
         # Verify installation
         chromedriver --version

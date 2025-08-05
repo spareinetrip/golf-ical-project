@@ -51,6 +51,12 @@ class IGolfScraper:
         options.add_argument('--remote-debugging-port=9222')
         options.add_argument('--single-process')
         
+        # Use Chrome for Testing if available
+        chrome_bin = os.environ.get('CHROME_BIN')
+        if chrome_bin and os.path.exists(chrome_bin):
+            print(f"🔄 Using Chrome for Testing: {chrome_bin}")
+            options.binary_location = chrome_bin
+        
         try:
             # Try system ChromeDriver first (for GitHub Actions)
             try:
@@ -60,13 +66,32 @@ class IGolfScraper:
                 print("✅ Chrome driver geïnitialiseerd met system ChromeDriver")
             except Exception as e:
                 print(f"⚠️  System ChromeDriver failed: {e}")
-                # Fallback to webdriver-manager
-                from webdriver_manager.chrome import ChromeDriverManager
-                print("🔄 Falling back to webdriver-manager...")
-                driver_path = ChromeDriverManager().install()
-                service = Service(driver_path)
-                self.driver = webdriver.Chrome(service=service, options=options)
-                print("✅ Chrome driver geïnitialiseerd met webdriver-manager")
+                # Fallback to webdriver-manager with specific version
+                try:
+                    from webdriver_manager.chrome import ChromeDriverManager
+                    print("🔄 Falling back to webdriver-manager...")
+                    driver_path = ChromeDriverManager().install()
+                    service = Service(driver_path)
+                    self.driver = webdriver.Chrome(service=service, options=options)
+                    print("✅ Chrome driver geïnitialiseerd met webdriver-manager")
+                except Exception as e2:
+                    print(f"⚠️  Webdriver-manager failed: {e2}")
+                    # Final fallback: use a specific ChromeDriver version
+                    print("🔄 Final fallback: downloading specific ChromeDriver version...")
+                    import urllib.request
+                    import zipfile
+                    
+                    # Download ChromeDriver 120.0.6099.109 (known to work with newer Chrome)
+                    chromedriver_url = "https://chromedriver.storage.googleapis.com/120.0.6099.109/chromedriver_linux64.zip"
+                    zip_path = "/tmp/chromedriver_fallback.zip"
+                    
+                    urllib.request.urlretrieve(chromedriver_url, zip_path)
+                    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                        zip_ref.extractall("/tmp/chromedriver_fallback")
+                    
+                    service = Service("/tmp/chromedriver_fallback/chromedriver")
+                    self.driver = webdriver.Chrome(service=service, options=options)
+                    print("✅ Chrome driver geïnitialiseerd met fallback ChromeDriver")
             
         except Exception as e:
             print(f"❌ Fout bij Chrome driver setup: {e}")
