@@ -26,6 +26,7 @@ from ics import Calendar, Event
 
 # Configuraties
 I_GOLF_URL = "https://www.i-golf.be"
+RESERVATIONS_URL = "https://www.i-golf.be/ords/f?p=165:119:714053694681593:::::"
 USERNAME = os.environ.get('I_GOLF_USERNAME', '714410')
 PASSWORD = os.environ.get('I_GOLF_PASSWORD', 'Julien')
 
@@ -143,13 +144,13 @@ class IGolfScraper:
             print(f"❌ Fout bij Chrome driver setup: {e}")
             raise
     
-    def login(self):
-        """Log in op i-Golf.be"""
+    def login_and_navigate(self):
+        """Log in op i-Golf.be en ga direct naar reservaties pagina"""
         try:
-            print("🔐 Bezig met inloggen op i-Golf.be...")
+            print("🔐 Bezig met inloggen op i-Golf.be en navigeren naar reservaties...")
             
-            # Navigate to the page
-            self.driver.get(I_GOLF_URL)
+            # Navigate directly to the reservations page
+            self.driver.get(RESERVATIONS_URL)
             print(f"📍 Navigated to: {self.driver.current_url}")
             print(f"📍 Page title: {self.driver.title}")
             
@@ -164,7 +165,7 @@ class IGolfScraper:
             print(f"📍 Current URL: {current_url}")
             
             if "LOGIN" not in current_url.upper():
-                print("✅ Already logged in")
+                print("✅ Already logged in and on reservations page")
                 return True
             
             # Look for login fields
@@ -190,13 +191,13 @@ class IGolfScraper:
             print("✅ Credentials submitted, waiting...")
             time.sleep(8)
             
-            # Check if login was successful
+            # Check if login was successful and we're on reservations page
             current_url = self.driver.current_url
             print(f"📍 URL after login: {current_url}")
             print(f"📍 Page title after login: {self.driver.title}")
             
             if "LOGIN" not in current_url.upper():
-                print("✅ Login successful")
+                print("✅ Login successful and on reservations page")
                 return True
             else:
                 print("❌ Still on login page")
@@ -209,75 +210,7 @@ class IGolfScraper:
             print(f"Full traceback: {traceback.format_exc()}")
             return False
     
-    def navigate_to_reservations(self):
-        """Navigeer naar reservaties pagina via menu"""
-        try:
-            print("🧭 Navigeren naar reservaties...")
-            
-            # Check huidige URL
-            print(f"📍 Huidige URL: {self.driver.current_url}")
-            
-            # Wait for page to fully load
-            time.sleep(5)
-            
-            # Try to find the JULIEN button with retry
-            max_retries = 3
-            for attempt in range(max_retries):
-                try:
-                    print(f"🔍 Looking for JULIEN button, attempt {attempt + 1}/{max_retries}")
-                    
-                    # Wait for JULIEN button
-                    julien_btn = WebDriverWait(self.driver, 15).until(
-                        EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'js-menuButton') and contains(., 'JULIEN')]"))
-                    )
-                    print("✅ JULIEN button found")
-                    
-                    # Click JULIEN button to open menu
-                    print("🖱️  Clicking JULIEN button...")
-                    julien_btn.click()
-                    time.sleep(3)  # Wait for menu to open
-                    
-                    # Look for "Uw reservaties" link
-                    print("🔍 Looking for 'Uw reservaties' link...")
-                    reservations_link = WebDriverWait(self.driver, 15).until(
-                        EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Uw reservaties')]"))
-                    )
-                    print("✅ 'Uw reservaties' link found")
-                    
-                    # Click on "Uw reservaties"
-                    print("🖱️  Clicking 'Uw reservaties'...")
-                    reservations_link.click()
-                    
-                    # Wait for page load
-                    time.sleep(6)
-                    
-                    # Check new URL
-                    current_url = self.driver.current_url
-                    print(f"📍 New URL: {current_url}")
-                    
-                    if "LOGIN" not in current_url.upper():
-                        print("✅ Successfully navigated to reservations page")
-                        return True
-                    else:
-                        print(f"⚠️  Still on login page, attempt {attempt + 1}")
-                        if attempt < max_retries - 1:
-                            time.sleep(3)
-                            self.driver.refresh()
-                            time.sleep(3)
-                        
-                except Exception as e:
-                    print(f"⚠️  Navigation attempt {attempt + 1} failed: {e}")
-                    if attempt < max_retries - 1:
-                        time.sleep(3)
-                        self.driver.refresh()
-                        time.sleep(3)
-            
-            print("❌ All navigation attempts failed")
-            return False
-            
-        except Exception as e:
-            print(f"❌ Navigation failed: {e}")
-            return False
+
     
     def scrape_reservations(self):
         """Scrape alle reservaties van de pagina"""
@@ -661,17 +594,11 @@ def main():
         scraper = IGolfScraper()
         print("✅ Scraper initialized")
         
-        print("=== LOGGING IN ===")
-        # Login
-        if not scraper.login():
-            raise Exception("Login gefaald")
-        print("✅ Login successful")
-        
-        print("=== NAVIGATING TO RESERVATIONS ===")
-        # Navigeer naar reservaties
-        if not scraper.navigate_to_reservations():
-            raise Exception("Navigatie naar reservaties gefaald")
-        print("✅ Navigation successful")
+        print("=== LOGGING IN AND NAVIGATING ===")
+        # Login en ga direct naar reservaties
+        if not scraper.login_and_navigate():
+            raise Exception("Login en navigatie gefaald")
+        print("✅ Login and navigation successful")
         
         print("=== SCRAPING RESERVATIONS ===")
         # Scrape reservaties

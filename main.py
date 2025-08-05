@@ -41,6 +41,7 @@ app = Flask(__name__)
 
 # Configuraties
 I_GOLF_URL = "https://www.i-golf.be"
+RESERVATIONS_URL = "https://www.i-golf.be/ords/f?p=165:119:714053694681593:::::"
 USERNAME = "714410"
 PASSWORD = "Julien"
 
@@ -109,110 +110,70 @@ class IGolfScraper:
             print("💡 Probeer: brew install chromedriver (macOS) of apt-get install chromium-chromedriver (Ubuntu)")
             raise
     
-    def login(self):
-        """Log in op i-Golf.be - using exact same method as test_scraping.py"""
+    def login_and_navigate(self):
+        """Log in op i-Golf.be en ga direct naar reservaties pagina"""
         try:
-            print("🔐 Bezig met inloggen op i-Golf.be...")
-            self.driver.get(I_GOLF_URL)
+            print("🔐 Bezig met inloggen op i-Golf.be en navigeren naar reservaties...")
             
-            # Wacht op splash screen (4 seconden)
-            time.sleep(4)
+            # Navigate directly to the reservations page
+            self.driver.get(RESERVATIONS_URL)
+            print(f"📍 Navigated to: {self.driver.current_url}")
+            print(f"📍 Page title: {self.driver.title}")
             
-            # Zoek login velden
-            username_field = WebDriverWait(self.driver, 10).until(
+            # Wait for page to load
+            time.sleep(8)
+            
+            # Check if we're already logged in
+            current_url = self.driver.current_url
+            print(f"📍 Current URL: {current_url}")
+            
+            if "LOGIN" not in current_url.upper():
+                print("✅ Already logged in and on reservations page")
+                return True
+            
+            # Look for login fields
+            print("🔍 Looking for login fields...")
+            
+            # Wait for login fields with longer timeout
+            username_field = WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((By.NAME, "P101_USERNAME"))
             )
             password_field = self.driver.find_element(By.NAME, "P101_PASSWORD")
             
-            # Vul credentials in
+            print("✅ Login fields found")
+            
+            # Clear and fill credentials
             username_field.clear()
             username_field.send_keys(USERNAME)
             password_field.clear()
             password_field.send_keys(PASSWORD)
             
-            # Submit via Enter key (exact same as test_scraping.py)
+            # Submit
             password_field.send_keys(Keys.RETURN)
             
-            print("✅ Login gelukt, wachten op pagina...")
-            time.sleep(4)
+            print("✅ Credentials submitted, waiting...")
+            time.sleep(8)
             
-            # Check of we echt ingelogd zijn (exact same as test_scraping.py)
+            # Check if login was successful and we're on reservations page
             current_url = self.driver.current_url
-            print(f"📍 URL na login: {current_url}")
-            
-            # Als we nog steeds op de login pagina zijn, probeer opnieuw
-            if "LOGIN" in current_url.upper():
-                print("⚠️  Nog steeds op login pagina, probeer opnieuw...")
-                
-                # Wacht langer
-                time.sleep(6)
-                
-                # Check opnieuw
-                current_url = self.driver.current_url
-                print(f"📍 URL na extra wachttijd: {current_url}")
-                
-                if "LOGIN" in current_url.upper():
-                    print("❌ Nog steeds niet ingelogd")
-                    return False
-            
-            print("✅ Succesvol ingelogd")
-            return True
-            
-        except Exception as e:
-            print(f"❌ Login gefaald: {e}")
-            return False
-    
-    def navigate_to_reservations(self):
-        """Navigeer naar reservaties pagina via menu - using exact same method as test_scraping.py"""
-        try:
-            print("🧭 Navigeren naar reservaties...")
-            
-            # Check huidige URL (exact same as test_scraping.py)
-            print(f"📍 Huidige URL: {self.driver.current_url}")
-            
-            # Wacht even voor de pagina om te laden
-            time.sleep(3)
-            
-            # Zoek naar de JULIEN knop
-            print("🔍 Zoeken naar JULIEN knop...")
-            julien_btn = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'js-menuButton') and contains(., 'JULIEN')]"))
-            )
-            print("✅ JULIEN knop gevonden")
-            
-            # Klik op JULIEN knop om menu te openen
-            print("🖱️  Klikken op JULIEN knop...")
-            julien_btn.click()
-            time.sleep(2)  # Wacht tot menu opent
-            
-            # Zoek naar "Uw reservaties" link in het menu
-            print("🔍 Zoeken naar 'Uw reservaties' link...")
-            reservations_link = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Uw reservaties')]"))
-            )
-            print("✅ 'Uw reservaties' link gevonden")
-            
-            # Klik op "Uw reservaties"
-            print("🖱️  Klikken op 'Uw reservaties'...")
-            reservations_link.click()
-            
-            # Wacht op pagina load
-            time.sleep(4)
-            
-            # Check nieuwe URL (exact same as test_scraping.py)
-            current_url = self.driver.current_url
-            print(f"📍 Nieuwe URL: {current_url}")
+            print(f"📍 URL after login: {current_url}")
+            print(f"📍 Page title after login: {self.driver.title}")
             
             if "LOGIN" not in current_url.upper():
-                print("✅ Succesvol naar reservaties pagina gegaan")
+                print("✅ Login successful and on reservations page")
                 return True
             else:
-                print("❌ Nog steeds op login pagina")
+                print("❌ Still on login page")
                 return False
             
         except Exception as e:
-            print(f"❌ Navigatie gefaald: {e}")
+            print(f"❌ Login failed: {e}")
+            print(f"Exception type: {type(e).__name__}")
+            import traceback
+            print(f"Full traceback: {traceback.format_exc()}")
             return False
+    
+
     
     def scrape_reservations(self):
         """Scrape alle reservaties van de pagina"""
@@ -655,13 +616,9 @@ def golf_ics():
         # Initialiseer scraper
         scraper = IGolfScraper()
         
-        # Login
-        if not scraper.login():
-            raise Exception("Login gefaald")
-        
-        # Navigeer naar reservaties
-        if not scraper.navigate_to_reservations():
-            raise Exception("Navigatie naar reservaties gefaald")
+        # Login en ga direct naar reservaties
+        if not scraper.login_and_navigate():
+            raise Exception("Login en navigatie gefaald")
         
         # Scrape reservaties
         events = scraper.scrape_reservations()
