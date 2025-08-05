@@ -583,8 +583,8 @@ def create_ical_calendar(events):
         # Fix location to include coordinates for clickable directions
         location = event_data['location']
         if location == "Royal Latem Golf Club":
-            # Add coordinates for Royal Latem Golf Club (best option for clickable locations)
-            event.location = "Royal Latem Golf Club;;51.0125,3.6308"
+            # Add full address for Apple Calendar compatibility
+            event.location = "Royal Latem Golf Club, Deurle, 9831 Sint-Martens-Latem, Belgium"
         else:
             event.location = location
         
