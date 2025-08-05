@@ -33,11 +33,9 @@ Een automatische iCal feed generator voor golfreservaties van i-Golf.be. Dit pro
 
    **Secret 1:**
    - Name: `I_GOLF_USERNAME`
-   - Value: `714410` (of je eigen i-Golf gebruikersnaam)
 
    **Secret 2:**
    - Name: `I_GOLF_PASSWORD`
-   - Value: `Julien` (of je eigen i-Golf wachtwoord)
 
 6. Klik "Add secret" voor beide
 
