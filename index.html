@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf iCal Feed Generator</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 { 
+            color: #2e7d32; 
+            border-bottom: 3px solid #2e7d32;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #388e3c;
+            margin-top: 30px;
+        }
+        .url-box { 
+            background: #f5f5f5; 
+            padding: 15px; 
+            margin: 15px 0; 
+            border-left: 4px solid #2e7d32; 
+            border-radius: 4px;
+        }
+        .step { 
+            margin: 15px 0; 
+            padding: 15px; 
+            background: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            border-left: 4px solid #4caf50;
+        }
+        code { 
+            background: #f0f0f0; 
+            padding: 2px 6px; 
+            border-radius: 3px; 
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        .status {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+            margin: 20px 0;
+        }
+        .warning {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+            margin: 20px 0;
+        }
+        .golf-icon {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+        a {
+            color: #2e7d32;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #2e7d32;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .download-btn:hover {
+            background: #1b5e20;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>🏌️‍♂️ Golf iCal Feed Generator</h1>
+    
+    <div class="status">
+        <strong>✅ Status:</strong> Deze feed wordt automatisch bijgewerkt elke dag om 8:00 AM (Belgische tijd) via GitHub Actions.
+    </div>
+    
+    <p>Dit is een dynamische iCal-feed voor je golfreservaties van i-Golf.be. 
+    De feed wordt automatisch bijgewerkt elke dag en bevat al je golfreservaties, wedstrijden en medespeler sessies.</p>
+    
+    <div class="url-box">
+        <strong>📅 iCal Feed URL:</strong><br>
+        <code>https://[YOUR_USERNAME].github.io/golf-ical-project/golf.ics</code>
+    </div>
+    
+    <a href="golf.ics" class="download-btn">📥 Download iCal bestand</a>
+    
+    <h2>📱 Apple Calendar Setup</h2>
+    
+    <div class="step">
+        <strong>Stap 1:</strong> Open de Calendar app op je Mac of iPhone
+    </div>
+    
+    <div class="step">
+        <strong>Stap 2:</strong> Ga naar <code>File → New Calendar Subscription...</code> (Mac) 
+        of <code>Settings → Calendar → Accounts → Add Account → Other → Add CalDAV Account</code> (iPhone)
+    </div>
+    
+    <div class="step">
+        <strong>Stap 3:</strong> Voer deze URL in: <code>https://[YOUR_USERNAME].github.io/golf-ical-project/golf.ics</code>
+        <br><small>Vervang [YOUR_USERNAME] met je GitHub gebruikersnaam</small>
+    </div>
+    
+    <div class="step">
+        <strong>Stap 4:</strong> Klik op "Subscribe" en geef je calendar een naam zoals "Golf Reservaties"
+    </div>
+    
+    <div class="step">
+        <strong>Stap 5:</strong> Stel refresh frequency in op "Every hour" voor automatische updates
+    </div>
+    
+    <h2>📱 Google Calendar Setup</h2>
+    
+    <div class="step">
+        <strong>Stap 1:</strong> Ga naar <a href="https://calendar.google.com" target="_blank">Google Calendar</a>
+    </div>
+    
+    <div class="step">
+        <strong>Stap 2:</strong> Klik op de tandwiel (Settings) → Settings
+    </div>
+    
+    <div class="step">
+        <strong>Stap 3:</strong> Ga naar "Import & Export" → "Add calendar" → "From URL"
+    </div>
+    
+    <div class="step">
+        <strong>Stap 4:</strong> Voer de iCal URL in en klik "Add calendar"
+    </div>
+    
+    <h2>ℹ️ Belangrijke opmerkingen</h2>
+    <ul>
+        <li>De feed wordt automatisch bijgewerkt elke dag om 8:00 AM (Belgische tijd)</li>
+        <li>Start tijden worden automatisch 30 minuten eerder ingesteld voor voorbereidingstijd</li>
+        <li>Alle golf-sessies hebben een duur van 4 uur</li>
+        <li>De feed bevat wedstrijden, tee-reservaties en medespeler sessies</li>
+        <li>Locaties worden automatisch opgeschoond en geformatteerd</li>
+    </ul>
+    
+    <div class="warning">
+        <strong>⚠️ Opmerking:</strong> Zorg ervoor dat je de URL hierboven aanpast met je eigen GitHub gebruikersnaam voordat je de feed gebruikt.
+    </div>
+    
+    <h2>🔧 Technische details</h2>
+    <p>Deze feed wordt gegenereerd door een Python script dat:</p>
+    <ul>
+        <li>Automatisch inlogt op i-Golf.be</li>
+        <li>Alle reservaties scraped van de website</li>
+        <li>De data converteert naar iCal formaat</li>
+        <li>Het bestand opslaat in deze repository</li>
+        <li>Dagelijks wordt uitgevoerd via GitHub Actions</li>
+    </ul>
+    
+    <p><small>Laatste update: <span id="last-update">Loading...</span></small></p>
+    
+    <script>
+        // Show last modified date
+        fetch('golf.ics')
+            .then(response => {
+                const lastModified = response.headers.get('last-modified');
+                if (lastModified) {
+                    document.getElementById('last-update').textContent = new Date(lastModified).toLocaleString('nl-BE');
+                } else {
+                    document.getElementById('last-update').textContent = 'Onbekend';
+                }
+            })
+            .catch(() => {
+                document.getElementById('last-update').textContent = 'Niet beschikbaar';
+            });
+    </script>
+</body>
+</html> 
