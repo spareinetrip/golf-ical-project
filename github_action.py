@@ -94,10 +94,23 @@ class IGolfScraper:
         options.add_argument('--window-size=1920,1080')
         options.add_argument('--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36')
         
-        # GitHub Actions specific options
+        # GitHub Actions specific options for stability
         options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--remote-debugging-port=9222')
-        options.add_argument('--single-process')
+        options.add_argument('--disable-extensions')
+        options.add_argument('--disable-plugins')
+        options.add_argument('--disable-images')
+        # options.add_argument('--disable-javascript')  # We need JS for the website
+        options.add_argument('--disable-background-timer-throttling')
+        options.add_argument('--disable-backgrounding-occluded-windows')
+        options.add_argument('--disable-renderer-backgrounding')
+        options.add_argument('--disable-features=TranslateUI')
+        options.add_argument('--disable-ipc-flooding-protection')
+        options.add_argument('--memory-pressure-off')
+        options.add_argument('--max_old_space_size=4096')
+        
+        # Remove problematic options
+        # options.add_argument('--remote-debugging-port=9222')  # Can cause connection issues
+        # options.add_argument('--single-process')  # Can cause stability issues
         
         # Use Chrome binary if specified
         if chrome_bin and os.path.exists(chrome_bin):
@@ -144,53 +157,72 @@ class IGolfScraper:
         """Log in op i-Golf.be"""
         try:
             print("🔐 Bezig met inloggen op i-Golf.be...")
+            
+            # Navigate to the page
             self.driver.get(I_GOLF_URL)
+            print(f"📍 Navigated to: {self.driver.current_url}")
             
-            # Wacht op splash screen (4 seconden)
-            time.sleep(4)
+            # Wait for page to load
+            time.sleep(5)
             
-            # Zoek login velden
-            username_field = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.NAME, "P101_USERNAME"))
-            )
-            password_field = self.driver.find_element(By.NAME, "P101_PASSWORD")
-            
-            # Vul credentials in
-            username_field.clear()
-            username_field.send_keys(USERNAME)
-            password_field.clear()
-            password_field.send_keys(PASSWORD)
-            
-            # Submit via Enter key
-            password_field.send_keys(Keys.RETURN)
-            
-            print("✅ Login gelukt, wachten op pagina...")
-            time.sleep(4)
-            
-            # Check of we echt ingelogd zijn
+            # Check if we're already logged in
             current_url = self.driver.current_url
-            print(f"📍 URL na login: {current_url}")
+            if "LOGIN" not in current_url.upper():
+                print("✅ Already logged in")
+                return True
             
-            # Als we nog steeds op de login pagina zijn, probeer opnieuw
-            if "LOGIN" in current_url.upper():
-                print("⚠️  Nog steeds op login pagina, probeer opnieuw...")
-                
-                # Wacht langer
-                time.sleep(6)
-                
-                # Check opnieuw
-                current_url = self.driver.current_url
-                print(f"📍 URL na extra wachttijd: {current_url}")
-                
-                if "LOGIN" in current_url.upper():
-                    print("❌ Nog steeds niet ingelogd")
-                    return False
+            # Look for login fields with retry
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    print(f"🔍 Login attempt {attempt + 1}/{max_retries}")
+                    
+                    # Wait for login fields
+                    username_field = WebDriverWait(self.driver, 15).until(
+                        EC.presence_of_element_located((By.NAME, "P101_USERNAME"))
+                    )
+                    password_field = self.driver.find_element(By.NAME, "P101_PASSWORD")
+                    
+                    print("✅ Login fields found")
+                    
+                    # Clear and fill credentials
+                    username_field.clear()
+                    username_field.send_keys(USERNAME)
+                    password_field.clear()
+                    password_field.send_keys(PASSWORD)
+                    
+                    # Submit
+                    password_field.send_keys(Keys.RETURN)
+                    
+                    print("✅ Credentials submitted, waiting...")
+                    time.sleep(6)
+                    
+                    # Check if login was successful
+                    current_url = self.driver.current_url
+                    print(f"📍 URL after login: {current_url}")
+                    
+                    if "LOGIN" not in current_url.upper():
+                        print("✅ Login successful")
+                        return True
+                    else:
+                        print(f"⚠️  Still on login page, attempt {attempt + 1}")
+                        if attempt < max_retries - 1:
+                            time.sleep(3)
+                            self.driver.refresh()
+                            time.sleep(3)
+                        
+                except Exception as e:
+                    print(f"⚠️  Login attempt {attempt + 1} failed: {e}")
+                    if attempt < max_retries - 1:
+                        time.sleep(3)
+                        self.driver.refresh()
+                        time.sleep(3)
             
-            print("✅ Succesvol ingelogd")
-            return True
+            print("❌ All login attempts failed")
+            return False
             
         except Exception as e:
-            print(f"❌ Login gefaald: {e}")
+            print(f"❌ Login failed: {e}")
             return False
     
     def navigate_to_reservations(self):
@@ -201,48 +233,66 @@ class IGolfScraper:
             # Check huidige URL
             print(f"📍 Huidige URL: {self.driver.current_url}")
             
-            # Wacht even voor de pagina om te laden
-            time.sleep(3)
+            # Wait for page to fully load
+            time.sleep(5)
             
-            # Zoek naar de JULIEN knop
-            print("🔍 Zoeken naar JULIEN knop...")
-            julien_btn = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'js-menuButton') and contains(., 'JULIEN')]"))
-            )
-            print("✅ JULIEN knop gevonden")
+            # Try to find the JULIEN button with retry
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    print(f"🔍 Looking for JULIEN button, attempt {attempt + 1}/{max_retries}")
+                    
+                    # Wait for JULIEN button
+                    julien_btn = WebDriverWait(self.driver, 15).until(
+                        EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'js-menuButton') and contains(., 'JULIEN')]"))
+                    )
+                    print("✅ JULIEN button found")
+                    
+                    # Click JULIEN button to open menu
+                    print("🖱️  Clicking JULIEN button...")
+                    julien_btn.click()
+                    time.sleep(3)  # Wait for menu to open
+                    
+                    # Look for "Uw reservaties" link
+                    print("🔍 Looking for 'Uw reservaties' link...")
+                    reservations_link = WebDriverWait(self.driver, 15).until(
+                        EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Uw reservaties')]"))
+                    )
+                    print("✅ 'Uw reservaties' link found")
+                    
+                    # Click on "Uw reservaties"
+                    print("🖱️  Clicking 'Uw reservaties'...")
+                    reservations_link.click()
+                    
+                    # Wait for page load
+                    time.sleep(6)
+                    
+                    # Check new URL
+                    current_url = self.driver.current_url
+                    print(f"📍 New URL: {current_url}")
+                    
+                    if "LOGIN" not in current_url.upper():
+                        print("✅ Successfully navigated to reservations page")
+                        return True
+                    else:
+                        print(f"⚠️  Still on login page, attempt {attempt + 1}")
+                        if attempt < max_retries - 1:
+                            time.sleep(3)
+                            self.driver.refresh()
+                            time.sleep(3)
+                        
+                except Exception as e:
+                    print(f"⚠️  Navigation attempt {attempt + 1} failed: {e}")
+                    if attempt < max_retries - 1:
+                        time.sleep(3)
+                        self.driver.refresh()
+                        time.sleep(3)
             
-            # Klik op JULIEN knop om menu te openen
-            print("🖱️  Klikken op JULIEN knop...")
-            julien_btn.click()
-            time.sleep(2)  # Wacht tot menu opent
-            
-            # Zoek naar "Uw reservaties" link in het menu
-            print("🔍 Zoeken naar 'Uw reservaties' link...")
-            reservations_link = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Uw reservaties')]"))
-            )
-            print("✅ 'Uw reservaties' link gevonden")
-            
-            # Klik op "Uw reservaties"
-            print("🖱️  Klikken op 'Uw reservaties'...")
-            reservations_link.click()
-            
-            # Wacht op pagina load
-            time.sleep(4)
-            
-            # Check nieuwe URL
-            current_url = self.driver.current_url
-            print(f"📍 Nieuwe URL: {current_url}")
-            
-            if "LOGIN" not in current_url.upper():
-                print("✅ Succesvol naar reservaties pagina gegaan")
-                return True
-            else:
-                print("❌ Nog steeds op login pagina")
-                return False
+            print("❌ All navigation attempts failed")
+            return False
             
         except Exception as e:
-            print(f"❌ Navigatie gefaald: {e}")
+            print(f"❌ Navigation failed: {e}")
             return False
     
     def scrape_reservations(self):
