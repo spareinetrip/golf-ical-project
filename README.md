@@ -4,7 +4,7 @@ Automatically sync your golf reservations from i-Golf.be to your calendar! This 
 
 ## ✨ Features
 
-- 🔄 **Automatic Updates**: Runs daily via GitHub Actions
+- 🔄 **Automatic Updates**: Runs hourly via GitHub Actions
 - 📱 **Universal Compatibility**: Works with Apple Calendar, Google Calendar, Outlook, and more
 - 🔒 **Secure**: Credentials stored as GitHub secrets
 - 🌍 **Timezone Aware**: Properly handles Belgian timezone
@@ -17,7 +17,7 @@ This tool automatically:
 1. Logs into your i-Golf.be account
 2. Scrapes all your golf reservations (competitions, tee times, playing partner bookings)
 3. Generates an iCal file with proper formatting
-4. Updates the feed daily so your calendar stays current
+4. Updates the feed hourly so your calendar stays current
 
 ## 🚀 Quick Start
 
@@ -43,11 +43,19 @@ This tool automatically:
    - Source: "Deploy from a branch"
    - Branch: "main" → Save
 
-4. **Test the Workflow**
+4. **Update the Reservations URL**
+   - Open `github_action.py` in your repository
+   - Find line 37: `RESERVATIONS_URL = "https://www.i-golf.be/ords/f?p=165:119:714053694681593:::::"`
+   - Go to i-Golf.be and navigate to your reservations page
+   - Copy the URL from your browser's address bar
+   - Replace the URL in the code with your personal reservations URL
+   - Commit and push the changes
+
+5. **Test the Workflow**
    - Go to Actions tab → "Update Golf Calendar" → "Run workflow"
    - Wait 2-3 minutes for completion
 
-5. **Get Your iCal URL**
+6. **Get Your iCal URL**
    - Your feed will be available at: `https://[YOUR_USERNAME].github.io/golf-ical-project/golf.ics`
    - Replace `[YOUR_USERNAME]` with your GitHub username
 
@@ -71,46 +79,6 @@ Most calendar applications support iCal feeds. Look for options like:
 - "Add calendar from URL"
 - "Subscribe to calendar"
 - "Import calendar"
-
-## 🔧 Customization
-
-### For Other Golf Clubs/Systems
-
-This project is specifically designed for i-Golf.be. To adapt it for other golf reservation systems, you'll need to modify:
-
-1. **URLs** (in `github_action.py`):
-   ```python
-   I_GOLF_URL = "https://www.i-golf.be"
-   RESERVATIONS_URL = "https://www.i-golf.be/ords/f?p=165:119:714053694681593:::::"
-   ```
-
-2. **HTML Selectors**: The scraping logic uses specific CSS selectors for i-Golf.be's structure:
-   - `div#WEDSTRIJDEN` for competitions
-   - `div#TEE` for tee reservations  
-   - `div#ITEE_CO` for playing partner reservations
-   - `h3.t-Card-title` for event titles
-   - `div.t-Card-desc` for event descriptions
-
-3. **Parsing Logic**: The date/time parsing assumes i-Golf.be's format:
-   - Competitions: `DD/MM/YYYY` with preference start times
-   - Tee times: `DD/MM/YYYY (HH:MM-HH:MM)`
-
-4. **Timezone**: Currently set to Belgian timezone:
-   ```python
-   BELGIUM_TZ = pytz.timezone('Europe/Brussels')
-   ```
-
-### For Different Update Frequencies
-
-Modify the cron schedule in `.github/workflows/update-golf-calendar.yml`:
-```yaml
-schedule:
-  - cron: '0 * * * *'  # Every hour
-  # Other options:
-  # '0 8 * * *'       # Daily at 8 AM
-  # '0 */6 * * *'     # Every 6 hours
-  # '0 8,20 * * *'    # Twice daily at 8 AM and 8 PM
-```
 
 ## 🛠️ Technical Details
 
