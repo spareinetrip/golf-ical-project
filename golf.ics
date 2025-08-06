@@ -2,19 +2,19 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Tee-time: 11:30\nMedespelers: Annuleren
-DURATION:PT4H
-LOCATION:Royal Latem Golf Club\, Deurle\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250811T090000Z
-SUMMARY:Tee-time ⛳️ Royal Latem Golf Club
-UID:4961d4d2-8b60-4118-8e34-69f5b4bdc376@4961.org
-END:VEVENT
-BEGIN:VEVENT
 DESCRIPTION:Tee-time: -\nVoorkeur start: -\nTee: 53
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, Deurle\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250816T080000Z
 SUMMARY:Competition ⛳️ The Original New Generation (Fours.+ Greens. + Chapm.)
-UID:efe8cf73-8b5b-466e-838e-55ae1e59c5b7@efe8.org
+UID:eef72b23-f2f4-4965-b523-8fac57b98f40@eef7.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Tee-time: 11:30\nMedespelers: Annuleren
+DURATION:PT4H
+LOCATION:Royal Latem Golf Club\, Deurle\, 9831 Sint-Martens-Latem\, Belgium
+DTSTART:20250811T090000Z
+SUMMARY:Tee-time ⛳️ Royal Latem Golf Club
+UID:77e1caf5-ea41-48cf-9ba4-d1b9f735962c@77e1.org
 END:VEVENT
 END:VCALENDAR
