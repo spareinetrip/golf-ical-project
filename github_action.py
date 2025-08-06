@@ -413,7 +413,7 @@ class IGolfScraper:
                 
                 # Maak event met proper formatting
                 event = {
-                    'title': f"⛳️ {title}",
+                    'title': f"⛳️  {title}",
                     'location': location,
                     'start': start_datetime,
                     'duration': timedelta(hours=4),
@@ -510,7 +510,7 @@ class IGolfScraper:
                 
                 # Maak event met proper formatting
                 event = {
-                    'title': f'⛳️ Tee-time @ {location}',
+                    'title': f'⛳️  Tee-time @ {location}',
                     'location': location,
                     'start': start_datetime,
                     'duration': timedelta(hours=4),
@@ -607,7 +607,7 @@ class IGolfScraper:
                 
                 # Maak event met proper formatting
                 event = {
-                    'title': f'⛳️ Tee-time @ {location}',
+                    'title': f'⛳️  Tee-time @ {location}',
                     'location': location,
                     'start': start_datetime,
                     'duration': timedelta(hours=4),
