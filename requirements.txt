@@ -3,3 +3,4 @@ flask==2.3.3
 beautifulsoup4==4.12.2
 ics==0.7.2
 webdriver-manager==4.0.1
+python-dotenv==1.0.0

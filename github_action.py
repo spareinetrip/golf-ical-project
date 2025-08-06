@@ -24,11 +24,22 @@ from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 from ics import Calendar, Event
 
+# Load environment variables from .env file for local development
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # python-dotenv not installed, continue without it
+
 # Configuraties
 I_GOLF_URL = "https://www.i-golf.be"
 RESERVATIONS_URL = "https://www.i-golf.be/ords/f?p=165:119:714053694681593:::::"
-USERNAME = os.environ.get('I_GOLF_USERNAME', '714410')
-PASSWORD = os.environ.get('I_GOLF_PASSWORD', 'Julien')
+USERNAME = os.environ.get('I_GOLF_USERNAME')
+PASSWORD = os.environ.get('I_GOLF_PASSWORD')
+
+# Check if credentials are available
+if not USERNAME or not PASSWORD:
+    raise ValueError("I_GOLF_USERNAME and I_GOLF_PASSWORD environment variables must be set")
 
 class IGolfScraper:
     def __init__(self):

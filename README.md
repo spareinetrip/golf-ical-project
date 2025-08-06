@@ -127,6 +127,39 @@ De GitHub Actions workflow:
 
 - Je i-Golf credentials worden veilig opgeslagen als GitHub secrets
 - Ze zijn niet zichtbaar in de code of logs
+- **BELANGRIJK**: Zorg ervoor dat je nooit je credentials hardcoded in de code plaatst
+- Voor lokale ontwikkeling, gebruik een `.env` bestand (zie `env.example`)
+
+### Lokale Ontwikkeling
+
+Voor het testen van de code lokaal:
+
+1. Kopieer `env.example` naar `.env`:
+   ```bash
+   cp env.example .env
+   ```
+
+2. Vul je echte credentials in in het `.env` bestand:
+   ```
+   I_GOLF_USERNAME=jouw_federatie_nummer
+   I_GOLF_PASSWORD=jouw_wachtwoord
+   ```
+
+3. Installeer python-dotenv:
+   ```bash
+   pip install python-dotenv
+   ```
+
+4. Voeg de volgende import toe aan het begin van je Python scripts:
+   ```python
+   from dotenv import load_dotenv
+   load_dotenv()
+   ```
+
+**⚠️ Security Waarschuwing**: 
+- Voeg `.env` toe aan je `.gitignore` om te voorkomen dat het wordt gecommit
+- Deel nooit je `.env` bestand of credentials
+- Gebruik altijd environment variables in productie
 - Alleen jij en GitHub hebben toegang tot deze secrets
 
 ## 📞 Support
