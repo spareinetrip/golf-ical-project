@@ -55,4 +55,7 @@ logs/
 
 # Temporary files
 *.tmp
-*.temp 
+*.temp
+
+# Generated files
+golf.ics 
