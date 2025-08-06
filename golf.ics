@@ -4,17 +4,17 @@ PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
 DESCRIPTION:Voorkeur start: -\nTee: 53
 DURATION:PT4H
-LOCATION:Royal Latem Golf Club\;\;51.0125\,3.6308
+LOCATION:Royal Latem Golf Club\, Deurle\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250816T100000Z
 SUMMARY:Competition ⛳️ The Original New Generation (Fours.+ Greens. + Chapm.)
-UID:7189c35f-db8a-43a9-a918-c976f9834a13@7189.org
+UID:8e71037b-9654-4bd1-b61c-c394b0c6fae4@8e71.org
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:Verantwoordelijke: Vinois Max\nMedespelers: Claeys Nicolas Jean\, Duytschaever Charles\, SOENEN JULIEN
+DESCRIPTION:Medespelers: Annuleren
 DURATION:PT4H
-LOCATION:Royal Latem Golf Club\;\;51.0125\,3.6308
-DTSTART:20250805T163000Z
+LOCATION:Royal Latem Golf Club\, Deurle\, 9831 Sint-Martens-Latem\, Belgium
+DTSTART:20250811T110000Z
 SUMMARY:Tee-time ⛳️ Royal Latem Golf Club
-UID:3175b601-76e3-47b7-9254-8bc7d216f980@3175.org
+UID:543869c2-8a0e-4c6a-95a1-babcb63653c5@5438.org
 END:VEVENT
 END:VCALENDAR
