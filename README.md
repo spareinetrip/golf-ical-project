@@ -1,185 +1,208 @@
-# Golf iCal Feed Generator
+# 🏌️ Golf iCal Feed Generator
 
-Een automatische iCal feed generator voor golfreservaties van i-Golf.be. Dit project gebruikt GitHub Actions om dagelijks je golfreservaties op te halen en beschikbaar te maken als iCal feed.
+Automatically sync your golf reservations from i-Golf.be to your calendar! This project uses GitHub Actions to scrape your golf reservations daily and provides them as an iCal feed that works with Apple Calendar, Google Calendar, and other calendar applications.
 
-## 🚀 Snelle Setup (Stap-voor-Stap)
+## ✨ Features
 
-### Stap 1: GitHub Repository Aanmaken
+- 🔄 **Automatic Updates**: Runs daily via GitHub Actions
+- 📱 **Universal Compatibility**: Works with Apple Calendar, Google Calendar, Outlook, and more
+- 🔒 **Secure**: Credentials stored as GitHub secrets
+- 🌍 **Timezone Aware**: Properly handles Belgian timezone
+- 📊 **Comprehensive**: Captures competitions, tee times, and playing partner reservations
+- 🚀 **Zero Maintenance**: Set it up once and forget about it
 
-1. Ga naar [GitHub.com](https://github.com) en log in
-2. Klik op de groene "New" knop om een nieuwe repository aan te maken
-3. Geef je repository een naam: `golf-ical-project`
-4. Zorg ervoor dat de repository **Public** is (nodig voor GitHub Pages)
-5. Klik "Create repository"
+## 🎯 What It Does
 
-### Stap 2: Bestanden Uploaden
+This tool automatically:
+1. Logs into your i-Golf.be account
+2. Scrapes all your golf reservations (competitions, tee times, playing partner bookings)
+3. Generates an iCal file with proper formatting
+4. Updates the feed daily so your calendar stays current
 
-1. In je nieuwe repository, klik op "uploading an existing file"
-2. Sleep alle bestanden uit deze map naar de upload area:
-   - `github_action.py`
-   - `requirements.txt`
-   - `.github/workflows/update-golf-calendar.yml`
-   - `index.html`
-   - `README.md`
-3. Klik "Commit changes"
+## 🚀 Quick Start
 
-### Stap 3: GitHub Secrets Instellen
+### Prerequisites
+- A GitHub account
+- An i-Golf.be account with active reservations
+- Basic familiarity with GitHub
 
-1. Ga naar je repository op GitHub
-2. Klik op "Settings" (tandwiel icoon)
-3. Scroll naar beneden en klik op "Secrets and variables" → "Actions"
-4. Klik op "New repository secret"
-5. Voeg twee secrets toe:
+### Setup Steps
 
-   **Secret 1:**
-   - Name: `I_GOLF_USERNAME`
+1. **Fork this repository**
+   - Click the "Fork" button at the top right of this page
+   - This creates your own copy of the project
 
-   **Secret 2:**
-   - Name: `I_GOLF_PASSWORD`
+2. **Configure GitHub Secrets**
+   - Go to your forked repository → Settings → Secrets and variables → Actions
+   - Add two new repository secrets:
+     - `I_GOLF_USERNAME`: Your i-Golf federation number
+     - `I_GOLF_PASSWORD`: Your i-Golf password
 
-6. Klik "Add secret" voor beide
+3. **Enable GitHub Pages**
+   - Go to Settings → Pages
+   - Source: "Deploy from a branch"
+   - Branch: "main" → Save
 
-### Stap 4: GitHub Pages Activeren
+4. **Test the Workflow**
+   - Go to Actions tab → "Update Golf Calendar" → "Run workflow"
+   - Wait 2-3 minutes for completion
 
-1. Ga naar "Settings" → "Pages"
-2. Onder "Source", selecteer "Deploy from a branch"
-3. Onder "Branch", selecteer "main" en klik "Save"
-4. Wacht een paar minuten tot je site live is
+5. **Get Your iCal URL**
+   - Your feed will be available at: `https://[YOUR_USERNAME].github.io/golf-ical-project/golf.ics`
+   - Replace `[YOUR_USERNAME]` with your GitHub username
 
-### Stap 5: GitHub Actions Testen
-
-1. Ga naar "Actions" tab in je repository
-2. Je zou de "Update Golf Calendar" workflow moeten zien
-3. Klik erop en klik "Run workflow" → "Run workflow"
-4. Wacht tot de workflow klaar is (ongeveer 2-3 minuten)
-
-### Stap 6: iCal Feed Gebruiken
-
-1. Ga naar je GitHub Pages site: `https://[YOUR_USERNAME].github.io/golf-ical-project/`
-2. Kopieer de iCal URL: `https://[YOUR_USERNAME].github.io/golf-ical-project/golf.ics`
-3. Vervang `[YOUR_USERNAME]` met je GitHub gebruikersnaam
-
-## 📱 Calendar App Setup
+## 📱 Adding to Your Calendar
 
 ### Apple Calendar (Mac/iPhone)
-
 1. Open Calendar app
-2. File → New Calendar Subscription... (Mac)
-   of Settings → Calendar → Accounts → Add Account → Other → Add CalDAV Account (iPhone)
-3. Voer de iCal URL in
-4. Klik Subscribe
-5. Geef calendar een naam (bijv. "Golf Reservaties")
-6. Refresh frequency: Every hour
+2. **Mac**: File → New Calendar Subscription...
+   **iPhone**: Settings → Calendar → Accounts → Add Account → Other → Add CalDAV Account
+3. Paste your iCal URL
+4. Set refresh frequency to "Every hour"
 
 ### Google Calendar
-
-1. Ga naar [calendar.google.com](https://calendar.google.com)
+1. Go to [calendar.google.com](https://calendar.google.com)
 2. Settings → Import & Export → Add calendar → From URL
-3. Voer de iCal URL in
-4. Klik "Add calendar"
+3. Paste your iCal URL
+4. Click "Add calendar"
 
-## 🔧 Technische Details
+### Other Calendar Apps
+Most calendar applications support iCal feeds. Look for options like:
+- "Add calendar from URL"
+- "Subscribe to calendar"
+- "Import calendar"
 
-### Bestanden Uitleg
+## 🔧 Customization
 
-- `github_action.py`: Het hoofdscript dat de golfreservaties ophaalt
-- `requirements.txt`: Python dependencies
-- `.github/workflows/update-golf-calendar.yml`: GitHub Actions workflow
-- `index.html`: Webpagina met instructies
-- `golf.ics`: Het gegenereerde iCal bestand (wordt automatisch aangemaakt)
+### For Other Golf Clubs/Systems
 
-### Workflow Schema
+This project is specifically designed for i-Golf.be. To adapt it for other golf reservation systems, you'll need to modify:
 
-De GitHub Actions workflow:
-- Draait elke dag om 8:00 AM (Belgische tijd)
-- Logt in op i-Golf.be
-- Scraped alle reservaties
-- Genereert een iCal bestand
-- Commit en pusht het bestand naar de repository
-
-### Automatische Updates
-
-- **Frequentie**: Dagelijks om 8:00 AM
-- **Trigger**: Automatisch via cron job
-- **Manual trigger**: Mogelijk via GitHub Actions tab
-
-## 🛠️ Troubleshooting
-
-### Workflow Fails
-
-1. Check de "Actions" tab voor error logs
-2. Controleer of je GitHub secrets correct zijn ingesteld
-3. Zorg ervoor dat je i-Golf credentials nog geldig zijn
-
-### iCal Feed Werkt Niet
-
-1. Controleer of het `golf.ics` bestand bestaat in je repository
-2. Verifieer de URL spelling
-3. Wacht een paar minuten na een workflow run
-
-### Calendar Updates Niet
-
-1. Controleer de refresh frequency in je calendar app
-2. Probeer de calendar opnieuw toe te voegen
-3. Wacht tot de volgende dagelijkse update
-
-## 🔒 Veiligheid
-
-- Je i-Golf credentials worden veilig opgeslagen als GitHub secrets
-- Ze zijn niet zichtbaar in de code of logs
-- **BELANGRIJK**: Zorg ervoor dat je nooit je credentials hardcoded in de code plaatst
-- Voor lokale ontwikkeling, gebruik een `.env` bestand (zie `env.example`)
-
-### Lokale Ontwikkeling
-
-Voor het testen van de code lokaal:
-
-1. Kopieer `env.example` naar `.env`:
-   ```bash
-   cp env.example .env
-   ```
-
-2. Vul je echte credentials in in het `.env` bestand:
-   ```
-   I_GOLF_USERNAME=jouw_federatie_nummer
-   I_GOLF_PASSWORD=jouw_wachtwoord
-   ```
-
-3. Installeer python-dotenv:
-   ```bash
-   pip install python-dotenv
-   ```
-
-4. Voeg de volgende import toe aan het begin van je Python scripts:
+1. **URLs** (in `github_action.py`):
    ```python
-   from dotenv import load_dotenv
-   load_dotenv()
+   I_GOLF_URL = "https://www.i-golf.be"
+   RESERVATIONS_URL = "https://www.i-golf.be/ords/f?p=165:119:714053694681593:::::"
    ```
 
-**⚠️ Security Waarschuwing**: 
-- Voeg `.env` toe aan je `.gitignore` om te voorkomen dat het wordt gecommit
-- Deel nooit je `.env` bestand of credentials
-- Gebruik altijd environment variables in productie
-- Alleen jij en GitHub hebben toegang tot deze secrets
+2. **HTML Selectors**: The scraping logic uses specific CSS selectors for i-Golf.be's structure:
+   - `div#WEDSTRIJDEN` for competitions
+   - `div#TEE` for tee reservations  
+   - `div#ITEE_CO` for playing partner reservations
+   - `h3.t-Card-title` for event titles
+   - `div.t-Card-desc` for event descriptions
 
-## 📞 Support
+3. **Parsing Logic**: The date/time parsing assumes i-Golf.be's format:
+   - Competitions: `DD/MM/YYYY` with preference start times
+   - Tee times: `DD/MM/YYYY (HH:MM-HH:MM)`
 
-Als je problemen ondervindt:
+4. **Timezone**: Currently set to Belgian timezone:
+   ```python
+   BELGIUM_TZ = pytz.timezone('Europe/Brussels')
+   ```
 
-1. Check de GitHub Actions logs voor error details
-2. Controleer of alle stappen correct zijn uitgevoerd
-3. Zorg ervoor dat je repository public is
-4. Verifieer dat GitHub Pages is geactiveerd
+### For Different Update Frequencies
 
-## 🎯 Wat Je Krijgt
+Modify the cron schedule in `.github/workflows/update-golf-calendar.yml`:
+```yaml
+schedule:
+  - cron: '0 * * * *'  # Every hour
+  # Other options:
+  # '0 8 * * *'       # Daily at 8 AM
+  # '0 */6 * * *'     # Every 6 hours
+  # '0 8,20 * * *'    # Twice daily at 8 AM and 8 PM
+```
 
-Na setup heb je:
-- ✅ Automatische dagelijkse updates van je golfreservaties
-- ✅ iCal feed beschikbaar via GitHub Pages
-- ✅ Werkt met Apple Calendar, Google Calendar en andere apps
-- ✅ Geen handmatige updates nodig
-- ✅ Gratis hosting via GitHub
+## 🛠️ Technical Details
+
+### Project Structure
+```
+golf-ical-project/
+├── github_action.py          # Main scraping script
+├── requirements.txt          # Python dependencies
+├── .github/workflows/        # GitHub Actions configuration
+├── golf.ics                 # Generated iCal file (auto-created)
+└── README.md               # This file
+```
+
+### Dependencies
+- **selenium**: Web scraping automation
+- **beautifulsoup4**: HTML parsing
+- **ics**: iCal file generation
+- **pytz**: Timezone handling
+- **python-dotenv**: Environment variable management
+
+### How It Works
+1. **Authentication**: Uses Selenium to log into i-Golf.be
+2. **Scraping**: Extracts reservation data from three sections:
+   - Competitions (wedstrijden)
+   - Tee reservations (tee-reservaties)
+   - Playing partner bookings (medespeler reservaties)
+3. **Processing**: Parses dates, times, and locations
+4. **Generation**: Creates properly formatted iCal events
+5. **Deployment**: Commits the file to GitHub for public access
+
+## 🔒 Security & Privacy
+
+- **Credentials**: Stored securely as GitHub repository secrets
+- **No Data Storage**: Only processes your reservations, doesn't store them
+- **Public Feed**: The generated iCal file is publicly accessible via GitHub Pages
+- **Local Development**: Use `.env` file for testing (see below)
+
+### Local Development
+For testing or development:
+1. Create a `.env` file:
+   ```
+   I_GOLF_USERNAME=your_federation_number
+   I_GOLF_PASSWORD=your_password
+   ```
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run locally: `python github_action.py`
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Workflow fails to run:**
+- Check GitHub Actions logs for detailed error messages
+- Verify your GitHub secrets are correctly set
+- Ensure your i-Golf credentials are valid
+
+**Calendar not updating:**
+- Verify the iCal URL is correct
+- Check that GitHub Pages is enabled
+- Wait for the next scheduled update or trigger manually
+
+**No reservations showing:**
+- Confirm you have active reservations on i-Golf.be
+- Check the workflow logs for scraping errors
+- Verify the reservation dates are in the future
+
+### Getting Help
+1. Check the GitHub Actions logs for detailed error information
+2. Verify all setup steps were completed correctly
+3. Ensure your repository is public (required for GitHub Pages)
+4. Test with a manual workflow run
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs or issues
+- Suggest improvements
+- Submit pull requests
+- Help improve documentation
+
+## 🙏 Acknowledgments
+
+- Built for the Belgian golf community
+- Uses GitHub Actions for automation
+- Inspired by the need for better calendar integration
 
 ---
 
-**Gemaakt met ❤️ voor golf liefhebbers**
+**Made with ❤️ for golf enthusiasts**
+
+*If this project helps you stay organized with your golf schedule, consider giving it a ⭐!*
