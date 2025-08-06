@@ -1,0 +1,464 @@
+#t_Alert_Success.isb_error {
+  background-color: red;
+}
+#t_Alert_Success.isb_error .t-Alert-icon .t-Icon:before {
+  font-family: 'Font APEX Small';
+  content: "\f06a";
+}
+#t_Alert_Success.isb_warning {
+  background-color: orange;
+}
+#t_Alert_Success.isb_warning .t-Alert-icon .t-Icon:before {
+  font-family: 'Font APEX Small';
+  content: "\f071";
+}
+
+/*pageTitle*/
+.t-Header-logo-link {
+  display: none;
+}
+.t-Header-logo {
+  width: 100%;	
+}
+.t-Header-logo .title {
+  /* color: #fff; */
+  float: left;
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 12px;
+  padding-right: 50px;
+  white-space: initial;
+}
+.t-Header-logo .dashboard_conf {
+  cursor: pointer;
+  font-size: 0px;
+  color: #fff;
+  height: 40px;
+  width: 35px;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+  float: left;
+}
+.t-Header-logo .dashboard_conf:before {
+	font-family: FontAwesome;
+	content: "\f013";
+	font-size: 18px;
+	line-height: 40px;
+}
+.t-Header-logo .portal-float-menu-bt {
+  cursor: pointer;
+  font-size: 0px;
+  /* color: #fff; */
+  height: 40px;
+  width: 35px;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+  float: left;
+  position: relative;
+}
+.t-Header-logo .portal-float-menu-bt:before {
+	font-family: FontAwesome;
+	content: "\f0c9";
+	font-size: 18px;
+	line-height: 40px;
+}
+.t-Header-logo .refresh {
+  cursor: pointer;
+  font-size: 0px;
+  /* color: #fff; */
+  position: absolute;
+  right: 35px;
+  height: 40px;
+  width: 35px;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+}
+.t-Header-logo .refresh:before {
+	font-family: FontAwesome;
+	content: "\f021";
+	font-size: 14px;
+	line-height: 40px;
+}
+.t-Header-logo .print {
+  cursor: pointer;
+  font-size: 0px;
+  /* color: #fff; */
+  position: absolute;
+  right: 0px;
+  height: 40px;
+  width: 35px;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+}
+.t-Header-logo .print:before {
+	font-family: FontAwesome;
+	content: "\f02f";
+	font-size: 14px;
+	line-height: 40px;
+}
+.t-Header-logo .dashboard_conf:hover, .t-Header-logo .dashboard_conf:active, .t-Header-logo .dashboard_conf:focus,
+.t-Header-logo .portal-float-menu-bt:hover, .t-Header-logo .portal-float-menu-bt:active, .t-Header-logo .portal-float-menu-bt:focus,
+.t-Header-logo .print:hover, .t-Header-logo .print:active, .t-Header-logo .print:focus,
+.t-Header-logo .refresh:hover, .t-Header-logo .refresh:active, .t-Header-logo .refresh:focus {
+  background-color: rgba(0,0,0,0.1);
+}
+
+/*bug in chrome (na update v94), gefocused veld heeft tekst onzichtbaar*/
+.apex-item-select,
+.apex-item-text,
+.apex-item-textarea,
+.apex-item-multi,
+.a-IRR-search-field {
+    backface-visibility: hidden;
+}
+
+/*begin apex 20.2*/
+/*nodig om "font apex" en "font awesome" samen te laten werken*/
+.fa, .fas {
+  vertical-align: initial;
+}
+/*anders zijn checkboxen niet volledig zichtbaar*/
+.t-Form-checkboxLabel, .t-Form-inputContainer .checkbox_group label {
+  min-height: var(--a-checkbox-size);
+  /* margin-top: .4rem; */
+}
+/*radiogroups plakken aan elkaar*/
+.apex-item-option>.u-radio {
+    margin-bottom: 4px;
+}
+/*bij een modal kan je anders niet meer aan de devtoolbar*/
+.a-DevToolbar.a-DevToolbar--bottom { 
+  z-index: 9999994;
+}
+/*autocomplete input veld anders 100%*/
+.oj-inputsearch {
+  width: initial;
+} 
+/*autocomplete anders niet zichtbaar in een popup*/
+.oj-listbox-drop-layer {
+  z-index: 9999999;
+}
+/*einde apex 20.2*/
+
+/*bug, typfout in theme-css vita-dark, ipv .ui- heeft een oracle dude .ul- gezet*/
+.apex-theme-vita-dark .a-ListView-item .ui-li-aside {
+    color: rgba(255,255,255,.65);
+}
+
+.groep_master .t-Form-inputContainer > * {
+    display: inline-block;
+}
+.groep_detail {
+    vertical-align: top;
+}
+.groep_detail .t-Form-labelContainer.col,
+.groep_detail .t-Form-inputContainer.col {
+    padding: 0;
+    width: auto;
+    min-height: 2.4rem;
+}
+.pad-left {
+    margin-left: 10px;
+}
+.pad-right {
+    margin-right: 10px;
+}
+@media (max-width: 640px) {
+  .groep_master  .t-Form-inputContainer.col { display: table-cell; }
+  .groep_detail.t-Form-fieldContainer { display: block; }
+  table.radio_group td { display: block; }  
+}
+
+/*buttonAction*/
+.buttonAction {
+  background: 0 0;
+  background-clip: padding-box;
+  cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  margin: 0;
+  text-align: center;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  padding: .8rem 1.2rem;
+  font-weight: 400;
+  border: none;
+  text-shadow: none;
+  border-radius: 2px;
+  transition: background-color .2s ease, color .2s ease;
+  color: #383838;
+  background-color: rgba(255,255,255,0.1);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.125) inset;
+}
+.buttonAction:hover {
+  /* color: #383838; */
+  background-color: rgba(255,255,255,0.2);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.15) inset, 0 2px 1px rgba(0,0,0,.075), 500px 0 0 0 rgba(255,255,255,.2) inset;	
+}
+.buttonAction:focus {
+  background-color: #fff;
+}
+.buttonAction:active {
+  box-shadow: 0 0 0 1px rgba(0,0,0,.15) inset,0 2px 2px rgba(0,0,0,.1) inset!important;	
+  background-color: #dedede;
+}
+.buttonAction+.buttonAction {
+  margin-left: 2px;
+}
+.buttonRow:nth-child(1n+2) {
+  margin-top: 2px;
+}
+
+#loading {
+	position: fixed; 
+	width: 100%; 
+	height: 100%; 
+	z-index: 9999000;
+	cursor: wait;
+	display: block;
+}
+
+#portal-install-app {
+  display: none;
+}
+
+#networkStatus {
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.2);
+}
+#networkStatusMsg {
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 50%;
+}
+#networkStatus.online #networkStatusMsg {
+  background-color: green;
+}
+#networkStatus.offline #networkStatusMsg {
+  background-color: red;
+}
+
+/*hover-kleur overrulen voor showDeleteLine*/
+.t-Report--rowHighlight .t-Report-report tr.showDeleteLine:hover .t-Report-cell{
+	background-color: rgba(255, 61, 61, 0.5)!important;	/*important staat ook al op de hover-kleur*/
+}
+
+/*colorTable kleuren*/
+.a-IRR-table tr td.actieve,
+.actieve  {
+}
+.a-IRR-table tr td.nt_actieve,
+.nt_actieve {
+	color: #339966;
+}
+.a-IRR-table tr td.blauw,
+.blauw  {
+	color: blue;
+}
+.a-IRR-table tr td.groen,
+.groen {
+	color: green;
+}
+.a-IRR-table tr td.rood,
+.rood  {
+	color: red;
+}
+.a-IRR-table tr td.purper,
+.purper {
+	color: #9900cc;
+}
+
+/*jquery portal dialog*/
+.ui-dialog.PortalDialog .ui-dialog-content {
+    padding: 1em;
+    box-sizing: content-box;
+}
+.ui-dialog.PortalDialog.PortalFrame .ui-dialog-content {
+	padding: 0;
+	overflow: hidden;
+}
+.ui-dialog.PortalDialog.PortalFrame iframe {
+	height: 100%;
+	width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.ui-dialog.PortalDialog.no-title .ui-dialog-titlebar {
+  display: none;
+}
+.ui-dialog.PortalDialog.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+.ui-dialog.PortalDialog.error .ui-dialog-titlebar,
+.sui-dialog.PortalDialog.error .ui-dialog-buttonpane {
+  background-color: red;
+}
+.ui-dialog.PortalDialog.success .ui-dialog-titlebar,
+.sui-dialog.PortalDialog.success .ui-dialog-buttonpane {
+  background-color: green;
+}
+.ui-dialog.PortalDialog.info .ui-dialog-titlebar,
+.sui-dialog.PortalDialog.info .ui-dialog-buttonpane {
+  background-color: #2578cf;
+}
+.ui-dialog.PortalDialog.error .ui-dialog-title,
+.ui-dialog.PortalDialog.success .ui-dialog-title,
+.ui-dialog.PortalDialog.info .ui-dialog-title {
+  color: #fff;
+  padding-left: 25px;
+}
+
+.ui-dialog.PortalDialog.error .ui-dialog-title:before,
+.ui-dialog.PortalDialog.success .ui-dialog-title:before,
+.ui-dialog.PortalDialog.info .ui-dialog-title:before {
+  position: absolute;
+  left: 10px;
+  color: #fff;
+  font-family: "Font APEX Small";
+  font-size: 22px;
+}
+.ui-dialog.PortalDialog.error .ui-dialog-title:before {
+  content: "\f06a";
+}
+.ui-dialog.PortalDialog.success .ui-dialog-title:before {
+  content: "\f058";
+}
+.ui-dialog.PortalDialog.info .ui-dialog-title:before {
+  content: "\f05a";
+} 
+
+/*menuPortal en autocomplete*/
+/*
+ * jQuery UI Menu2 1.10.4
+ * http://jqueryui.com
+ *
+ * Copyright 2014 jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://api.jqueryui.com/menu2/#theming
+ */
+.ui-menu2 {
+	list-style: none;
+	padding: 2px;
+	margin: 0;
+	display: block;
+	outline: none;
+}
+.ui-menu2 .ui-menu2 {
+	margin-top: -3px;
+	position: absolute;
+}
+.ui-menu2 .ui-menu2-item {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	/* support: IE10, see #8844 */
+	list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
+}
+.ui-menu2 .ui-menu2-divider {
+	margin: 5px -2px 5px -2px;
+	height: 0;
+	font-size: 0;
+	line-height: 0;
+	border-width: 1px 0 0 0;
+}
+.ui-menu2 .ui-menu2-item a {
+	text-decoration: none;
+	display: block;
+	padding: 2px .4em;
+	line-height: 1.5;
+	min-height: 0; /* support: IE7 */
+	font-weight: normal;
+}
+.ui-menu2 .ui-menu2-item:nth-child(even) {
+	border: 1px solid #ebebeb;
+	background-color: #f8f8f8;
+}
+.ui-menu2 .ui-menu2-item a.ui-state-focus,
+.ui-menu2 .ui-menu2-item a.ui-state-active {
+	font-weight: normal;
+	/*margin: -1px;*/
+}
+.ui-menu2 .ui-state-disabled {
+	font-weight: normal;
+	margin: .4em 0 .2em;
+	line-height: 1.5;
+}
+.ui-menu2 .ui-state-disabled a {
+	cursor: default;
+}
+.ui-menu2-icons {
+	position: relative;
+}
+.ui-menu2-icons .ui-menu2-item a {
+	position: relative;
+	padding-left: 2em;
+}
+.ui-menu2 .ui-icon {
+	position: absolute;
+	top: .2em;
+left: .2em;
+}
+.ui-menu2 .ui-menu2-icon {
+	position: static;
+	float: right;
+}
+.ui-autocomplete {
+	position: absolute;
+	top: 0;
+	left: 0;
+	cursor: default;
+}
+/*beperk autocomplete in hoogte*/
+.ui-menu2.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+  border: 1px solid #ebebeb;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05); 
+  /* snelle zoek op popup voor de popup (z-index = 900) tonen.*/
+  z-index: 901;
+}
+ul.ui-autocomplete.ui-menu2 { 
+  /*max-width: 200px;*/ 
+}
+.lov-no-results {
+  color: red !important;
+}
+
+/*begin slidebar*/
+/*ipv absolute willen we hier relative, anders werkt resize van de sidebar niet*/
+.slide.ui-resizable {
+  position: relative;
+}
+.slide .ui-resizable-w {
+	  background-color: gray;
+}
+/*einde slidebar*/

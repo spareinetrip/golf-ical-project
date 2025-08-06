@@ -13,6 +13,7 @@ import os
 import re
 import time
 from datetime import datetime, timedelta
+import pytz
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -36,6 +37,9 @@ I_GOLF_URL = "https://www.i-golf.be"
 RESERVATIONS_URL = "https://www.i-golf.be/ords/f?p=165:119:714053694681593:::::"
 USERNAME = os.environ.get('I_GOLF_USERNAME')
 PASSWORD = os.environ.get('I_GOLF_PASSWORD')
+
+# Timezone for Belgium
+BELGIUM_TZ = pytz.timezone('Europe/Brussels')
 
 # Check if credentials are available
 if not USERNAME or not PASSWORD:
@@ -328,6 +332,8 @@ class IGolfScraper:
                         datetime.strptime(datum_str, '%d/%m/%Y').date(),
                         start_tijd
                     ) - timedelta(minutes=30)
+                    # Make timezone-aware for Belgium
+                    start_datetime = BELGIUM_TZ.localize(start_datetime)
                 else:
                     print(f"  ⏰ Geen voorkeur start tijd, gebruik standaard 10:00")
                     # Gebruik standaard 10:00
@@ -335,6 +341,8 @@ class IGolfScraper:
                         datetime.strptime(datum_str, '%d/%m/%Y').date(),
                         datetime.strptime('10:00', '%H:%M').time()
                     )
+                    # Make timezone-aware for Belgium
+                    start_datetime = BELGIUM_TZ.localize(start_datetime)
                 
                 # Locatie uit beschrijving (eerste regel) - proper golf club name
                 lines = [line.strip() for line in desc_text.split('\n') if line.strip()]
@@ -375,6 +383,14 @@ class IGolfScraper:
                 
                 # Maak notes - only include clean voorkeur start and tee info
                 notes_parts = []
+                
+                # Add tee-time as first line (use voorkeur start time if available, otherwise default)
+                if voorkeur_match and voorkeur_match.group(1).strip() and voorkeur_match.group(1).strip() != "-":
+                    tee_time_str = voorkeur_match.group(1).strip()
+                    notes_parts.append(f"Tee-time: {tee_time_str}")
+                else:
+                    notes_parts.append("Tee-time: -")
+                
                 if voorkeur_start:
                     notes_parts.append(voorkeur_start)
                 if tee_info:
@@ -448,6 +464,10 @@ class IGolfScraper:
                 
                 # Extract only Medespelers info for tee reservations
                 notes_parts = []
+                
+                # Add tee-time as first line
+                notes_parts.append(f"Tee-time: {start_tijd_str}")
+                
                 for line in lines:
                     if 'Medespelers:' in line:
                         # Clean up the line to only include Medespelers info
@@ -467,6 +487,8 @@ class IGolfScraper:
                     datetime.strptime(datum_str, '%d/%m/%Y').date(),
                     start_tijd
                 ) - timedelta(minutes=30)
+                # Make timezone-aware for Belgium
+                start_datetime = BELGIUM_TZ.localize(start_datetime)
                 
                 # Maak event met proper formatting
                 event = {
@@ -536,6 +558,9 @@ class IGolfScraper:
                 # Extract only Verantwoordelijke and Medespelers info for medespeler reservations
                 notes_parts = []
                 
+                # Add tee-time as first line
+                notes_parts.append(f"Tee-time: {start_tijd_str}")
+                
                 # Search in the full description text since it's all on one line
                 verantwoordelijke_match = re.search(r'Verantwoordelijke:\s*([^,\n]*?)(?=\s*Medespelers:)', desc_text)
                 if verantwoordelijke_match:
@@ -558,6 +583,8 @@ class IGolfScraper:
                     datetime.strptime(datum_str, '%d/%m/%Y').date(),
                     start_tijd
                 ) - timedelta(minutes=30)
+                # Make timezone-aware for Belgium
+                start_datetime = BELGIUM_TZ.localize(start_datetime)
                 
                 # Maak event met proper formatting
                 event = {
@@ -599,7 +626,16 @@ def create_ical_calendar(events):
         else:
             event.location = location
         
-        event.begin = event_data['start']
+        # Convert timezone-aware datetime to UTC for ICS format
+        start_datetime = event_data['start']
+        if start_datetime.tzinfo is not None:
+            # Convert to UTC for ICS format
+            start_datetime_utc = start_datetime.astimezone(pytz.UTC)
+        else:
+            # If no timezone info, assume it's already in local time and convert to UTC
+            start_datetime_utc = BELGIUM_TZ.localize(start_datetime).astimezone(pytz.UTC)
+        
+        event.begin = start_datetime_utc
         event.duration = event_data['duration']
         event.description = event_data.get('notes', '')
         
