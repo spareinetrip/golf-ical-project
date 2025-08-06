@@ -7,7 +7,7 @@ DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250811T090000Z
 SUMMARY:Tee-time ⛳️ Royal Latem Golf Club
-UID:59b870eb-ef1d-4dfd-92a8-3b35dc4a5ba0@59b8.org
+UID:2a0bd33a-e1c9-489c-8d26-649070148189@2a0b.org
 END:VEVENT
 BEGIN:VEVENT
 DESCRIPTION:Tee-time: -\nVoorkeur start: -\nTee: 53
@@ -15,6 +15,6 @@ DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250816T080000Z
 SUMMARY:Competition ⛳️ The Original New Generation (Fours.+ Greens. + Chapm.)
-UID:cb8cb74a-a8d2-4cf2-a9ed-b3d38941b74a@cb8c.org
+UID:d24e8f8b-33df-4726-811d-6c14ed7086fe@d24e.org
 END:VEVENT
 END:VCALENDAR
