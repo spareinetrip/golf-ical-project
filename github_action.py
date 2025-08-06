@@ -474,6 +474,9 @@ class IGolfScraper:
                         medespelers_match = re.search(r'Medespelers:\s*(.*)', line)
                         if medespelers_match:
                             medespelers_names = medespelers_match.group(1).strip()
+                            # Check if medespelers is "Annuleren" and replace with "-"
+                            if medespelers_names == "Annuleren":
+                                medespelers_names = "-"
                             notes_parts.append(f"Medespelers: {medespelers_names}")
                         break  # Only take the first occurrence
                 
