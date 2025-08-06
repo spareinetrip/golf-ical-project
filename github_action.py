@@ -625,7 +625,7 @@ def create_ical_calendar(events):
         location = event_data['location']
         if location == "Royal Latem Golf Club":
             # Add full address for Apple Calendar compatibility
-            event.location = "Royal Latem Golf Club, Deurle, 9831 Sint-Martens-Latem, Belgium"
+            event.location = "Royal Latem Golf Club, 9831 Sint-Martens-Latem, Belgium"
         else:
             event.location = location
         
