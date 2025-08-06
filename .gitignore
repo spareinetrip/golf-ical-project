@@ -58,7 +58,6 @@ logs/
 *.temp
 
 # Generated files
-golf.ics
 
 # Local development files (HTML and assets for testing)
 Reservaties.html
