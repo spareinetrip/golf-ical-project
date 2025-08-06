@@ -381,15 +381,15 @@ class IGolfScraper:
                 else:
                     tee_info = ""
                 
+                # TODO: Parse officiële starttijd (komt later online)
+                # Placeholder voor toekomstige implementatie
+                officiele_start = "Start: -"
+                
                 # Maak notes - only include clean voorkeur start and tee info
                 notes_parts = []
                 
-                # Add tee-time as first line (use voorkeur start time if available, otherwise default)
-                if voorkeur_match and voorkeur_match.group(1).strip() and voorkeur_match.group(1).strip() != "-":
-                    tee_time_str = voorkeur_match.group(1).strip()
-                    notes_parts.append(f"Tee-time: {tee_time_str}")
-                else:
-                    notes_parts.append("Tee-time: -")
+                # Add officiële starttijd (voorlopig altijd "-")
+                notes_parts.append(officiele_start)
                 
                 if voorkeur_start:
                     notes_parts.append(voorkeur_start)
@@ -466,7 +466,7 @@ class IGolfScraper:
                 notes_parts = []
                 
                 # Add tee-time as first line
-                notes_parts.append(f"Tee-time: {start_tijd_str}")
+                notes_parts.append(f"Start: {start_tijd_str}")
                 
                 for line in lines:
                     if 'Medespelers:' in line:
@@ -562,7 +562,7 @@ class IGolfScraper:
                 notes_parts = []
                 
                 # Add tee-time as first line
-                notes_parts.append(f"Tee-time: {start_tijd_str}")
+                notes_parts.append(f"Start: {start_tijd_str}")
                 
                 # Search in the full description text since it's all on one line
                 verantwoordelijke_match = re.search(r'Verantwoordelijke:\s*([^,\n]*?)(?=\s*Medespelers:)', desc_text)
