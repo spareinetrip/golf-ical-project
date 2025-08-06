@@ -321,21 +321,34 @@ class IGolfScraper:
                 datum_str = datum_match.group(1)
                 print(f"  📅 Datum gevonden: {datum_str}")
                 
-                # Zoek voorkeur start tijd
-                voorkeur_match = re.search(r'Voorkeur start:\s*(\d{1,2}:\d{2})', desc_text)
+                # Zoek voorkeur start tijd (kan zijn "11:33-12:36" of "-")
+                voorkeur_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)', desc_text)
                 if voorkeur_match:
-                    start_tijd_str = voorkeur_match.group(1)
-                    print(f"  ⏰ Voorkeur start tijd: {start_tijd_str}")
-                    # Parse tijd en trek 30 minuten af
-                    start_tijd = datetime.strptime(start_tijd_str, '%H:%M').time()
-                    start_datetime = datetime.combine(
-                        datetime.strptime(datum_str, '%d/%m/%Y').date(),
-                        start_tijd
-                    ) - timedelta(minutes=30)
-                    # Make timezone-aware for Belgium
-                    start_datetime = BELGIUM_TZ.localize(start_datetime)
+                    voorkeur_value = voorkeur_match.group(1).strip()
+                    print(f"  ⏰ Voorkeur start tijd: {voorkeur_value}")
+                    
+                    # Check of het een tijdstip is (niet "-")
+                    if voorkeur_value != "-":
+                        # Parse eerste tijdstip uit range (bijv. "11:33" uit "11:33-12:36")
+                        start_tijd_str = voorkeur_value.split('-')[0]
+                        start_tijd = datetime.strptime(start_tijd_str, '%H:%M').time()
+                        start_datetime = datetime.combine(
+                            datetime.strptime(datum_str, '%d/%m/%Y').date(),
+                            start_tijd
+                        ) - timedelta(minutes=30)
+                        # Make timezone-aware for Belgium
+                        start_datetime = BELGIUM_TZ.localize(start_datetime)
+                    else:
+                        print(f"  ⏰ Voorkeur start is '-', gebruik standaard 10:00")
+                        # Gebruik standaard 10:00
+                        start_datetime = datetime.combine(
+                            datetime.strptime(datum_str, '%d/%m/%Y').date(),
+                            datetime.strptime('10:00', '%H:%M').time()
+                        )
+                        # Make timezone-aware for Belgium
+                        start_datetime = BELGIUM_TZ.localize(start_datetime)
                 else:
-                    print(f"  ⏰ Geen voorkeur start tijd, gebruik standaard 10:00")
+                    print(f"  ⏰ Geen voorkeur start tijd gevonden, gebruik standaard 10:00")
                     # Gebruik standaard 10:00
                     start_datetime = datetime.combine(
                         datetime.strptime(datum_str, '%d/%m/%Y').date(),
@@ -362,12 +375,12 @@ class IGolfScraper:
                 voorkeur_start = "Voorkeur start: -"
                 tee_info = ""
                 
-                # Parse voorkeur start - extract only the time value
-                voorkeur_match = re.search(r'Voorkeur start:\s*([^-\s]+)', desc_text)
-                if voorkeur_match:
-                    voorkeur_value = voorkeur_match.group(1).strip()
-                    if voorkeur_value and voorkeur_value != "-":
-                        voorkeur_start = f"Voorkeur start: {voorkeur_value}"
+                # Parse voorkeur start voor notes - extract the full value (kan zijn "11:33-12:36" of "-")
+                voorkeur_notes_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)', desc_text)
+                if voorkeur_notes_match:
+                    voorkeur_notes_value = voorkeur_notes_match.group(1).strip()
+                    if voorkeur_notes_value and voorkeur_notes_value != "-":
+                        voorkeur_start = f"Voorkeur start: {voorkeur_notes_value}"
                     else:
                         voorkeur_start = "Voorkeur start: -"
                 else:
@@ -443,10 +456,11 @@ class IGolfScraper:
                 start_tijd_str = datetime_match.group(2)
                 print(f"  📅 Datum: {datum_str}, Tijd: {start_tijd_str}")
                 
-                # Zoek beschrijving direct in de TEE region
-                desc_elem = tee_region.find('div', class_='t-Card-desc')
+                # Zoek beschrijving in de huidige card
+                card_body = card.find_parent('div', class_='t-Card').find('div', class_='t-Card-body')
+                desc_elem = card_body.find('div', class_='t-Card-desc')
                 if not desc_elem:
-                    print(f"  ❌ t-Card-desc niet gevonden in TEE region")
+                    print(f"  ❌ t-Card-desc niet gevonden in huidige card")
                     continue
                 
                 desc_text = desc_elem.get_text()
@@ -539,10 +553,11 @@ class IGolfScraper:
                 start_tijd_str = datetime_match.group(2)
                 print(f"  📅 Datum: {datum_str}, Tijd: {start_tijd_str}")
                 
-                # Zoek beschrijving direct in de ITEE_CO region
-                desc_elem = itee_co_region.find('div', class_='t-Card-desc')
+                # Zoek beschrijving in de huidige card
+                card_body = card.find_parent('div', class_='t-Card').find('div', class_='t-Card-body')
+                desc_elem = card_body.find('div', class_='t-Card-desc')
                 if not desc_elem:
-                    print(f"  ❌ t-Card-desc niet gevonden in ITEE_CO region")
+                    print(f"  ❌ t-Card-desc niet gevonden in huidige card")
                     continue
                 
                 desc_text = desc_elem.get_text()
