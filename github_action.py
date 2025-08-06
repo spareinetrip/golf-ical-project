@@ -304,10 +304,11 @@ class IGolfScraper:
                     print(f"  ⏭️  Skip (tee-reservatie format)")
                     continue
                 
-                # Zoek beschrijving direct in de WEDSTRIJDEN region
-                desc_elem = wedstrijden_region.find('div', class_='t-Card-desc')
+                # Zoek beschrijving in de huidige card
+                card_body = card.find_parent('div', class_='t-Card').find('div', class_='t-Card-body')
+                desc_elem = card_body.find('div', class_='t-Card-desc')
                 if not desc_elem:
-                    print(f"  ❌ t-Card-desc niet gevonden in WEDSTRIJDEN region")
+                    print(f"  ❌ t-Card-desc niet gevonden in huidige card")
                     continue
                 
                 desc_text = desc_elem.get_text()
@@ -322,7 +323,7 @@ class IGolfScraper:
                 print(f"  📅 Datum gevonden: {datum_str}")
                 
                 # Zoek voorkeur start tijd (kan zijn "11:33-12:36" of "-")
-                voorkeur_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)', desc_text)
+                voorkeur_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)(?=\s*Tee:)', desc_text)
                 if voorkeur_match:
                     voorkeur_value = voorkeur_match.group(1).strip()
                     print(f"  ⏰ Voorkeur start tijd: {voorkeur_value}")
@@ -376,7 +377,7 @@ class IGolfScraper:
                 tee_info = ""
                 
                 # Parse voorkeur start voor notes - extract the full value (kan zijn "11:33-12:36" of "-")
-                voorkeur_notes_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)', desc_text)
+                voorkeur_notes_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)(?=\s*Tee:)', desc_text)
                 if voorkeur_notes_match:
                     voorkeur_notes_value = voorkeur_notes_match.group(1).strip()
                     if voorkeur_notes_value and voorkeur_notes_value != "-":
