@@ -391,7 +391,17 @@ class IGolfScraper:
                 tee_match = re.search(r'Tee:\s*(\d+)', desc_text)
                 if tee_match:
                     tee_number = tee_match.group(1)
-                    tee_info = f"Tee: {tee_number}"
+                    # Add emoji based on tee number
+                    if tee_number == "53":
+                        tee_emoji = "🟡"
+                    elif tee_number == "57":
+                        tee_emoji = "⚪️"
+                    elif tee_number == "49":
+                        tee_emoji = "🔴"
+                    else:
+                        tee_emoji = ""
+                    
+                    tee_info = f"Tee: {tee_number}{tee_emoji}"
                 else:
                     tee_info = ""
                 
