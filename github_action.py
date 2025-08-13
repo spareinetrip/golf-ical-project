@@ -393,11 +393,11 @@ class IGolfScraper:
                     tee_number = tee_match.group(1)
                     # Add emoji based on tee number
                     if tee_number == "53":
-                        tee_emoji = "🟡"
+                        tee_emoji = "🔸"
                     elif tee_number == "57":
-                        tee_emoji = "⚪️"
+                        tee_emoji = "▫️"
                     elif tee_number == "49":
-                        tee_emoji = "🔴"
+                        tee_emoji = "🔻"
                     else:
                         tee_emoji = ""
                     
