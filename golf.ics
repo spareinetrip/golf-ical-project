@@ -7,14 +7,6 @@ DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250830T100000Z
 SUMMARY:⛳️  Family Prize
-UID:8e3d3a81-1ce0-4179-875b-ee180ba2194b@8e3d.org
-END:VEVENT
-BEGIN:VEVENT
-DESCRIPTION:Start: -\nVoorkeur start: -\nTee: 53🔸
-DURATION:PT4H
-LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250816T080000Z
-SUMMARY:⛳️  The Original New Generation (Fours.+ Greens. + Chapm.)
-UID:19c05320-9a23-49f9-8f20-ed216c1aee9e@19c0.org
+UID:9556d4a8-3c7d-46bb-993f-22db40658914@9556.org
 END:VEVENT
 END:VCALENDAR
