@@ -2,19 +2,19 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: -\nVoorkeur start: -\nTee: 53🔸
-DURATION:PT4H
-LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250816T080000Z
-SUMMARY:⛳️  The Original New Generation (Fours.+ Greens. + Chapm.)
-UID:90f366ae-1ad5-46fa-bdd4-58f631317990@90f3.org
-END:VEVENT
-BEGIN:VEVENT
 DESCRIPTION:Start: -\nVoorkeur start: 12:30-13:30\nTee: 53🔸
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250830T100000Z
 SUMMARY:⛳️  Family Prize
-UID:e62014ac-ebf5-45c2-9f4c-2da044fac4d6@e620.org
+UID:640317bf-5c6f-46ea-bca1-0700ba5423eb@6403.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Start: -\nVoorkeur start: -\nTee: 53🔸
+DURATION:PT4H
+LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
+DTSTART:20250816T080000Z
+SUMMARY:⛳️  The Original New Generation (Fours.+ Greens. + Chapm.)
+UID:7452d3dd-f75d-4350-8636-de658637d153@7452.org
 END:VEVENT
 END:VCALENDAR
