@@ -2,11 +2,11 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: -\nVoorkeur start: 12:30-13:30\nTee: 53🔸
+DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 53🔸
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250830T100000Z
-SUMMARY:⛳️  Family Prize
-UID:46e8c1cb-b97f-4f08-8691-d2c9b9a84a28@46e8.org
+DTSTART:20250906T102000Z
+SUMMARY:⛳️  Vranken Pommery Prize
+UID:8a65f168-b148-4ae8-a1d3-72c0c9992304@8a65.org
 END:VEVENT
 END:VCALENDAR
