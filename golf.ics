@@ -7,7 +7,7 @@ DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250827T053000Z
 SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
-UID:98ee1324-a813-4a34-80dd-a3c57f119599@98ee.org
+UID:76fc1bfb-a83e-40f4-9e76-97d2e174221f@76fc.org
 END:VEVENT
 BEGIN:VEVENT
 DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 53🔸
@@ -15,6 +15,6 @@ DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250906T102000Z
 SUMMARY:⛳️  Vranken Pommery Prize
-UID:5c6549c6-fd0a-4b9f-8e15-d81d16f29a1f@5c65.org
+UID:92c64449-4db5-47be-8efa-40fb4b9883f4@92c6.org
 END:VEVENT
 END:VCALENDAR
