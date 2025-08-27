@@ -2,19 +2,19 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: 08:00\nVerantwoordelijke: Stage Juniors\nMedespelers: Verbeke Brigitte\, Schrans Emile\, DE CORDIER CATHELINE\, VANDEWALLE NICOLAS\, VANDEN STOCK ROGER\, Bauer Paul\, reserved r\, Reserved res\, Res Res\, BRAET Nicolas\, Res Res\, Res Reserved\, res res\, HESSELS Koen\, LA GRANGE SYLVIE\, van DURME VALERIE\, TETTEROO CAROLINE\, QUINTYN ISABELLE\, BOUTENS INGE\, happy bee\, VERMEERSCH ALAIN\, VERMEERSCH HANET CARINE\, STEENHAUT DIDIER\, HAUSPY FRANK\, Van der Elst Harry\, VAN LANGENHOVE FRANS\, BUYSSCHAERT MAXIME\, Van Acker Jean\, CLAEYS BEATRICE\, CHIN Yun Sup\, DE WITTE François\, VAN EECKHAUTE Isabelle\, VAN KAN Christian\, LAUTE Geert\, SOENEN JULIEN\, VAN LANGENHOVE Gaetan\, BUYSSCHAERT RAPHAEL\, GEVAERT Benoit\, CONTANT Christiaan\, DE WITTE Anne Pascale\, De Martelaere Annelies\, Jay Michel\, VAN LANGENHOVE Aimery
-DURATION:PT4H
-LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250827T053000Z
-SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
-UID:2c9cf336-e4ed-478d-aae7-f4e2ce56d8c7@2c9c.org
-END:VEVENT
-BEGIN:VEVENT
 DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 53🔸
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250906T102000Z
 SUMMARY:⛳️  Vranken Pommery Prize
-UID:bc8c03dc-e683-46c2-90bd-415d3ddfbe84@bc8c.org
+UID:e0b15ed8-3bfb-4278-aa6c-e5c0b7b310b0@e0b1.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Start: 08:00\nVerantwoordelijke: Stage Juniors\nMedespelers: Verbeke Brigitte\, Schrans Emile\, DE CORDIER CATHELINE\, VANDEWALLE NICOLAS\, VANDEN STOCK ROGER\, Bauer Paul\, reserved r\, Reserved res\, Res Res\, BRAET Nicolas\, Res Res\, Res Reserved\, res res\, HESSELS Koen\, LA GRANGE SYLVIE\, van DURME VALERIE\, TETTEROO CAROLINE\, QUINTYN ISABELLE\, BOUTENS INGE\, happy bee\, VERMEERSCH ALAIN\, VERMEERSCH HANET CARINE\, STEENHAUT DIDIER\, HAUSPY FRANK\, Van der Elst Harry\, VAN LANGENHOVE FRANS\, BUYSSCHAERT MAXIME\, Van Acker Jean\, CLAEYS BEATRICE\, CHIN Yun Sup\, DE WITTE François\, VAN EECKHAUTE Isabelle\, VAN KAN Christian\, LAUTE Geert\, SOENEN JULIEN\, VAN LANGENHOVE Gaetan\, BUYSSCHAERT RAPHAEL\, GEVAERT Benoit\, CONTANT Christiaan\, DE WITTE Anne Pascale\, De Martelaere Annelies\, Jay Michel\, VAN LANGENHOVE Aimery
+DURATION:PT4H
+LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
+DTSTART:20250827T053000Z
+SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
+UID:4bc4d432-6c3a-4c49-ba96-f84b66dfd214@4bc4.org
 END:VEVENT
 END:VCALENDAR
