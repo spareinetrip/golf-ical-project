@@ -2,19 +2,11 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: 08:00\nVerantwoordelijke: Stage Juniors\nMedespelers: Verbeke Brigitte\, Schrans Emile\, DE CORDIER CATHELINE\, VANDEWALLE NICOLAS\, VANDEN STOCK ROGER\, Bauer Paul\, reserved r\, Reserved res\, Res Res\, BRAET Nicolas\, Res Res\, Res Reserved\, res res\, HESSELS Koen\, LA GRANGE SYLVIE\, van DURME VALERIE\, TETTEROO CAROLINE\, QUINTYN ISABELLE\, BOUTENS INGE\, happy bee\, VERMEERSCH ALAIN\, VERMEERSCH HANET CARINE\, STEENHAUT DIDIER\, HAUSPY FRANK\, Van der Elst Harry\, VAN LANGENHOVE FRANS\, BUYSSCHAERT MAXIME\, Van Acker Jean\, CLAEYS BEATRICE\, CHIN Yun Sup\, DE WITTE François\, VAN EECKHAUTE Isabelle\, VAN KAN Christian\, LAUTE Geert\, SOENEN JULIEN\, VAN LANGENHOVE Gaetan\, BUYSSCHAERT RAPHAEL\, GEVAERT Benoit\, CONTANT Christiaan\, DE WITTE Anne Pascale\, De Martelaere Annelies\, Jay Michel\, VAN LANGENHOVE Aimery
-DURATION:PT4H
-LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250827T053000Z
-SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
-UID:b491581b-dfe6-4181-8fca-18394f79fa6d@b491.org
-END:VEVENT
-BEGIN:VEVENT
 DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 53🔸
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250906T102000Z
 SUMMARY:⛳️  Vranken Pommery Prize
-UID:b99a2b16-d00d-4b9d-a222-adb0098d3c4e@b99a.org
+UID:2096d6d2-7295-452a-9ec6-534202590fd3@2096.org
 END:VEVENT
 END:VCALENDAR
