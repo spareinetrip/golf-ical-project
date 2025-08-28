@@ -773,8 +773,8 @@ END:VALARM"""
         
         # Add Waze navigation link for Royal Latem Golf Club events
         if event_data['location'] == "Royal Latem Golf Club":
-            # Add Waze attachment before the alarm
-            waze_attachment = f"""ATTACH:https://waze.com/ul/hu14d4qfxy
+            # Add Waze URL attachment before the alarm
+            waze_attachment = f"""ATTACH;VALUE=URI:https://waze.com/ul/hu14d4qfxy
 {alarm_1_day}"""
             ical_string = ical_string.replace(f'{alarm_1_day}\nEND:VEVENT', f'{waze_attachment}\nEND:VEVENT', 1)
     
