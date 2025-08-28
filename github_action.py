@@ -23,7 +23,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
-from ics import Calendar, Event, Alarm
+from ics import Calendar, Event
 
 # Load environment variables from .env file for local development
 try:
@@ -742,24 +742,8 @@ def create_ical_calendar(events):
         event.duration = event_data['duration']
         event.description = event_data.get('notes', '')
         
-        # Add alarms/notifications
-        # 1. Alarm 1 dag ervoor (24 uur)
-        event.alarms.append(
-            Alarm(
-                trigger=timedelta(days=-1),
-                action="DISPLAY",
-                description=f"Herinnering: {event_data['title']} morgen"
-            )
-        )
-        
-        # 2. Alarm 2 uur ervoor
-        event.alarms.append(
-            Alarm(
-                trigger=timedelta(hours=-2),
-                action="DISPLAY", 
-                description=f"Herinnering: {event_data['title']} over 2 uur"
-            )
-        )
+        # Add alarms/notifications manually to the iCal string
+        # We'll add these after the calendar is generated
         
         calendar.events.add(event)
     
