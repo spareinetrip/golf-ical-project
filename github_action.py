@@ -742,12 +742,41 @@ def create_ical_calendar(events):
         event.duration = event_data['duration']
         event.description = event_data.get('notes', '')
         
-        # Add alarms/notifications manually to the iCal string
-        # We'll add these after the calendar is generated
-        
         calendar.events.add(event)
     
-    return calendar
+    # Generate the iCal string and add alarms manually
+    ical_string = str(calendar)
+    
+    # Add alarms for each event
+    for event_data in events:
+        # Find the event in the iCal string and add alarms
+        event_start = event_data['start']
+        if event_start.tzinfo is not None:
+            event_start_utc = event_start.astimezone(pytz.UTC)
+        else:
+            event_start_utc = BELGIUM_TZ.localize(event_start).astimezone(pytz.UTC)
+        
+        # Format the start time for iCal
+        start_str = event_start_utc.strftime('%Y%m%dT%H%M%SZ')
+        
+        # Add alarm 1 day before
+        alarm_1_day = f"""BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Herinnering: {event_data['title']} morgen
+END:VALARM"""
+        
+        # Add alarm 2 hours before
+        alarm_2_hours = f"""BEGIN:VALARM
+TRIGGER:-PT2H
+ACTION:DISPLAY
+DESCRIPTION:Herinnering: {event_data['title']} over 2 uur
+END:VALARM"""
+        
+        # Insert alarms before the END:VEVENT
+        ical_string = ical_string.replace('END:VEVENT', f'{alarm_1_day}\n{alarm_2_hours}\nEND:VEVENT', 1)
+    
+    return ical_string
 
 
 def main():
@@ -787,14 +816,14 @@ def main():
         
         print("=== CREATING ICAL ===")
         # Maak iCal calendar
-        calendar = create_ical_calendar(events)
+        ical_string = create_ical_calendar(events)
         print("✅ Calendar created")
         
         # Save to file
         output_file = 'golf.ics'
         print(f"=== SAVING TO {output_file} ===")
         with open(output_file, 'w', encoding='utf-8') as f:
-            f.write(str(calendar))
+            f.write(ical_string)
         
         print(f"✅ iCal bestand gegenereerd: {output_file}")
         print(f"📊 Aantal events: {len(events)}")
