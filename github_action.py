@@ -423,7 +423,7 @@ class IGolfScraper:
                 
                 # Maak event met proper formatting
                 event = {
-                    'title': f"⛳️  {title}",
+                    'title': f"🏆  {title}",
                     'location': location,
                     'start': start_datetime,
                     'duration': timedelta(hours=4),
