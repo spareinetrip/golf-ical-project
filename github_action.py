@@ -23,7 +23,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
-from ics import Calendar, Event, ContentLine
+from ics import Calendar, Event
 
 # Load environment variables from .env file for local development
 try:
@@ -742,13 +742,7 @@ def create_ical_calendar(events):
         event.duration = event_data['duration']
         event.description = event_data.get('notes', '')
         
-        # Add Waze navigation link for Royal Latem Golf Club
-        if location == "Royal Latem Golf Club":
-            # Add Waze navigation link as attachment
-            event.extra.append(ContentLine(
-                name='ATTACH', 
-                value='https://waze.com/ul/hu14d4qfxy'
-            ))
+        # Note: Waze navigation link will be added manually to the iCal string
         
         calendar.events.add(event)
     
@@ -776,6 +770,13 @@ END:VALARM"""
         
         # Insert alarm before the END:VEVENT
         ical_string = ical_string.replace('END:VEVENT', f'{alarm_1_day}\nEND:VEVENT', 1)
+        
+        # Add Waze navigation link for Royal Latem Golf Club events
+        if event_data['location'] == "Royal Latem Golf Club":
+            # Add Waze attachment before the alarm
+            waze_attachment = f"""ATTACH:https://waze.com/ul/hu14d4qfxy
+{alarm_1_day}"""
+            ical_string = ical_string.replace(f'{alarm_1_day}\nEND:VEVENT', f'{waze_attachment}\nEND:VEVENT', 1)
     
     return ical_string
 
