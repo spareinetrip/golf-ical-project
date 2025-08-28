@@ -759,22 +759,15 @@ def create_ical_calendar(events):
         # Format the start time for iCal
         start_str = event_start_utc.strftime('%Y%m%dT%H%M%SZ')
         
-        # Add alarm 1 day before
+        # Add alarm 1 day before only (Apple Calendar makes 2-hour alert automatically)
         alarm_1_day = f"""BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
 DESCRIPTION:Herinnering: {event_data['title']} morgen
 END:VALARM"""
         
-        # Add alarm 2 hours before
-        alarm_2_hours = f"""BEGIN:VALARM
-TRIGGER:-PT2H
-ACTION:DISPLAY
-DESCRIPTION:Herinnering: {event_data['title']} over 2 uur
-END:VALARM"""
-        
-        # Insert alarms before the END:VEVENT
-        ical_string = ical_string.replace('END:VEVENT', f'{alarm_1_day}\n{alarm_2_hours}\nEND:VEVENT', 1)
+        # Insert alarm before the END:VEVENT
+        ical_string = ical_string.replace('END:VEVENT', f'{alarm_1_day}\nEND:VEVENT', 1)
     
     return ical_string
 
