@@ -797,6 +797,11 @@ END:VALARM"""
             waze_url = f"""URL;VALUE=URI:https://waze.com/ul/hu147k5f62
 {alarm_1_day}"""
             ical_string = ical_string.replace(f'{alarm_1_day}\nEND:VEVENT', f'{waze_url}\nEND:VEVENT', 1)
+        elif event_data['location'] == "Royal Zoute Golf Club":
+            # Add Waze URL for Knokke
+            waze_url = f"""URL;VALUE=URI:https://waze.com/ul/hu14k54ywq
+{alarm_1_day}"""
+            ical_string = ical_string.replace(f'{alarm_1_day}\nEND:VEVENT', f'{waze_url}\nEND:VEVENT', 1)
     
     return ical_string
 
