@@ -771,10 +771,15 @@ END:VALARM"""
         # Insert alarm before the END:VEVENT
         ical_string = ical_string.replace('END:VEVENT', f'{alarm_1_day}\nEND:VEVENT', 1)
         
-        # Add Waze navigation link for Royal Latem Golf Club events
+        # Add Waze navigation links for specific golf clubs
         if event_data['location'] == "Royal Latem Golf Club":
             # Add Waze URL with correct iCal syntax
             waze_url = f"""URL;VALUE=URI:https://waze.com/ul/hu14d4qfxy
+{alarm_1_day}"""
+            ical_string = ical_string.replace(f'{alarm_1_day}\nEND:VEVENT', f'{waze_url}\nEND:VEVENT', 1)
+        elif event_data['location'] == "Executive Club Private Golf Zwijnaarde":
+            # Add Waze URL for Zwijnaarde
+            waze_url = f"""URL;VALUE=URI:https://waze.com/ul/hu14dhskqx
 {alarm_1_day}"""
             ical_string = ical_string.replace(f'{alarm_1_day}\nEND:VEVENT', f'{waze_url}\nEND:VEVENT', 1)
     
