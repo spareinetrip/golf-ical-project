@@ -23,7 +23,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
-from ics import Calendar, Event
+from ics import Calendar, Event, ContentLine
 
 # Load environment variables from .env file for local development
 try:
@@ -741,6 +741,14 @@ def create_ical_calendar(events):
         event.begin = start_datetime_utc
         event.duration = event_data['duration']
         event.description = event_data.get('notes', '')
+        
+        # Add Waze navigation link for Royal Latem Golf Club
+        if location == "Royal Latem Golf Club":
+            # Add Waze navigation link as attachment
+            event.extra.append(ContentLine(
+                name='ATTACH', 
+                value='https://waze.com/ul/hu14d4qfxy'
+            ))
         
         calendar.events.add(event)
     
