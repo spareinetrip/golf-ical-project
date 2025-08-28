@@ -6,7 +6,17 @@ DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 53🔸
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250906T102000Z
-SUMMARY:⛳️  Vranken Pommery Prize
-UID:a49c67af-5791-4ebf-8a24-516d11053c79@a49c.org
+SUMMARY:🏆  Vranken Pommery Prize
+UID:2d177358-7ede-40c8-81b8-17be626b8051@2d17.org
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Herinnering: 🏆  Vranken Pommery Prize morgen
+END:VALARM
+BEGIN:VALARM
+TRIGGER:-PT2H
+ACTION:DISPLAY
+DESCRIPTION:Herinnering: 🏆  Vranken Pommery Prize over 2 uur
+END:VALARM
 END:VEVENT
 END:VCALENDAR
