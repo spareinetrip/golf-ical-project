@@ -58,7 +58,10 @@ logs/
 *.temp
 
 # Generated files
+golf.ics
 
 # Local development files (HTML and assets for testing)
 Reservaties.html
-Reservaties_files/ 
+Reservaties_files/
+Boek een greenfee.html
+Boek een greenfee_files/ 

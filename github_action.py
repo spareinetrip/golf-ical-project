@@ -23,7 +23,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
-from ics import Calendar, Event
+from ics import Calendar, Event, Alarm
 
 # Load environment variables from .env file for local development
 try:
@@ -652,6 +652,80 @@ def create_ical_calendar(events):
         if location == "Royal Latem Golf Club":
             # Add full address for Apple Calendar compatibility
             event.location = "Royal Latem Golf Club, 9831 Sint-Martens-Latem, Belgium"
+        elif location == "Royal Waterloo Golf Club":
+            event.location = "Royal Waterloo Golf Club, 1380 Lasne, Belgium"
+        elif location == "Brussels Droh!me Golf Club":
+            event.location = "Brussels Droh!me Golf Club, 1000 Brussel, Belgium"
+        elif location == "Antwerp Golfschool":
+            event.location = "Antwerp Golfschool, 2000 Antwerpen, Belgium"
+        elif location == "Royal Bercuit Golf Club":
+            event.location = "Royal Bercuit Golf Club, 1300 Waver, Belgium"
+        elif location == "Royal Golf Club des Fagnes":
+            event.location = "Royal Golf Club des Fagnes, 4900 Spa, Belgium"
+        elif location == "Royal Keerbergen Golf Club":
+            event.location = "Royal Keerbergen Golf Club, 3140 Keerbergen, Belgium"
+        elif location == "Brabantse Golf":
+            event.location = "Brabantse Golf, 3000 Leuven, Belgium"
+        elif location == "Golf du Château de la Bawette":
+            event.location = "Golf du Château de la Bawette, 1300 Waver, Belgium"
+        elif location == "Golfclub Hasselt":
+            event.location = "Golfclub Hasselt, 3500 Hasselt, Belgium"
+        elif location == "Lilse Golf & Country":
+            event.location = "Lilse Golf & Country, 2275 Lille, Belgium"
+        elif location == "Winge Golf":
+            event.location = "Winge Golf, 3020 Herent, Belgium"
+        elif location == "Damme Golf & Country Club":
+            event.location = "Damme Golf & Country Club, 8340 Damme, Belgium"
+        elif location == "Golf de Liège-Gomzé":
+            event.location = "Golf de Liège-Gomzé, 4000 Luik, Belgium"
+        elif location == "Golfclub Witbos":
+            event.location = "Golfclub Witbos, 9000 Gent, Belgium"
+        elif location == "Royal Amicale Anderlecht Golf Club":
+            event.location = "Royal Amicale Anderlecht Golf Club, 1070 Anderlecht, Belgium"
+        elif location == "Royal Golf Club Oudenaarde":
+            event.location = "Royal Golf Club Oudenaarde, 9700 Oudenaarde, Belgium"
+        elif location == "Golf de Rougemont":
+            event.location = "Golf de Rougemont, 6900 Aarlen, Belgium"
+        elif location == "Waregem Happy Golf":
+            event.location = "Waregem Happy Golf, 8790 Waregem, Belgium"
+        elif location == "Golf de la Bruyère":
+            event.location = "Golf de la Bruyère, 1300 Waver, Belgium"
+        elif location == "Golf Club du Haras":
+            event.location = "Golf Club du Haras, 1000 Brussel, Belgium"
+        elif location == "Golf & Business Association Kampenhout":
+            event.location = "Golf & Business Association Kampenhout, 1910 Kampenhout, Belgium"
+        elif location == "Avernas Golf Club":
+            event.location = "Avernas Golf Club, 4280 Hannut, Belgium"
+        elif location == "Golfforum Lummen":
+            event.location = "Golfforum Lummen, 3560 Lummen, Belgium"
+        elif location == "Durbuy Golf Resorts":
+            event.location = "Durbuy Golf Resorts, 6940 Durbuy, Belgium"
+        elif location == "Golfclub De Palingbeek":
+            event.location = "Golfclub De Palingbeek, 8900 Ieper, Belgium"
+        elif location == "Golf de Pierpont":
+            event.location = "Golf de Pierpont, 7000 Bergen, Belgium"
+        elif location == "Golf Club Enghien":
+            event.location = "Golf Club Enghien, 7850 Enghien, Belgium"
+        elif location == "Golfclub Beveren":
+            event.location = "Golfclub Beveren, 9120 Beveren, Belgium"
+        elif location == "Ieper Open Golf":
+            event.location = "Ieper Open Golf, 8900 Ieper, Belgium"
+        elif location == "Ragnies Golf Club":
+            event.location = "Ragnies Golf Club, 6530 Thuin, Belgium"
+        elif location == "Westgolf":
+            event.location = "Westgolf, 8000 Brugge, Belgium"
+        elif location == "Golf Découverte Virton":
+            event.location = "Golf Découverte Virton, 6760 Virton, Belgium"
+        elif location == "Executive Club - Private Golf Zwijnaarde":
+            event.location = "Executive Club - Private Golf Zwijnaarde, 9052 Zwijnaarde, Belgium"
+        elif location == "Millennium Golf":
+            event.location = "Millennium Golf, 9000 Gent, Belgium"
+        elif location == "Golfschool Gent":
+            event.location = "Golfschool Gent, 9000 Gent, Belgium"
+        elif location == "Wijnvelden Golf Club":
+            event.location = "Wijnvelden Golf Club, 9000 Gent, Belgium"
+        elif location == "Wellington Golf Oostende":
+            event.location = "Wellington Golf Oostende, 8400 Oostende, Belgium"
         else:
             event.location = location
         
@@ -667,6 +741,25 @@ def create_ical_calendar(events):
         event.begin = start_datetime_utc
         event.duration = event_data['duration']
         event.description = event_data.get('notes', '')
+        
+        # Add alarms/notifications
+        # 1. Alarm 1 dag ervoor (24 uur)
+        event.alarms.append(
+            Alarm(
+                trigger=timedelta(days=-1),
+                action="DISPLAY",
+                description=f"Herinnering: {event_data['title']} morgen"
+            )
+        )
+        
+        # 2. Alarm 2 uur ervoor
+        event.alarms.append(
+            Alarm(
+                trigger=timedelta(hours=-2),
+                action="DISPLAY", 
+                description=f"Herinnering: {event_data['title']} over 2 uur"
+            )
+        )
         
         calendar.events.add(event)
     
