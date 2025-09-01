@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: 14:40\nMedespelers: Jay Michel\, Van der Elst Harry
+DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 53🔸
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250901T121000Z
-SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
-UID:3f493fba-0728-46c6-b2d7-c94c37e97f78@3f49.org
+DTSTART:20250906T102000Z
+SUMMARY:🏆  Vranken Pommery Prize
+UID:442c4e6a-9ece-47bd-bbf4-5deaba148d5b@442c.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
@@ -22,11 +22,11 @@ DESCRIPTION:Herinnering: ⛳️  Tee-time @ Royal Latem Golf Club morgen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 53🔸
+DESCRIPTION:Start: 14:40\nMedespelers: Jay Michel\, Van der Elst Harry
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250906T102000Z
-SUMMARY:🏆  Vranken Pommery Prize
-UID:c513937f-5e3b-4d69-af73-1771050826bb@c513.org
+DTSTART:20250901T121000Z
+SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
+UID:b95d8a79-470c-40ad-9ca3-0292939ca94a@b95d.org
 END:VEVENT
 END:VCALENDAR
