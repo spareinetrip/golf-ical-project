@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 5305
+DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 53🔸
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250906T102000Z
 SUMMARY:🏆  Vranken Pommery Prize
-UID:e7cf967d-ad42-47d5-8c04-38db4d90a2ec@e7cf.org
+UID:1c019ad3-1826-451c-8ec0-c9ec819a074a@1c01.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
