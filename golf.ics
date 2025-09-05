@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: 16:20\nMedespelers: 
+DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 53🔸
 DURATION:PT4H
-LOCATION:Waregem Happy Golfwaregem Golf Club 10-18Reservatie Nr: 15596259Medespelers:
-DTSTART:20250905T135000Z
-SUMMARY:⛳️  Tee-time @ Waregem Happy Golfwaregem Golf Club 10-18Reservatie Nr: 15596259Medespelers:
-UID:a206810e-4b9a-43cd-8119-4d8875c1d70a@a206.org
+LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
+DTSTART:20250906T102000Z
+SUMMARY:🏆  Vranken Pommery Prize
+UID:4bab0056-d8de-4399-86c3-ed1aae4daf0a@4bab.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
@@ -21,11 +21,11 @@ DESCRIPTION:Herinnering: ⛳️  Tee-time @ Waregem Happy Golfwaregem Golf Club 
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:Start: -\nVoorkeur start: 12:50-13:30\nTee: 53🔸
+DESCRIPTION:Start: 16:20\nMedespelers: 
 DURATION:PT4H
-LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250906T102000Z
-SUMMARY:🏆  Vranken Pommery Prize
-UID:6d3a95c4-4ddb-4abb-b5f4-b4a56f5c76c5@6d3a.org
+LOCATION:Waregem Happy Golfwaregem Golf Club 10-18Reservatie Nr: 15596259Medespelers:
+DTSTART:20250905T135000Z
+SUMMARY:⛳️  Tee-time @ Waregem Happy Golfwaregem Golf Club 10-18Reservatie Nr: 15596259Medespelers:
+UID:22fc5f9a-2a4b-4a64-99a8-82db4a979c82@22fc.org
 END:VEVENT
 END:VCALENDAR
