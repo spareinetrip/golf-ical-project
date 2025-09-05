@@ -7,7 +7,7 @@ DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250906T102000Z
 SUMMARY:🏆  Vranken Pommery Prize
-UID:895817ee-d9c6-44bf-99ae-dbe8e0882404@8958.org
+UID:c1eb2158-5d02-430a-ab67-5058bb358bb6@c1eb.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
@@ -26,6 +26,6 @@ DURATION:PT4H
 LOCATION:Waregem Happy Golfwaregem Golf Club 10-18Reservatie Nr: 15596259Medespelers:
 DTSTART:20250905T135000Z
 SUMMARY:⛳️  Tee-time @ Waregem Happy Golfwaregem Golf Club 10-18Reservatie Nr: 15596259Medespelers:
-UID:0a473f18-3f64-4f1f-b455-04a5852a6817@0a47.org
+UID:99c6e220-d2db-4f5d-96bc-219d1612d161@99c6.org
 END:VEVENT
 END:VCALENDAR
