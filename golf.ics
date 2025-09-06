@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: 13:30\nTee: 53🔸
+DESCRIPTION:Voorkeur start: 10:12-11:15\nTee: 57▫️
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250906T110000Z
-SUMMARY:🏆  Vranken Pommery Prize
-UID:ed097b37-296a-40ba-8f6e-d6d22d9b7aeb@ed09.org
+DTSTART:20250920T074200Z
+SUMMARY:🏆  Mercedes Trophy Members
+UID:a2ce82ef-a6f5-4cc0-a54f-124a9b30444d@a2ce.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
@@ -22,11 +22,11 @@ DESCRIPTION:Herinnering: 🏆  Mercedes Trophy Members morgen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:Voorkeur start: 10:12-11:15\nTee: 57▫️
+DESCRIPTION:Start: 13:30\nTee: 53🔸
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250920T074200Z
-SUMMARY:🏆  Mercedes Trophy Members
-UID:d9dbfa8a-fc55-4c66-aef0-148c262ff2ae@d9db.org
+DTSTART:20250906T110000Z
+SUMMARY:🏆  Vranken Pommery Prize
+UID:19c0c18d-41d4-4539-9e9e-079ea5dd776a@19c0.org
 END:VEVENT
 END:VCALENDAR
