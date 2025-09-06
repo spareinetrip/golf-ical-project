@@ -314,49 +314,51 @@ class IGolfScraper:
                 desc_text = desc_elem.get_text()
                 print(f"  📝 Beschrijving: {desc_text[:100]}...")
                 
-                # Zoek datum
-                datum_match = re.search(r'Datum:\s*(\d{2}/\d{2}/\d{4})', desc_text)
+                # Zoek datum en officiële starttijd (kan zijn "Datum: 06/09/2025 13:30" of "Datum: 06/09/2025")
+                datum_match = re.search(r'Datum:\s*(\d{2}/\d{2}/\d{4})(?:\s+(\d{1,2}:\d{2}))?', desc_text)
                 if not datum_match:
                     print(f"  ❌ Datum niet gevonden in beschrijving")
                     continue
                 datum_str = datum_match.group(1)
+                officiele_starttijd = datum_match.group(2) if datum_match.group(2) else None
                 print(f"  📅 Datum gevonden: {datum_str}")
-                
-                # Zoek voorkeur start tijd (kan zijn "11:33-12:36" of "-")
-                voorkeur_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)(?=\s*Tee:)', desc_text)
-                if voorkeur_match:
-                    voorkeur_value = voorkeur_match.group(1).strip()
-                    print(f"  ⏰ Voorkeur start tijd: {voorkeur_value}")
-                    
-                    # Check of het een tijdstip is (niet "-")
-                    if voorkeur_value != "-":
-                        # Parse eerste tijdstip uit range (bijv. "11:33" uit "11:33-12:36")
-                        start_tijd_str = voorkeur_value.split('-')[0]
-                        start_tijd = datetime.strptime(start_tijd_str, '%H:%M').time()
-                        start_datetime = datetime.combine(
-                            datetime.strptime(datum_str, '%d/%m/%Y').date(),
-                            start_tijd
-                        ) - timedelta(minutes=30)
-                        # Make timezone-aware for Belgium
-                        start_datetime = BELGIUM_TZ.localize(start_datetime)
-                    else:
-                        print(f"  ⏰ Voorkeur start is '-', gebruik standaard 10:00")
-                        # Gebruik standaard 10:00
-                        start_datetime = datetime.combine(
-                            datetime.strptime(datum_str, '%d/%m/%Y').date(),
-                            datetime.strptime('10:00', '%H:%M').time()
-                        )
-                        # Make timezone-aware for Belgium
-                        start_datetime = BELGIUM_TZ.localize(start_datetime)
+                if officiele_starttijd:
+                    print(f"  ⏰ Officiële starttijd gevonden: {officiele_starttijd}")
                 else:
-                    print(f"  ⏰ Geen voorkeur start tijd gevonden, gebruik standaard 10:00")
-                    # Gebruik standaard 10:00
-                    start_datetime = datetime.combine(
-                        datetime.strptime(datum_str, '%d/%m/%Y').date(),
-                        datetime.strptime('10:00', '%H:%M').time()
-                    )
-                    # Make timezone-aware for Belgium
-                    start_datetime = BELGIUM_TZ.localize(start_datetime)
+                    print(f"  ⏰ Geen officiële starttijd gevonden")
+                
+                # Bepaal welke starttijd te gebruiken
+                if officiele_starttijd:
+                    # Gebruik officiële starttijd als deze beschikbaar is
+                    start_tijd_str = officiele_starttijd
+                    print(f"  ✅ Gebruik officiële starttijd: {start_tijd_str}")
+                else:
+                    # Zoek voorkeur start tijd als fallback (kan zijn "11:33-12:36" of "-")
+                    voorkeur_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)(?=\s*Tee:)', desc_text)
+                    if voorkeur_match:
+                        voorkeur_value = voorkeur_match.group(1).strip()
+                        print(f"  ⏰ Voorkeur start tijd: {voorkeur_value}")
+                        
+                        # Check of het een tijdstip is (niet "-")
+                        if voorkeur_value != "-":
+                            # Parse eerste tijdstip uit range (bijv. "11:33" uit "11:33-12:36")
+                            start_tijd_str = voorkeur_value.split('-')[0]
+                            print(f"  ✅ Gebruik voorkeur starttijd: {start_tijd_str}")
+                        else:
+                            print(f"  ⏰ Voorkeur start is '-', gebruik standaard 10:00")
+                            start_tijd_str = "10:00"
+                    else:
+                        print(f"  ⏰ Geen voorkeur start tijd gevonden, gebruik standaard 10:00")
+                        start_tijd_str = "10:00"
+                
+                # Parse de gekozen starttijd
+                start_tijd = datetime.strptime(start_tijd_str, '%H:%M').time()
+                start_datetime = datetime.combine(
+                    datetime.strptime(datum_str, '%d/%m/%Y').date(),
+                    start_tijd
+                ) - timedelta(minutes=30)
+                # Make timezone-aware for Belgium
+                start_datetime = BELGIUM_TZ.localize(start_datetime)
                 
                 # Locatie uit beschrijving (eerste regel) - proper golf club name
                 lines = [line.strip() for line in desc_text.split('\n') if line.strip()]
@@ -372,20 +374,23 @@ class IGolfScraper:
                 
                 print(f"  🏌️  Locatie: {location}")
                 
-                # Zoek voorkeur start en tee info voor notes
-                voorkeur_start = "Voorkeur start: -"
-                tee_info = ""
+                # Maak notes - include starttijd en tee info
+                notes_parts = []
                 
-                # Parse voorkeur start voor notes - extract the full value (kan zijn "11:33-12:36" of "-")
-                voorkeur_notes_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)(?=\s*Tee:)', desc_text)
-                if voorkeur_notes_match:
-                    voorkeur_notes_value = voorkeur_notes_match.group(1).strip()
-                    if voorkeur_notes_value and voorkeur_notes_value != "-":
-                        voorkeur_start = f"Voorkeur start: {voorkeur_notes_value}"
-                    else:
-                        voorkeur_start = "Voorkeur start: -"
+                # Add starttijd (officieel of voorkeur)
+                if officiele_starttijd:
+                    notes_parts.append(f"Start: {officiele_starttijd}")
                 else:
-                    voorkeur_start = "Voorkeur start: -"
+                    # Parse voorkeur start voor notes - extract the full value (kan zijn "11:33-12:36" of "-")
+                    voorkeur_notes_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)(?=\s*Tee:)', desc_text)
+                    if voorkeur_notes_match:
+                        voorkeur_notes_value = voorkeur_notes_match.group(1).strip()
+                        if voorkeur_notes_value and voorkeur_notes_value != "-":
+                            notes_parts.append(f"Voorkeur start: {voorkeur_notes_value}")
+                        else:
+                            notes_parts.append("Voorkeur start: -")
+                    else:
+                        notes_parts.append("Voorkeur start: -")
                 
                 # Parse tee info - extract only the number
                 tee_match = re.search(r'Tee:\s*(\d+)', desc_text)
@@ -401,24 +406,8 @@ class IGolfScraper:
                     else:
                         tee_emoji = ""
                     
-                    tee_info = f"Tee: {tee_number}{tee_emoji}"
-                else:
-                    tee_info = ""
+                    notes_parts.append(f"Tee: {tee_number}{tee_emoji}")
                 
-                # TODO: Parse officiële starttijd (komt later online)
-                # Placeholder voor toekomstige implementatie
-                officiele_start = "Start: -"
-                
-                # Maak notes - only include clean voorkeur start and tee info
-                notes_parts = []
-                
-                # Add officiële starttijd (voorlopig altijd "-")
-                notes_parts.append(officiele_start)
-                
-                if voorkeur_start:
-                    notes_parts.append(voorkeur_start)
-                if tee_info:
-                    notes_parts.append(tee_info)
                 notes = '\n'.join(notes_parts)
                 
                 # Maak event met proper formatting
