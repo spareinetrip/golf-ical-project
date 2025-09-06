@@ -7,12 +7,26 @@ DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250906T102000Z
 SUMMARY:🏆  Vranken Pommery Prize
-UID:30109da5-ba0b-4af4-ae58-b328ac18f1cf@3010.org
-URL;VALUE=URI:https://waze.com/ul/hu14d4qfxy
+UID:57a291f4-4b9b-4cd4-b97f-41c355316524@57a2.org
+URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
 DESCRIPTION:Herinnering: 🏆  Vranken Pommery Prize morgen
 END:VALARM
+URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Herinnering: 🏆  Mercedes Trophy Members morgen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Start: -\nVoorkeur start: 10:12-11:15\nTee: 57▫️
+DURATION:PT4H
+LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
+DTSTART:20250920T074200Z
+SUMMARY:🏆  Mercedes Trophy Members
+UID:8a7026ed-3e07-486e-b0e7-112622681a57@8a70.org
 END:VEVENT
 END:VCALENDAR
