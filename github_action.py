@@ -377,6 +377,19 @@ class IGolfScraper:
                 # Maak notes - include starttijd en tee info
                 notes_parts = []
                 
+                # First, check for remarks/notes in the card
+                card_element = card.find_parent('div', class_='t-Card')
+                if card_element:
+                    card_info = card_element.find('div', class_='t-Card-info')
+                    if card_info:
+                        # Look for remark divs with content
+                        remark_divs = card_info.find_all('div', id=re.compile(r'^remark_PL\d+$'))
+                        for remark_div in remark_divs:
+                            remark_text = remark_div.get_text(strip=True)
+                            if remark_text:
+                                notes_parts.append(f"💬 {remark_text}")
+                                print(f"  📝 Remark gevonden: {remark_text}")
+                
                 # Add starttijd (officieel of voorkeur)
                 if officiele_starttijd:
                     notes_parts.append(f"Start: {officiele_starttijd}")
@@ -479,6 +492,19 @@ class IGolfScraper:
                 # Extract only Medespelers info for tee reservations
                 notes_parts = []
                 
+                # First, check for remarks/notes in the card
+                card_element = card.find_parent('div', class_='t-Card')
+                if card_element:
+                    card_info = card_element.find('div', class_='t-Card-info')
+                    if card_info:
+                        # Look for remark divs with content
+                        remark_divs = card_info.find_all('div', id=re.compile(r'^remark_PL\d+$'))
+                        for remark_div in remark_divs:
+                            remark_text = remark_div.get_text(strip=True)
+                            if remark_text:
+                                notes_parts.append(f"💬 {remark_text}")
+                                print(f"  📝 Remark gevonden: {remark_text}")
+                
                 # Add tee-time as first line
                 notes_parts.append(f"Start: {start_tijd_str}")
                 
@@ -575,6 +601,19 @@ class IGolfScraper:
                 
                 # Extract only Verantwoordelijke and Medespelers info for medespeler reservations
                 notes_parts = []
+                
+                # First, check for remarks/notes in the card
+                card_element = card.find_parent('div', class_='t-Card')
+                if card_element:
+                    card_info = card_element.find('div', class_='t-Card-info')
+                    if card_info:
+                        # Look for remark divs with content
+                        remark_divs = card_info.find_all('div', id=re.compile(r'^remark_PL\d+$'))
+                        for remark_div in remark_divs:
+                            remark_text = remark_div.get_text(strip=True)
+                            if remark_text:
+                                notes_parts.append(f"💬 {remark_text}")
+                                print(f"  📝 Remark gevonden: {remark_text}")
                 
                 # Add tee-time as first line
                 notes_parts.append(f"Start: {start_tijd_str}")
