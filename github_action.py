@@ -388,6 +388,7 @@ class IGolfScraper:
                             remark_text = remark_div.get_text(strip=True)
                             if remark_text:
                                 notes_parts.append(f"💬 {remark_text}")
+                                notes_parts.append("")  # Extra witregel na remark
                                 print(f"  📝 Remark gevonden: {remark_text}")
                 
                 # Add starttijd (officieel of voorkeur)
@@ -503,6 +504,7 @@ class IGolfScraper:
                             remark_text = remark_div.get_text(strip=True)
                             if remark_text:
                                 notes_parts.append(f"💬 {remark_text}")
+                                notes_parts.append("")  # Extra witregel na remark
                                 print(f"  📝 Remark gevonden: {remark_text}")
                 
                 # Add tee-time as first line
@@ -613,6 +615,7 @@ class IGolfScraper:
                             remark_text = remark_div.get_text(strip=True)
                             if remark_text:
                                 notes_parts.append(f"💬 {remark_text}")
+                                notes_parts.append("")  # Extra witregel na remark
                                 print(f"  📝 Remark gevonden: {remark_text}")
                 
                 # Add tee-time as first line
