@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:💬 Indien mogelijk graag met Arthur Le Jeune en Didier van Durme aub\n\nVoorkeur start: 10:12-11:15\nTee: 57▫️
+DESCRIPTION:💬 Graag met Arthur Le Jeune en Didier van Durme aub\n\nVoorkeur start: 10:12-11:15\nTee: 57▫️
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250920T074200Z
 SUMMARY:🏆  Mercedes Trophy Members
-UID:86dc36f1-1244-4e6e-8f19-a3ecb8245d15@86dc.org
+UID:df452b3d-a589-4d4b-a3c9-8f243cd47f85@df45.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
