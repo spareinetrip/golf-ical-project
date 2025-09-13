@@ -7,7 +7,7 @@ DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250914T102000Z
 SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
-UID:7db16476-ccaf-43a7-acfa-6b4c2fe21084@7db1.org
+UID:b7994be6-6090-4d5b-95f8-b755d26bb5b2@b799.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
@@ -27,6 +27,6 @@ DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250920T074200Z
 SUMMARY:🏆  Mercedes Trophy Members
-UID:7ae9da11-7953-4db0-b0ba-b3f11551bba9@7ae9.org
+UID:956801d3-18cd-4ffd-9955-562070a53636@9568.org
 END:VEVENT
 END:VCALENDAR
