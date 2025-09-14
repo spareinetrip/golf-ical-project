@@ -7,7 +7,7 @@ DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250920T074200Z
 SUMMARY:🏆  Mercedes Trophy Members
-UID:4f999ffd-19cd-454c-b92c-e06cf591c6e5@4f99.org
+UID:29163b43-983d-4f2e-b05b-e641c481da2c@2916.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
@@ -22,11 +22,11 @@ DESCRIPTION:Herinnering: ⛳️  Tee-time @ Royal Latem Golf Club morgen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:Start: 12:50
+DESCRIPTION:Start: 12:50\nMedespelers: Schrans Emiel
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20250914T102000Z
 SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
-UID:8ef9cf39-9ee3-486b-b255-2eba7d79c4e0@8ef9.org
+UID:9a9ce41e-5d76-4cd1-977c-c7a50c9920e6@9a9c.org
 END:VEVENT
 END:VCALENDAR
