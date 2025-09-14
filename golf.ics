@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: 12:50
+DESCRIPTION:💬 Graag met Arthur Le Jeune en Didier van Durme aub\n\nVoorkeur start: 10:12-11:15\nTee: 57▫️
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250914T102000Z
-SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
-UID:1a52326f-e380-4b71-8015-4f3c5ff6b36e@1a52.org
+DTSTART:20250920T074200Z
+SUMMARY:🏆  Mercedes Trophy Members
+UID:d71e9a27-d45d-4eab-b310-603b9efe2aff@d71e.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
@@ -22,11 +22,11 @@ DESCRIPTION:Herinnering: ⛳️  Tee-time @ Royal Latem Golf Club morgen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:💬 Graag met Arthur Le Jeune en Didier van Durme aub\n\nVoorkeur start: 10:12-11:15\nTee: 57▫️
+DESCRIPTION:Start: 12:50
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20250920T074200Z
-SUMMARY:🏆  Mercedes Trophy Members
-UID:7ee34dfa-1237-4dad-80ce-20c810326f58@7ee3.org
+DTSTART:20250914T102000Z
+SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
+UID:76289a1c-f793-4df6-9e31-39c0a99eafe0@7628.org
 END:VEVENT
 END:VCALENDAR
