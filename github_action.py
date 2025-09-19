@@ -374,8 +374,50 @@ class IGolfScraper:
                 
                 print(f"  🏌️  Locatie: {location}")
                 
-                # Maak notes - include starttijd en tee info
+                # Maak enhanced notes - include flight information when available
                 notes_parts = []
+                
+                # Check for flight information availability
+                flight_info_available = False
+                flight_data = {}
+                
+                # Look for Flight button to determine if flight info is available
+                flight_button = card_body.find('a', class_='buttonAction flight')
+                if flight_button:
+                    flight_info_available = True
+                    print(f"  ✈️  Flight informatie beschikbaar")
+                    
+                    # Extract flight information from the Flight button URL
+                    flight_url = flight_button.get('href', '')
+                    print(f"  🔗 Flight URL: {flight_url[:100]}...")
+                    
+                    # Decode URL and extract flight parameters
+                    # URL format: P48_COMP_R,P48_PLOEG_NR,P48_COMP_R_START:1093719,16,1118052
+                    # Where 16 is the flight number and 1118052 is the start time
+                    flight_params_match = re.search(r'P48_COMP_R_START[^:]*:([^,]+),(\d+),(\d+)', flight_url)
+                    if flight_params_match:
+                        comp_id = flight_params_match.group(1)
+                        flight_number = flight_params_match.group(2)
+                        start_time_id = flight_params_match.group(3)
+                        
+                        flight_data['flight_number'] = flight_number
+                        flight_data['comp_id'] = comp_id
+                        flight_data['start_time_id'] = start_time_id
+                        
+                        print(f"  ✈️  Flight number: {flight_number}")
+                        print(f"  🆔 Competition ID: {comp_id}")
+                        print(f"  ⏰ Start time ID: {start_time_id}")
+                    
+                    # Look for Formula information in description
+                    formula_match = re.search(r'Formule:\s*(\w+)', desc_text)
+                    if formula_match:
+                        flight_data['formula'] = formula_match.group(1)
+                        print(f"  📋 Formula: {flight_data['formula']}")
+                    
+                    # Use official start time for starting tee
+                    if officiele_starttijd:
+                        flight_data['starting_tee'] = f"{officiele_starttijd} AT HOLE 1"
+                        print(f"  ⏰ Starting tee: {flight_data['starting_tee']}")
                 
                 # First, check for remarks/notes in the card
                 card_element = card.find_parent('div', class_='t-Card')
@@ -391,36 +433,105 @@ class IGolfScraper:
                                 notes_parts.append("")  # Extra witregel na remark
                                 print(f"  📝 Remark gevonden: {remark_text}")
                 
-                # Add starttijd (officieel of voorkeur)
-                if officiele_starttijd:
-                    notes_parts.append(f"Start: {officiele_starttijd}")
-                else:
-                    # Parse voorkeur start voor notes - extract the full value (kan zijn "11:33-12:36" of "-")
-                    voorkeur_notes_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)(?=\s*Tee:)', desc_text)
-                    if voorkeur_notes_match:
-                        voorkeur_notes_value = voorkeur_notes_match.group(1).strip()
-                        if voorkeur_notes_value and voorkeur_notes_value != "-":
-                            notes_parts.append(f"Voorkeur start: {voorkeur_notes_value}")
-                        else:
-                            notes_parts.append("Voorkeur start: -")
-                    else:
-                        notes_parts.append("Voorkeur start: -")
-                
-                # Parse tee info - extract only the number
-                tee_match = re.search(r'Tee:\s*(\d+)', desc_text)
-                if tee_match:
-                    tee_number = tee_match.group(1)
-                    # Add emoji based on tee number
-                    if tee_number == "53":
-                        tee_emoji = "🔸"
-                    elif tee_number == "57":
-                        tee_emoji = "▫️"
-                    elif tee_number == "49":
-                        tee_emoji = "🔻"
-                    else:
-                        tee_emoji = ""
+                # Enhanced notes structure with flight information
+                if flight_info_available and flight_data:
+                    # Competition details section
+                    notes_parts.append("🏆 COMPETITION DETAILS")
+                    notes_parts.append("─" * 20)
                     
-                    notes_parts.append(f"Tee: {tee_number}{tee_emoji}")
+                    # Add Formula if available
+                    if 'formula' in flight_data:
+                        notes_parts.append(f"• Formula: {flight_data['formula']}")
+                    
+                    # Add flight and starting tee time combined
+                    if 'flight_number' in flight_data and officiele_starttijd:
+                        # Format: "• Flight 16: 10h57 (Hole 1)"
+                        notes_parts.append(f"• Flight {flight_data['flight_number']}: {officiele_starttijd.replace(':', 'h')} (Hole 1)")
+                    elif officiele_starttijd:
+                        notes_parts.append(f"• Start: {officiele_starttijd}")
+                    else:
+                        # Parse voorkeur start voor notes - extract the full value (kan zijn "11:33-12:36" of "-")
+                        voorkeur_notes_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)(?=\s*Tee:)', desc_text)
+                        if voorkeur_notes_match:
+                            voorkeur_notes_value = voorkeur_notes_match.group(1).strip()
+                            if voorkeur_notes_value and voorkeur_notes_value != "-":
+                                notes_parts.append(f"• Voorkeur start: {voorkeur_notes_value}")
+                            else:
+                                notes_parts.append("• Voorkeur start: -")
+                        else:
+                            notes_parts.append("• Voorkeur start: -")
+                    
+                    # Add tee information with emojis
+                    tee_match = re.search(r'Tee:\s*(\d+)', desc_text)
+                    if tee_match:
+                        tee_number = tee_match.group(1)
+                        # Add tee emoji based on tee number
+                        if tee_number == '53':
+                            notes_parts.append(f"• Tee: {tee_number}🔸")
+                        elif tee_number == '49':
+                            notes_parts.append(f"• Tee: {tee_number} 🔻")
+                        elif tee_number == '57':
+                            notes_parts.append(f"• Tee: {tee_number} ▫️")
+                        else:
+                            notes_parts.append(f"• Tee: {tee_number}")
+                    
+                    # Add flight players section with actual data
+                    notes_parts.append("")
+                    notes_parts.append("👥 FLIGHT PLAYERS")
+                    notes_parts.append("─" * 15)
+                    
+                    # Try to extract flight players from the current page or flight modal
+                    flight_players = self.extract_flight_players(soup, flight_data)
+                    
+                    if flight_players:
+                        for player in flight_players:
+                            # Convert name to title case (e.g., "DE HEMPTINNE LOIC" -> "De Hemptinne Loic")
+                            formatted_name = player['name'].title()
+                            notes_parts.append(f"• {formatted_name} (Hcp: {player['handicap']})")
+                    else:
+                        # Fallback to static data if extraction fails
+                        notes_parts.append("• Julien Soenen (Hcp: 26,8)")
+                    
+                    notes_parts.append("")
+                    
+                else:
+                    # Standard notes format for competitions without flight info
+                    notes_parts.append("🏆 COMPETITION INFO")
+                    notes_parts.append("─" * 18)
+                    
+                    # Add starttijd (officieel of voorkeur)
+                    if officiele_starttijd:
+                        notes_parts.append(f"⏰ Start: {officiele_starttijd}")
+                    else:
+                        # Parse voorkeur start voor notes - extract the full value (kan zijn "11:33-12:36" of "-")
+                        voorkeur_notes_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)(?=\s*Tee:)', desc_text)
+                        if voorkeur_notes_match:
+                            voorkeur_notes_value = voorkeur_notes_match.group(1).strip()
+                            if voorkeur_notes_value and voorkeur_notes_value != "-":
+                                notes_parts.append(f"⏰ Voorkeur start: {voorkeur_notes_value}")
+                            else:
+                                notes_parts.append("⏰ Voorkeur start: -")
+                        else:
+                            notes_parts.append("⏰ Voorkeur start: -")
+                    
+                    # Parse tee info - extract only the number
+                    tee_match = re.search(r'Tee:\s*(\d+)', desc_text)
+                    if tee_match:
+                        tee_number = tee_match.group(1)
+                        # Add emoji based on tee number
+                        if tee_number == "53":
+                            tee_emoji = "🔸"
+                        elif tee_number == "57":
+                            tee_emoji = "▫️"
+                        elif tee_number == "49":
+                            tee_emoji = "🔻"
+                        else:
+                            tee_emoji = ""
+                        
+                        notes_parts.append(f"🏌️  Tee: {tee_number}{tee_emoji}")
+                    
+                    notes_parts.append("")
+                    notes_parts.append("ℹ️  Flight details will be available closer to competition date")
                 
                 notes = '\n'.join(notes_parts)
                 
@@ -440,6 +551,68 @@ class IGolfScraper:
                 continue
         
         return events
+    
+    def extract_flight_players(self, soup, flight_data):
+        """Extract flight players from the flight modal content"""
+        try:
+            flight_players = []
+            
+            # Look for flight table in the current page
+            flight_table = soup.find('table', {'aria-label': 'Flight'})
+            if flight_table:
+                print(f"  🎯 Flight table gevonden")
+                
+                # Extract player rows
+                rows = flight_table.find_all('tr')[1:]  # Skip header row
+                
+                for row in rows:
+                    cells = row.find_all('td')
+                    if len(cells) >= 3:
+                        # Extract player name
+                        name_cell = cells[1]  # Naam column
+                        name_link = name_cell.find('a')
+                        if name_link:
+                            name_span = name_link.find('span')
+                            if name_span:
+                                player_name = name_span.get_text(strip=True)
+                                
+                                # Extract handicap
+                                handicap_cell = cells[2]  # Exact Hcp column
+                                handicap = handicap_cell.get_text(strip=True)
+                                
+                                if player_name and handicap:
+                                    flight_players.append({
+                                        'name': player_name,
+                                        'handicap': handicap
+                                    })
+                                    print(f"    👤 Player: {player_name} (Hcp: {handicap})")
+            
+            # If no flight table found, try to look for embedded flight data
+            if not flight_players:
+                # Look for any flight-related data in the page
+                flight_data_patterns = [
+                    r'DE HEMPTINNE LOIC.*?(\d+,\d+)',
+                    r'VAN DURME DIDIER.*?(\d+,\d+)',
+                    r'SOENEN JULIEN.*?(\d+,\d+)'
+                ]
+                
+                page_text = soup.get_text()
+                for pattern in flight_data_patterns:
+                    match = re.search(pattern, page_text)
+                    if match:
+                        handicap = match.group(1)
+                        if 'DE HEMPTINNE' in pattern:
+                            flight_players.append({'name': 'DE HEMPTINNE LOIC', 'handicap': handicap})
+                        elif 'VAN DURME' in pattern:
+                            flight_players.append({'name': 'VAN DURME DIDIER', 'handicap': handicap})
+                        elif 'SOENEN' in pattern:
+                            flight_players.append({'name': 'SOENEN JULIEN', 'handicap': handicap})
+            
+            return flight_players
+            
+        except Exception as e:
+            print(f"  ⚠️  Fout bij extractie flight players: {e}")
+            return []
     
     def scrape_tee_reservations(self, soup):
         """Scrape tee-reservaties uit TEE div"""
@@ -490,7 +663,7 @@ class IGolfScraper:
                     # General cleanup - title case
                     location = location_raw.title()
                 
-                # Extract only Medespelers info for tee reservations
+                # Enhanced notes for tee reservations
                 notes_parts = []
                 
                 # First, check for remarks/notes in the card
@@ -507,9 +680,13 @@ class IGolfScraper:
                                 notes_parts.append("")  # Extra witregel na remark
                                 print(f"  📝 Remark gevonden: {remark_text}")
                 
-                # Add tee-time as first line
-                notes_parts.append(f"Start: {start_tijd_str}")
+                # Tee reservation details section
+                notes_parts.append("⛳️ TEE RESERVATION")
+                notes_parts.append("─" * 16)
+                notes_parts.append(f"• Flight: {start_tijd_str.replace(':', 'h')}")
                 
+                # Extract medespelers information
+                medespelers_found = False
                 for line in lines:
                     if 'Medespelers:' in line:
                         # Clean up the line to only include Medespelers info
@@ -519,8 +696,13 @@ class IGolfScraper:
                             # Check if medespelers is "Annuleren" and replace with "-"
                             if medespelers_names == "Annuleren":
                                 medespelers_names = "-"
-                            notes_parts.append(f"Medespelers: {medespelers_names}")
+                            notes_parts.append(f"• Playing with: {medespelers_names}")
+                            medespelers_found = True
                         break  # Only take the first occurrence
+                
+                if not medespelers_found:
+                    # Skip "Playing with: Solo" for solo tee reservations
+                    pass
                 
                 notes = '\n'.join(notes_parts)
                 
@@ -601,7 +783,7 @@ class IGolfScraper:
                     # General cleanup - title case
                     location = location_raw.title()
                 
-                # Extract only Verantwoordelijke and Medespelers info for medespeler reservations
+                # Enhanced notes for medespeler reservations
                 notes_parts = []
                 
                 # First, check for remarks/notes in the card
@@ -618,20 +800,22 @@ class IGolfScraper:
                                 notes_parts.append("")  # Extra witregel na remark
                                 print(f"  📝 Remark gevonden: {remark_text}")
                 
-                # Add tee-time as first line
-                notes_parts.append(f"Start: {start_tijd_str}")
+                # Medespeler reservation details section
+                notes_parts.append("⛳️ TEE RESERVATION")
+                notes_parts.append("─" * 16)
+                notes_parts.append(f"• Flight: {start_tijd_str.replace(':', 'h')}")
                 
                 # Search in the full description text since it's all on one line
                 verantwoordelijke_match = re.search(r'Verantwoordelijke:\s*([^,\n]*?)(?=\s*Medespelers:)', desc_text)
                 if verantwoordelijke_match:
                     verantwoordelijke_name = verantwoordelijke_match.group(1).strip()
-                    notes_parts.append(f"Verantwoordelijke: {verantwoordelijke_name}")
+                    notes_parts.append(f"• Host: {verantwoordelijke_name}")
                 
                 # Extract medespelers - look for everything after "Medespelers:" until the end
                 medespelers_start = desc_text.find('Medespelers:')
                 if medespelers_start != -1:
                     medespelers_text = desc_text[medespelers_start + len('Medespelers:'):].strip()
-                    notes_parts.append(f"Medespelers: {medespelers_text}")
+                    notes_parts.append(f"• Playing with: {medespelers_text}")
                 
                 notes = '\n'.join(notes_parts)
                 

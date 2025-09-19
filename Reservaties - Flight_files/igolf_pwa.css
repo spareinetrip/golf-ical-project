@@ -1,0 +1,871 @@
+/*login image en eventueel titel te overschrijven*/
+.t-PageBody--login {
+    background-repeat: no-repeat;
+    /* background-position-x: center; */
+    background-position-y: bottom;
+    background-size: cover;
+    background-image: url('/i/isb/golf/i-pass/Koninklijke_Golf_Club_van_Belgie_Ravenstein_1200.jpg');
+}
+
+.t-Login-logo {
+    background-image: url('/i/isb/golf/i-pass/pwa_begolf_login.png?v=2.1');
+    height: 250px;
+    width: 250px;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: 0 auto;
+}
+
+.t-Login-title {
+    display: none;
+}
+
+.t-Header-logo .title, .t-Header-logo .refresh, .t-Header-logo .print {
+    display: none;
+}
+
+.t-BreadcrumbRegion-titleText {
+    margin-bottom: 0;
+}
+
+.t-NavigationBar-item.has-username .t-Button-label {
+    text-transform: initial;
+}
+
+.t-Cards {
+    margin: 0;
+}
+
+/*bug in chrome (na update v94), gefocused veld heeft tekst onzichtbaar*/
+.apex-item-select,
+.apex-item-text,
+.apex-item-textarea,
+.apex-item-multi {
+    backface-visibility: hidden;
+}
+
+/*loading transition between pages*/
+@media only screen and (max-width: 480px) {
+    /*op klein scherm, menu toeklappen*/ body.apex-side-nav.js-navExpanded.page-transition.loading-busy .t-Body-nav {
+        width: 0;
+    }
+
+    body.apex-side-nav.js-navExpanded.page-transition.loading-busy .t-Body-main {
+        margin-left: 0;
+        transform: translate3d(0px,0,0);
+    }
+}
+
+.page-loader {
+    position: fixed;
+    height: 100px;
+    width: 100px;
+    left: 37%;
+    left: calc(50% - 50px);
+    top: 43%;
+    top: calc(50% - 50px);
+    display: none;
+    background-color: #eee;
+    border-radius: 3px;
+    border-radius: 50%;
+    /* box-shadow: 0px 2px 4px 0px rgba(0,0,0,.2); */
+    z-index: 9999999;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,.2), 1000px 0 0 0 inset rgba(0,0,0,0);
+}
+
+.page-loader.vvg {
+    background-image: url(/i/isb/golf/i-pass/vvg_logo_klein_zw.png);
+}
+
+.page-loader.afg {
+    background-image: url(/i/isb/golf/i-pass/afg_logo_klein_zw.png);
+}
+
+.page-loader.igolf {
+    background-image: url(/i/isb/golf/i-pass/igolf_logo_klein_zw.png);
+}
+
+.loader {
+    height: 100%;
+    width: 100%;
+}
+
+.loader div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    border: 4px solid #666;
+    border-radius: 50%;
+    animation: loader 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #666 transparent transparent transparent;
+}
+
+.loader div:nth-child(1) {
+    animation-delay: -0.3s;
+}
+
+.loader div:nth-child(2) {
+    animation-delay: -0.2s;
+}
+
+.loader div:nth-child(3) {
+    animation-delay: -0.1s;
+}
+
+@keyframes loader {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*PWA*/
+.t-Header-logo-link {
+  display: block;
+}
+.club_logo_wrap {
+    height: 35px;
+    width: 35px;
+    background-color: #ffffff;
+    padding: 2px;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.club_logo {
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+/*PWA footer*/
+.igolf_wrapper {
+    text-align: center;
+    height: 66px;
+    font-size: 10px;
+}
+
+.igolf_wrapper .igolf {
+    height: 40px;
+    margin: 0px 20px;
+}
+
+.igolf_wrapper .vvg {
+    height: 35px;
+    margin: 0px 20px;
+}
+
+.igolf_wrapper .afg {
+    height: 35px;
+    margin: 0px 20px;
+}
+
+.clear {
+    clear: both;
+}
+
+/*sponsor*/
+.sponsor {
+    height: 250px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sponsor.fullscreen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+}
+
+.sponsor .background {
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.sponsor.vanlanschot_NL.winter, 
+.sponsor.vanlanschot_FR.winter, 
+.sponsor.vanlanschot_ENG.winter,
+.sponsor.vanlanschot_D.winter {
+    background-color: #52a4db;
+}
+.sponsor.vanlanschot_NL.lente, 
+.sponsor.vanlanschot_FR.lente, 
+.sponsor.vanlanschot_ENG.lente,
+.sponsor.vanlanschot_D.lente {
+    background-color: #71af50;
+}
+.sponsor.vanlanschot_NL.herfst, 
+.sponsor.vanlanschot_FR.herfst, 
+.sponsor.vanlanschot_ENG.herfst,
+.sponsor.vanlanschot_D.herfst {
+    background-color: #d45315;
+}
+.sponsor.vanlanschot_NL.zomer, 
+.sponsor.vanlanschot_FR.zomer, 
+.sponsor.vanlanschot_ENG.zomer,
+.sponsor.vanlanschot_D.zomer {
+    background-color: #d45315;
+}
+
+.sponsor.vanlanschot_NL.winter .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_winter_NL.svg);
+}
+.sponsor.vanlanschot_FR.winter .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_winter_FR.svg);
+}
+.sponsor.vanlanschot_ENG.winter .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_winter_ENG.svg);
+}
+.sponsor.vanlanschot_D.winter .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_winter_D.svg);
+}
+.sponsor.vanlanschot_NL.lente .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_lente_NL.svg);
+}
+.sponsor.vanlanschot_FR.lente .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_lente_FR.svg);
+}
+.sponsor.vanlanschot_ENG.lente .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_lente_ENG.svg);
+}
+.sponsor.vanlanschot_D.lente .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_lente_D.svg);
+}
+.sponsor.vanlanschot_NL.zomer .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_zomer_NL.svg);
+}
+.sponsor.vanlanschot_FR.zomer .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_zomer_FR.svg);
+}
+.sponsor.vanlanschot_ENG.zomer .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_zomer_ENG.svg);
+}
+.sponsor.vanlanschot_D.zomer .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_zomer_D.svg);
+}
+.sponsor.vanlanschot_NL.herfst .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_herfst_NL.svg);
+}
+.sponsor.vanlanschot_FR.herfst .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_herfst_FR.svg);
+}
+.sponsor.vanlanschot_ENG.herfst .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_herfst_ENG.svg);
+}
+.sponsor.vanlanschot_D.herfst .background {
+    background-image: url(/i/isb/golf/i-pass/sponsor_van_lanschot_herfst_D.svg);
+}
+
+/*big green egg pagina 69 sponsor*/
+.sponsor.big-green-egg {
+    background-color: #f0ede8;
+}
+.sponsor.big-green-egg video {
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    width: 100%;   
+}
+
+/*i-golf interactive*/
+.buttonAction.hcp_detail {
+    position: relative;
+    min-width: 60px;
+    min-height: 32px;
+    text-align: center;
+    padding-left: 30px;
+}
+
+.buttonAction.hcp_detail:before {
+    font-family: 'Font APEX Small';
+    content: "\f040";
+    position: absolute;
+    left: 10px;
+    font-size: 1.2em;
+}
+
+.buttonAction {
+    background-color: rgba(255,255,255,0.7) /*anders buttons te donker in donkere layout*/
+}
+
+.buttonAction.delete, .buttonAction.mail, .buttonAction.move, .buttonAction.plus, .buttonAction.save, .buttonAction.edit, .buttonAction.detail, .buttonAction.inschrijven, .buttonAction.inschr, .buttonAction.itee_reserveer, .buttonAction.niet_inschr, .buttonAction.itee_niet_reserveer, .buttonAction.itee_gereserveerd, .buttonAction.reserve_lijst, .buttonAction.info_blue, .buttonAction.info_red, .buttonAction.inschr_lijst, .buttonAction.flight, .buttonAction.start_lijst, .buttonAction.rangschikking, .buttonAction.ext, .buttonAction.pdf {
+    font-size: 0px;
+    text-align: center;
+}
+
+.buttonAction.edit:before, .buttonAction.detail:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f040";
+    font-size: 14px;
+}
+
+.buttonAction.delete {
+    background-color: #D00000;
+    color: #fff;
+}
+
+.buttonAction.delete:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f1f8";
+    font-size: 14px;
+}
+
+.buttonAction.plus, .buttonAction.save, .buttonAction.inschrijven, .buttonAction.inschr, .buttonAction.itee_reserveer, .buttonAction.reserve_lijst {
+    background-color: green;
+    color: #fff;
+}
+
+.buttonAction.inschrijven:before, .buttonAction.inschr:before, .buttonAction.itee_reserveer:before {
+    display: inline-block;
+    transform: rotate(180deg);
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f090";
+    font-size: 14px;
+}
+
+.buttonAction.niet_inschr, .buttonAction.itee_niet_reserveer, .buttonAction.itee_gereserveerd {
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    cursor: initial;
+}
+
+.buttonAction.niet_inschr:before, .buttonAction.itee_niet_reserveer:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f05e";
+    font-size: 14px;
+}
+
+.buttonAction.itee_gereserveerd:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f058";
+    font-size: 14px;
+}
+
+.buttonAction.reserve_lijst:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f007";
+    font-size: 14px;
+}
+
+.buttonAction.info_blue:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f05a";
+    font-size: 14px;
+}
+
+.buttonAction.info_red:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f05a";
+    font-size: 14px;
+    color: darkgoldenrod;
+}
+
+.buttonAction.inschr_lijst:before,
+.buttonAction.flight:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f0c0";
+    font-size: 14px;
+}
+
+.buttonAction.start_lijst:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f0ca";
+    font-size: 14px;
+}
+
+.buttonAction.rangschikking:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f091";
+    font-size: 14px;
+}
+
+.buttonAction.ext:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f0c1";
+    font-size: 14px;
+}
+
+.buttonAction.pdf:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f1c1";
+    font-size: 14px;
+}
+
+.buttonAction.plus:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f067";
+    font-size: 14px;
+}
+
+.buttonAction.save:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f0c7";
+    font-size: 14px;
+}
+
+.buttonAction.mail:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f0e0";
+    font-size: 14px;
+}
+
+.buttonAction.move:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f047";
+    font-size: 14px;
+}
+
+.buttonAction.score:before {
+    line-height: 22px;
+    font-family: 'Font APEX Small';
+    content: "\f022";
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.buttonAction.green {
+    background-color: green;
+    color: #fff;
+}
+
+/*profiel*/
+a.buttonAction.profile {
+    margin-right: 5px;
+}
+
+.buttonProfile {
+    cursor: pointer;
+    padding: 0px 4px;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.buttonProfile:before {
+    line-height: 26px;
+    font-family: Font APEX Small;
+    content: "\f007";
+    font-size: 16px;
+    margin-right: 4px;
+}
+
+/*
+.current_user {
+    font-weight: bold;
+    background-color: yellow;
+}
+*/
+.current_user:before {
+    content: ' ';
+    background-color: yellow;
+    width: 10px;
+    height: 10px;
+    position: relative;
+    display: inline-block;
+    margin-right: 2px;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+}
+
+/*ipass itee reservatie*/
+.ipass_avail {
+    border-radius: 5px;
+    height: 100%;
+    text-align: center;
+    line-height: 27px;
+    display: block;
+    color: #161513;
+}
+
+.ipass_dag {
+    background-color: #23AEFF;
+}
+
+.ipass_24 {
+    background-color: #00FF40;
+}
+
+.ipass_12 {
+    background-color: #BFFF00;
+}
+
+.ipass_6 {
+    background-color: #FFBF00;
+}
+
+.ipass_0 {
+    background-color: #FF4000;
+}
+
+.ipass_niets {
+    background-color: #BDBDBD;
+}
+
+/*apex verzet de breedte van radio-groups, komt niet goed als die in de rechtse regio staan*/
+@media (max-width: 640px) {
+    .apex-item-group--rc .apex-item-option {
+        float: initial;
+        display: initial;
+    }
+}
+
+/*radiogroups: lange tekst komt niet goed*/
+.apex-item-group--rc .apex-item-option label {
+    white-space: normal;
+}
+
+/*scorekaart*/
+/*begin Tee kleuren */
+.casual_tee_BLACK {
+    text-align: center;
+    background-color: black;
+    padding: 5px;
+    color: white;
+    border-radius: 4px;
+}
+
+.casual_tee_BLUE {
+    text-align: center;
+    background-color: blue;
+    padding: 5px;
+    color: white;
+    border-radius: 4px;
+}
+
+.casual_tee_BROWN {
+    text-align: center;
+    background-color: brown;
+    padding: 5px;
+    color: white;
+    border-radius: 4px;
+}
+
+.casual_tee_GRAY {
+    text-align: center;
+    background-color: gray;
+    padding: 5px;
+    color: white;
+    border-radius: 4px;
+}
+
+.casual_tee_GREEN {
+    text-align: center;
+    background-color: green;
+    padding: 5px;
+    color: white;
+    border-radius: 4px;
+}
+
+.casual_tee_GREY {
+    text-align: center;
+    background-color: grey;
+    padding: 5px;
+    color: white;
+    border-radius: 4px;
+}
+
+.casual_tee_ORANGE {
+    text-align: center;
+    background-color: orange;
+    padding: 5px;
+    color: white;
+    border-radius: 4px;
+}
+
+.casual_tee_PINK {
+    text-align: center;
+    background-color: pink;
+    padding: 5px;
+    color: white;
+    border-radius: 4px;
+}
+
+.casual_tee_RED {
+    text-align: center;
+    background-color: red;
+    padding: 5px;
+    color: white;
+    border-radius: 4px;
+}
+
+.casual_tee_WHITE {
+    text-align: center;
+    background-color: white;
+    padding: 5px;
+    color: black;
+    border: 1px solid grey;
+    border-radius: 4px;
+}
+
+.casual_tee_YELLOW {
+    text-align: center;
+    background-color: yellow;
+    padding: 5px;
+    color: black;
+    border-radius: 4px;
+}
+
+.casual_tee_GOLDENROD {
+    text-align: center;
+    background-color: goldenrod;
+    padding: 5px;
+    color: white;
+    border-radius: 4px;  
+}
+
+.casual_tee_LIGHTBLUE {
+    text-align: center;
+    background-color: lightblue;
+    padding: 5px;
+    color: black;
+    border-radius: 4px;  
+}
+/* einde Tee kleuren */
+
+/*scorekaart*/
+#SCORECARD_DET input {
+    padding: 0;
+    text-align: center;
+    border: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    outline: 0;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    box-shadow: none;
+    width: 33px;
+}
+
+.scoreAccent2 {
+    min-height: 40px;
+    min-width: 30px;
+}
+
+.albatros input, .eagle input, .birdie input, .par input, .bogey input, .doublebogey input {
+    text-align: center;
+}
+
+.albatros {
+    background-color: #BCEE68;
+    border-radius: 5px;
+    border-bottom: 5px solid #BCEE68;
+}
+
+.eagle {
+    background-color: #FBA16C;
+    border-radius: 5px;
+    border-bottom: 5px solid #FBA16C;
+}
+
+.birdie {
+    background-color: #FFDAB9;
+    border-radius: 5px;
+    border-bottom: 5px solid #FFDAB9;
+}
+
+.par {
+    background-color: #FFFFAA;
+    border-radius: 5px;
+    border-bottom: 5px solid #FFFFAA;
+}
+
+.bogey {
+    background-color: #BFEFFF;
+    border-radius: 5px;
+    border-bottom: 5px solid #BFEFFF;
+}
+
+.doublebogey {
+    background-color: #00B2EE;
+    border-radius: 5px;
+    border-bottom: 5px solid #00B2EE;
+}
+
+/*Scorekaart*/
+#SCORECARD_DET table th, #SCORECARD_DET table td {
+    padding: 5px;
+}
+/*Scorekaart, flip horizontaal naar verticaal, begin*/
+#SCORECARD_DET.verticaal table {
+    border-collapse: collapse;
+}
+
+#SCORECARD_DET.verticaal table thead {
+    display: block;
+    float: left;
+}
+
+#SCORECARD_DET.verticaal table tbody {
+    display: block;
+    float: left;
+}
+
+#SCORECARD_DET.verticaal table tr {
+    display: block;
+    float: left;
+}
+
+#SCORECARD_DET.verticaal table tr tr {
+    display: block;
+    float: left;
+}
+
+#SCORECARD_DET.verticaal table th, #SCORECARD_DET.verticaal table td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    padding: 5px;
+}
+
+#SCORECARD_DET.verticaal table br {
+    display: none;
+}
+
+#SCORECARD_DET.verticaal .t-Report-pagination {
+    display: none;
+}
+
+#SCORECARD_DET.verticaal .t-Report {
+    overflow: hidden;
+    width: max-content;
+}
+
+#SCORECARD_DET.verticaal .scoreAccent2.bovenlijn {
+    min-height: initial;
+    min-width: initial;
+}
+#SCORECARD_DET.verticaal .scoreAccent2.onderlijn {
+    min-height: 30px;
+    min-width: 30px;
+    line-height: 30px;
+}
+
+#SCORECARD_DET.verticaal input {
+    padding: 0;
+    text-align: center;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    box-shadow: none;
+    width: 30px;
+    height: 32px;
+    display: inline-block;
+    float: left;
+}
+#SCORECARD_DET.verticaal .score-input-min,
+#SCORECARD_DET.verticaal .score-input-plus {
+    display: inline-block;
+    float: left;
+    width: 32px;
+    height: 32px;
+    top: 0;
+    background-color: rgba(0,0,0,0.2);
+    color: #fff;
+    border-radius: 5px;
+}
+#SCORECARD_DET.verticaal .score-input-min:hover,
+#SCORECARD_DET.verticaal .score-input-plus:hover {
+    background-color: rgba(0,0,0,0.3);
+}
+#SCORECARD_DET.verticaal .score-input-min:before {
+    content: "-";
+    line-height: 32px;
+}
+#SCORECARD_DET.verticaal .score-input-plus:before {
+    content: "+";
+    line-height: 32px;
+}
+
+#SCORECARD_DET.verticaal .albatros, 
+#SCORECARD_DET.verticaal .eagle,
+#SCORECARD_DET.verticaal .birdie, 
+#SCORECARD_DET.verticaal .par, 
+#SCORECARD_DET.verticaal .bogey, 
+#SCORECARD_DET.verticaal .doublebogey {
+    border-bottom: 0;
+}
+
+#SCORECARD_DET.verticaal td:nth-child(1) {
+    padding-left: 5px;
+}
+
+#SCORECARD_DET.verticaal .t-Report-wrap {
+    width: 100%;
+}
+/*Scorekaart, flip horizontaal naar verticaal, einde*/
+
+/*berichten*/
+.pwa-message.new-messages:after {
+    content: attr(data-count);
+    font-size: 12px;
+    position: absolute;
+    left: -15px;
+    top: -10px;
+    border-radius: 3px;
+    background-color: rgba(255,0,0,1);
+    height: 18px;
+    line-height: 18px;
+    color: #fff;
+    text-align: center;
+    padding: 0px 5px;
+    font-family: 'Oracle Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif !important;
+}
+
+/*om tabel wat te versmallen qua padding, extra class toe te voegen in regio-attributes-css classes*/
+.smaller th,
+.smaller td {
+  padding: 8px 6px;
+}
+
+/*regio titel in rechtse regio anders soms niet volledig leesbaar*/
+.t-Body-actionsContent .t-Region-title {
+    max-width: 165px;
+}

@@ -1,0 +1,73 @@
+apex.dialog.registerHandlers([
+{
+"action":"init",
+"ids":["MODAL_DIALOG"]
+,"code":function(pPageUrl,pTitle,pHeight,pWidth,pMaxWidth,pIsModal,pDialogCssClasses,dialogAttributes,pDialog,pPageCssClasses,pTriggeringElement){apex.navigation.dialog(pPageUrl,{title:pTitle,height:pHeight,width:pWidth,maxWidth:pMaxWidth,modal:pIsModal,dialog:pDialog,dialogAttributes},'t-Dialog-page--standard '+pDialogCssClasses,pTriggeringElement);}
+},
+{
+"action":"init",
+"ids":["WIZARD_MODAL_DIALOG"]
+,"code":function(pPageUrl,pTitle,pHeight,pWidth,pMaxWidth,pIsModal,pDialogCssClasses,dialogAttributes,pDialog,pPageCssClasses,pTriggeringElement){apex.navigation.dialog(pPageUrl,{title:pTitle,height:pHeight,width:pWidth,maxWidth:pMaxWidth,modal:pIsModal,dialog:pDialog,dialogAttributes},'t-Dialog-page--wizard '+pDialogCssClasses,pTriggeringElement);}
+},
+{
+"action":"close",
+"ids":["MODAL_DIALOG","WIZARD_MODAL_DIALOG"]
+,"code":function(pIsModal,pTarget){apex.navigation.dialog.close(pIsModal,pTarget);}
+}]);
+apex.dialog.registerAttributes([
+{
+"appId":165,"pageId":14,"attributes": function() { return {resizable:true}; }
+}
+,
+{
+"appId":165,"pageId":15,"attributes": function() { return {resizable:true}; }
+}
+,
+{
+"appId":165,"pageId":17,"attributes": function() { return {resizable:true}; }
+}
+,
+{
+"appId":165,"pageId":20,"attributes": function() { return {close: function(event, ui) {apex.navigation.dialog.close(true,{dialogPageId:20});}}; }
+}
+,
+{
+"appId":165,"pageId":21,"attributes": function() { return {close: function(event, ui) {apex.navigation.dialog.close(true,{dialogPageId:21});}}; }
+}
+,
+{
+"appId":165,"pageId":23,"attributes": function() { return {close: function(event, ui) {apex.navigation.dialog.close(true,{dialogPageId:23});}}; }
+}
+,
+{
+"appId":165,"pageId":27,"attributes": function() { return {close: function(event, ui) {apex.navigation.dialog.close(true,{dialogPageId:27});}}; }
+}
+,
+{
+"appId":165,"pageId":37,"attributes": function() { return {resizable:true}; }
+}
+,
+{
+"appId":165,"pageId":128,"attributes": function() { return {resizable:true}; }
+}
+,
+{
+"appId":165,"pageId":130,"attributes": function() { return {resizable:true}; }
+}
+,
+{
+"appId":165,"pageId":131,"attributes": function() { return {resizable:true}; }
+}
+,
+{
+"appId":165,"pageId":132,"attributes": function() { return {resizable:true}; }
+}
+,
+{
+"appId":165,"pageId":133,"attributes": function() { return {resizable:true}; }
+}
+,
+{
+"appId":165,"pageId":134,"attributes": function() { return {resizable:true}; }
+}
+]);
