@@ -243,10 +243,12 @@ class IGolfScraper:
             wedstrijden_region = soup.find('div', id='WEDSTRIJDEN')
             tee_region = soup.find('div', id='TEE')
             itee_co_region = soup.find('div', id='ITEE_CO')
+            prores_region = soup.find('div', id='PRORES')
             
             print(f"🔍 WEDSTRIJDEN region gevonden: {wedstrijden_region is not None}")
             print(f"🔍 TEE region gevonden: {tee_region is not None}")
             print(f"🔍 ITEE_CO region gevonden: {itee_co_region is not None}")
+            print(f"🔍 PRORES region gevonden: {prores_region is not None}")
             
             # Debug: Check for any t-Card-title elements
             all_cards = soup.find_all('h3', class_='t-Card-title')
@@ -272,6 +274,11 @@ class IGolfScraper:
             medespeler_events = self.scrape_medespeler_reservations(soup)
             all_events.extend(medespeler_events)
             print(f"👥 {len(medespeler_events)} medespeler reservaties gevonden")
+            
+            # D. Scrape lesson reservaties (pro-reservaties)
+            lesson_events = self.scrape_lesson_reservations(soup)
+            all_events.extend(lesson_events)
+            print(f"📚 {len(lesson_events)} golfles reservaties gevonden")
             
             print(f"✅ Totaal {len(all_events)} reservaties gescraped")
             return all_events
@@ -659,6 +666,122 @@ class IGolfScraper:
                 
             except Exception as e:
                 print(f"⚠️  Fout bij medespeler reservatie parsing: {e}")
+                continue
+        
+        return events
+    
+    def scrape_lesson_reservations(self, soup):
+        """Scrape lesson reservaties uit PRORES div"""
+        events = []
+        
+        # Zoek naar de PRORES region
+        prores_region = soup.find('div', id='PRORES')
+        if not prores_region:
+            print("⚠️  PRORES region niet gevonden")
+            return events
+        
+        # Zoek naar alle t-Card-title elementen binnen PRORES
+        cards = prores_region.find_all('h3', class_='t-Card-title')
+        print(f"🔍 PRORES: {len(cards)} cards gevonden")
+        
+        for i, card in enumerate(cards):
+            try:
+                title_text = card.get_text(strip=True)
+                print(f"🔍 PRORES card {i+1}: {title_text}")
+                
+                # Parse datum en tijd: "24/09/2025 (10:00-10:30)"
+                datetime_match = re.search(r'(\d{2}/\d{2}/\d{4})\s*\((\d{1,2}:\d{2})-(\d{1,2}:\d{2})\)', title_text)
+                if not datetime_match:
+                    print(f"  ❌ Datum/tijd format niet herkend")
+                    continue
+                
+                datum_str = datetime_match.group(1)
+                start_tijd_str = datetime_match.group(2)
+                end_tijd_str = datetime_match.group(3)
+                print(f"  📅 Datum: {datum_str}, Tijd: {start_tijd_str}-{end_tijd_str}")
+                
+                # Zoek beschrijving in de huidige card
+                card_body = card.find_parent('div', class_='t-Card').find('div', class_='t-Card-body')
+                desc_elem = card_body.find('div', class_='t-Card-desc')
+                if not desc_elem:
+                    print(f"  ❌ t-Card-desc niet gevonden in huidige card")
+                    continue
+                
+                desc_text = desc_elem.get_text()
+                print(f"  📝 Beschrijving: {desc_text[:100]}...")
+                lines = [line.strip() for line in desc_text.split('\n') if line.strip()]
+                location_raw = lines[0] if lines else "Onbekende golfclub"
+                
+                # Clean up location name (proper case)
+                location_parts = location_raw.split()
+                if len(location_parts) >= 3 and location_parts[0] == "ROYAL" and location_parts[1] == "LATEM":
+                    location = "Royal Latem Golf Club"
+                else:
+                    # General cleanup - title case
+                    location = location_raw.title()
+                
+                # Extract pro information and remarks
+                notes_parts = []
+                
+                # First, check for remarks/notes in the card
+                card_element = card.find_parent('div', class_='t-Card')
+                if card_element:
+                    card_info = card_element.find('div', class_='t-Card-info')
+                    if card_info:
+                        remark_text = card_info.get_text(strip=True)
+                        if remark_text and remark_text != "Opm:":
+                            # Remove "Opm:" prefix if present
+                            if remark_text.startswith("Opm:"):
+                                remark_text = remark_text[4:].strip()
+                            if remark_text:
+                                notes_parts.append(f"💬 {remark_text}")
+                                notes_parts.append("")  # Extra witregel na remark
+                                print(f"  📝 Remark gevonden: {remark_text}")
+                
+                # Add lesson time
+                notes_parts.append(f"Tijd: {start_tijd_str}-{end_tijd_str}")
+                
+                # Extract pro information from description
+                pro_match = re.search(r'Pro:\s*([^<\n]+)', desc_text)
+                if pro_match:
+                    pro_name = pro_match.group(1).strip()
+                    notes_parts.append(f"Pro: {pro_name}")
+                
+                notes = '\n'.join(notes_parts)
+                
+                print(f"  🏌️  Locatie: {location}")
+                
+                # Parse datetime - no need to subtract 30 minutes for lessons
+                start_tijd = datetime.strptime(start_tijd_str, '%H:%M').time()
+                end_tijd = datetime.strptime(end_tijd_str, '%H:%M').time()
+                start_datetime = datetime.combine(
+                    datetime.strptime(datum_str, '%d/%m/%Y').date(),
+                    start_tijd
+                )
+                end_datetime = datetime.combine(
+                    datetime.strptime(datum_str, '%d/%m/%Y').date(),
+                    end_tijd
+                )
+                # Make timezone-aware for Belgium
+                start_datetime = BELGIUM_TZ.localize(start_datetime)
+                end_datetime = BELGIUM_TZ.localize(end_datetime)
+                
+                # Calculate lesson duration
+                lesson_duration = end_datetime - start_datetime
+                
+                # Maak event met proper formatting
+                event = {
+                    'title': f'📚  Golfles @ {location}',
+                    'location': location,
+                    'start': start_datetime,
+                    'duration': lesson_duration,
+                    'notes': notes
+                }
+                events.append(event)
+                print(f"  ✅ Golfles toegevoegd: {title_text} @ {location}")
+                
+            except Exception as e:
+                print(f"⚠️  Fout bij golfles parsing: {e}")
                 continue
         
         return events
