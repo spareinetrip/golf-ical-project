@@ -159,6 +159,12 @@ class IGolfScraper:
             print(f"❌ Fout bij Chrome driver setup: {e}")
             raise
     
+    def format_time_for_notes(self, time_str):
+        """Convert time format from HH:MM to HHuMM for notes display"""
+        if not time_str or time_str == "-":
+            return time_str
+        return time_str.replace(":", "u")
+    
     def login_and_navigate(self):
         """Log in op i-Golf.be en ga direct naar reservaties pagina"""
         try:
@@ -400,14 +406,14 @@ class IGolfScraper:
                 
                 # Add starttijd (officieel of voorkeur)
                 if officiele_starttijd:
-                    notes_parts.append(f"Start: {officiele_starttijd}")
+                    notes_parts.append(f"Start: {self.format_time_for_notes(officiele_starttijd)}")
                 else:
                     # Parse voorkeur start voor notes - extract the full value (kan zijn "11:33-12:36" of "-")
                     voorkeur_notes_match = re.search(r'Voorkeur start:\s*([^-\s]+(?:-[^-\s]+)?)(?=\s*Tee:)', desc_text)
                     if voorkeur_notes_match:
                         voorkeur_notes_value = voorkeur_notes_match.group(1).strip()
                         if voorkeur_notes_value and voorkeur_notes_value != "-":
-                            notes_parts.append(f"Voorkeur start: {voorkeur_notes_value}")
+                            notes_parts.append(f"Voorkeur start: {self.format_time_for_notes(voorkeur_notes_value)}")
                         else:
                             notes_parts.append("Voorkeur start: -")
                     else:
@@ -515,7 +521,7 @@ class IGolfScraper:
                                 print(f"  📝 Remark gevonden: {remark_text}")
                 
                 # Add tee-time as first line
-                notes_parts.append(f"Start: {start_tijd_str}")
+                notes_parts.append(f"Start: {self.format_time_for_notes(start_tijd_str)}")
                 
                 for line in lines:
                     if 'Medespelers:' in line:
@@ -626,7 +632,7 @@ class IGolfScraper:
                                 print(f"  📝 Remark gevonden: {remark_text}")
                 
                 # Add tee-time as first line
-                notes_parts.append(f"Start: {start_tijd_str}")
+                notes_parts.append(f"Start: {self.format_time_for_notes(start_tijd_str)}")
                 
                 # Search in the full description text since it's all on one line
                 verantwoordelijke_match = re.search(r'Verantwoordelijke:\s*([^,\n]*?)(?=\s*Medespelers:)', desc_text)
@@ -739,25 +745,29 @@ class IGolfScraper:
                                 print(f"  📝 Remark gevonden: {remark_text}")
                 
                 # Add lesson time
-                notes_parts.append(f"Tijd: {start_tijd_str}-{end_tijd_str}")
+                notes_parts.append(f"Tijd: {self.format_time_for_notes(start_tijd_str)}-{self.format_time_for_notes(end_tijd_str)}")
                 
-                # Extract pro information from description
+                # Extract pro information from description - clean up the name
                 pro_match = re.search(r'Pro:\s*([^<\n]+)', desc_text)
                 if pro_match:
                     pro_name = pro_match.group(1).strip()
+                    # Remove "Annuleren" button text and clean up the name
+                    pro_name = pro_name.replace('Annuleren', '').strip()
+                    # Convert to proper case (first letter uppercase, rest lowercase)
+                    pro_name = pro_name.title()
                     notes_parts.append(f"Pro: {pro_name}")
                 
                 notes = '\n'.join(notes_parts)
                 
                 print(f"  🏌️  Locatie: {location}")
                 
-                # Parse datetime - no need to subtract 30 minutes for lessons
+                # Parse datetime en trek 30 minuten af (same as other reservations)
                 start_tijd = datetime.strptime(start_tijd_str, '%H:%M').time()
                 end_tijd = datetime.strptime(end_tijd_str, '%H:%M').time()
                 start_datetime = datetime.combine(
                     datetime.strptime(datum_str, '%d/%m/%Y').date(),
                     start_tijd
-                )
+                ) - timedelta(minutes=30)
                 end_datetime = datetime.combine(
                     datetime.strptime(datum_str, '%d/%m/%Y').date(),
                     end_tijd
@@ -766,12 +776,12 @@ class IGolfScraper:
                 start_datetime = BELGIUM_TZ.localize(start_datetime)
                 end_datetime = BELGIUM_TZ.localize(end_datetime)
                 
-                # Calculate lesson duration
+                # Calculate lesson duration (including the 30-minute buffer)
                 lesson_duration = end_datetime - start_datetime
                 
                 # Maak event met proper formatting
                 event = {
-                    'title': f'📚  Golfles @ {location}',
+                    'title': f'📚  Pro-reservatie @ {location}',
                     'location': location,
                     'start': start_datetime,
                     'duration': lesson_duration,
