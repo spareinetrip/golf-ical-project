@@ -1,18 +1,4 @@
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
-BEGIN:VEVENT
-DESCRIPTION:Start: 13u00\nMedespelers: Jay MichelAnnuleren
-DURATION:PT4H
-LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20251001T103000Z
-SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
-UID:e14a1c04-a12d-404b-b81d-ae70c7d4428f@e14a.org
-URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Herinnering: ⛳️  Tee-time @ Royal Latem Golf Club morgen
-END:VALARM
-END:VEVENT
 END:VCALENDAR
