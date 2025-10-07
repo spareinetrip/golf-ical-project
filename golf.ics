@@ -7,7 +7,7 @@ DURATION:PT1H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20251016T143000Z
 SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
-UID:8ed08ee8-22f2-4d42-96f5-6aeb0add2a4f@8ed0.org
+UID:10881e96-c36d-4f47-b088-e21e64ced745@1088.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
@@ -27,6 +27,6 @@ DURATION:PT1H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20251007T133000Z
 SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
-UID:f0eb35fd-1134-4726-b780-e02fb73fcbf6@f0eb.org
+UID:99ca7257-3f4d-4b67-91c0-c24ab8129ae3@99ca.org
 END:VEVENT
 END:VCALENDAR
