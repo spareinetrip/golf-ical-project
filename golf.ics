@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: 17u30\nVerantwoordelijke: Duytschaever Charles\nMedespelers: SOENEN JULIEN\, Vanderlinden Quentin\, Jay Michel
-DURATION:PT4H
-LOCATION:Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
-DTSTART:20251010T150000Z
-SUMMARY:⛳️  Tee-time @ Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
-UID:d590d6cb-aa2b-4d9d-9520-bd058eef31be@d590.org
+DESCRIPTION:Tijd: 17u00-17u30\nPro: Verplancke Jan
+DURATION:PT1H
+LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
+DTSTART:20251016T143000Z
+SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
+UID:cf27b410-db82-42ae-8250-b1fbffe898d2@cf27.org
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
@@ -21,11 +21,11 @@ DESCRIPTION:Herinnering: 📚  Pro-reservatie @ Royal Latem Golf Club morgen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:Tijd: 17u00-17u30\nPro: Verplancke Jan
-DURATION:PT1H
-LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20251016T143000Z
-SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
-UID:aabc1fa2-1753-49fd-86e6-ebbaebba463c@aabc.org
+DESCRIPTION:Start: 17u30\nVerantwoordelijke: Duytschaever Charles\nMedespelers: SOENEN JULIEN\, Vanderlinden Quentin\, Jay Michel
+DURATION:PT4H
+LOCATION:Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
+DTSTART:20251010T150000Z
+SUMMARY:⛳️  Tee-time @ Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
+UID:d9ffa13c-9c9f-4cfa-b12b-494aea008536@d9ff.org
 END:VEVENT
 END:VCALENDAR
