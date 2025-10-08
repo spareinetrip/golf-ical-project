@@ -7,7 +7,7 @@ DURATION:PT1H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20251016T143000Z
 SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
-UID:cf27b410-db82-42ae-8250-b1fbffe898d2@cf27.org
+UID:1c0447d2-2a41-46c1-828e-33fbc7da58bc@1c04.org
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
@@ -26,6 +26,6 @@ DURATION:PT4H
 LOCATION:Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
 DTSTART:20251010T150000Z
 SUMMARY:⛳️  Tee-time @ Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
-UID:d9ffa13c-9c9f-4cfa-b12b-494aea008536@d9ff.org
+UID:957d7634-1c6a-4b22-a78e-cdf121f878d4@957d.org
 END:VEVENT
 END:VCALENDAR
