@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Tijd: 17u00-17u30\nPro: Verplancke Jan
-DURATION:PT1H
-LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20251016T143000Z
-SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
-UID:4b479fde-5452-4f27-996c-11f71c0089a5@4b47.org
+DESCRIPTION:Start: 17u30\nVerantwoordelijke: Duytschaever Charles\nMedespelers: SOENEN JULIEN\, Vanderlinden Quentin\, Jay Michel
+DURATION:PT4H
+LOCATION:Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
+DTSTART:20251010T150000Z
+SUMMARY:⛳️  Tee-time @ Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
+UID:38c6c76c-2aad-4ed6-be42-a9014b147611@38c6.org
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
@@ -21,11 +21,11 @@ DESCRIPTION:Herinnering: 📚  Pro-reservatie @ Royal Latem Golf Club morgen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:Start: 17u30\nVerantwoordelijke: Duytschaever Charles\nMedespelers: SOENEN JULIEN\, Vanderlinden Quentin\, Jay Michel
-DURATION:PT4H
-LOCATION:Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
-DTSTART:20251010T150000Z
-SUMMARY:⛳️  Tee-time @ Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
-UID:b1fe8f38-63c6-40c7-900d-6b966a84a501@b1fe.org
+DESCRIPTION:Tijd: 17u00-17u30\nPro: Verplancke Jan
+DURATION:PT1H
+LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
+DTSTART:20251016T143000Z
+SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
+UID:d7e939dd-9b69-481c-9f39-9f7ef873df57@d7e9.org
 END:VEVENT
 END:VCALENDAR
