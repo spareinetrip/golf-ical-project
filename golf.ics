@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: 17u30\nVerantwoordelijke: Duytschaever Charles\nMedespelers: SOENEN JULIEN\, Vanderlinden Quentin\, Jay Michel
-DURATION:PT4H
-LOCATION:Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
-DTSTART:20251010T150000Z
-SUMMARY:⛳️  Tee-time @ Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
-UID:ab424564-a387-438d-a137-73f4c8cce1e2@ab42.org
+DESCRIPTION:Tijd: 17u00-17u30\nPro: Verplancke Jan
+DURATION:PT1H
+LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
+DTSTART:20251016T143000Z
+SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
+UID:bc205038-2503-4fdf-83c6-95fab50739a5@bc20.org
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
@@ -21,11 +21,11 @@ DESCRIPTION:Herinnering: 📚  Pro-reservatie @ Royal Latem Golf Club morgen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:Tijd: 17u00-17u30\nPro: Verplancke Jan
-DURATION:PT1H
-LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20251016T143000Z
-SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
-UID:b88e6a9c-feaa-4c46-a837-1e6a507612e5@b88e.org
+DESCRIPTION:Start: 17u30\nVerantwoordelijke: Duytschaever Charles\nMedespelers: SOENEN JULIEN\, Vanderlinden Quentin\, Jay Michel
+DURATION:PT4H
+LOCATION:Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
+DTSTART:20251010T150000Z
+SUMMARY:⛳️  Tee-time @ Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
+UID:59af02c3-6151-4321-bd5f-22c750fd8db7@59af.org
 END:VEVENT
 END:VCALENDAR
