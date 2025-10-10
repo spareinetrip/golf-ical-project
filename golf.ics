@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Tijd: 17u00-17u30\nPro: Verplancke Jan
-DURATION:PT1H
-LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
-DTSTART:20251016T143000Z
-SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
-UID:4e4fb749-9809-4062-86f6-c5d4e79d006c@4e4f.org
+DESCRIPTION:Start: 17u30\nVerantwoordelijke: Duytschaever Charles\nMedespelers: SOENEN JULIEN\, Vanderlinden Quentin\, Jay Michel
+DURATION:PT4H
+LOCATION:Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
+DTSTART:20251010T150000Z
+SUMMARY:⛳️  Tee-time @ Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
+UID:9ce2dda1-41d0-4ee0-ab36-9a5ca653b37e@9ce2.org
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
@@ -21,11 +21,11 @@ DESCRIPTION:Herinnering: 📚  Pro-reservatie @ Royal Latem Golf Club morgen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:Start: 17u30\nVerantwoordelijke: Duytschaever Charles\nMedespelers: SOENEN JULIEN\, Vanderlinden Quentin\, Jay Michel
-DURATION:PT4H
-LOCATION:Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
-DTSTART:20251010T150000Z
-SUMMARY:⛳️  Tee-time @ Executive Club - Private Golf Zwijnaardezwijnaarde Qualifying Tee 1-9Reservatie Nr: 15770898Verantwoordelijke: Duytschaever Charlesmedespelers: Soenen Julien\, Vanderlinden Quentin\, Jay Michel
-UID:30795de8-1035-49f4-a718-d3e11955ff62@3079.org
+DESCRIPTION:Tijd: 17u00-17u30\nPro: Verplancke Jan
+DURATION:PT1H
+LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
+DTSTART:20251016T143000Z
+SUMMARY:📚  Pro-reservatie @ Royal Latem Golf Club
+UID:8a5b7449-e223-4319-8edd-28509415583f@8a5b.org
 END:VEVENT
 END:VCALENDAR
