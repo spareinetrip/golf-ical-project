@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: 13u20\nVerantwoordelijke: DESIMPEL OSCAR\nMedespelers: Duytschaever Charles\, GHEYSENS Remy\, DESMET Anthony\, Vereenooghe Charles\, SOENEN JULIEN\, Vanderlinden Quentin\, Deklerck Antoine\, Van der Elst Harry\, Van  Cauwelaert Thomas\, Schrans Emiel
+DESCRIPTION:Start: 13u20\nVerantwoordelijke: DESIMPEL OSCAR\nMedespelers: SOENEN JULIEN\, Duytschaever Charles\, DESMET Anthony\, Vereenooghe Charles\, GHEYSENS Remy\, Vanderlinden Quentin\, Deklerck Antoine\, Van der Elst Harry\, Van  Cauwelaert Thomas\, Schrans Emiel\, DERVEAUX Willem
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20251018T105000Z
 SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
-UID:0c81d126-98ee-4135-986e-32ec5089424f@0c81.org
+UID:756701e2-6cb2-4073-a1e5-65d96cd42fa2@7567.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
