@@ -2,12 +2,12 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Start: 11u30\nMedespelers: Duytschaever Charles\, Vinois Max
+DESCRIPTION:Start: 11u30\nMedespelers: Vinois Max
 DURATION:PT4H
 LOCATION:Royal Latem Golf Club\, 9831 Sint-Martens-Latem\, Belgium
 DTSTART:20260131T100000Z
 SUMMARY:⛳️  Tee-time @ Royal Latem Golf Club
-UID:fc60196d-df6e-42f9-8b8a-bb1190f598fc@fc60.org
+UID:5fc6d54a-2ec3-4a12-9cf7-245fe895a807@5fc6.org
 URL;VALUE=URI:https://waze.com/ul/hu14d4qeqv
 BEGIN:VALARM
 TRIGGER:-P1D
